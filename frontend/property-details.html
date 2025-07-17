@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Property Details</title>
+  <link rel="stylesheet" href="styles/styleOwners.css" />
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <img src="images/logo.png" alt="Logo" class="logo" />
+      <h1>Roommate</h1>
+    </div>
+  </header>
+
+  <main>
+    <a href="owner-dashboard.html" class="btn-back">← Back to Dashboard</a>
+
+    <section id="property-details">
+      <h2 class="property-header"></h2>
+
+      <img class="main-photo" src="" alt="Main property photo" />
+
+      <div class="details">
+        <!-- Filled dynamically -->
+      </div>
+
+      <h3>Gallery</h3>
+      <div class="gallery">
+        <!-- Other photos will be injected here -->
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <nav class="bottom-nav">
+      <a href="#"><img src="icons/key.svg" alt="properties" class="footer-icon"> My Properties</a>
+      <a href="owner-dashboard.html" class="footer-link"><img src="icons/homepage.svg" alt="Home" class="footer-icon"> Home</a>
+      <a href="#"><img src="icons/payments.svg" alt="Payments" class="footer-icon"> Payments</a>
+    </nav>
+  </footer>
+
+  <script src="scripts/property-details.js"></script>
+</body>
+</html>
