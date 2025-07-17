@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Property</title>
+  <link rel="stylesheet" href="styles/styleOwners.css" />
+</head>
+<body>
+  <h1>Add New Property</h1>
+  <form id="propertyForm" enctype="multipart/form-data">
+    <input type="text" name="address" placeholder="Address" required />
+    <input type="number" name="rooms" placeholder="Number of Rooms" required />
+    <input type="number" name="price" placeholder="Price" required />
+    <select name="status" required>
+      <option value="available">Available</option>
+      <option value="rented">Rented</option>
+    </select>
+    <input type="file" name="photo" accept="image/*" required />
+    <button type="submit">Add Property</button>
+  </form>
+  <a href="owner-dashboard.html" class="btn-back">← Back</a>
+  <script src="scripts/add-property.js"></script>
+</body>
+</html>
