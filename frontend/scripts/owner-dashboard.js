@@ -41,47 +41,53 @@ document.addEventListener("DOMContentLoaded", async () => {
           <p class="status">${prop.status}</p>
         </div>
       `;
+      card.addEventListener("click", () => {
+        window.location.href = `property-details.html?id=${prop.id}`;
+      });
+      
 
       list.appendChild(card);
     });
 
-    // ▶ Toggle menu
-    document.querySelectorAll(".toggle-btn").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const id = btn.dataset.id;
-        const menu = document.getElementById(`menu-${id}`);
-        menu.classList.toggle("hidden");
-      });
-    });
+    // Toggle menu
+document.querySelectorAll(".toggle-btn").forEach(btn => {
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation(); // ✅ empêche la redirection
+    const id = btn.dataset.id;
+    const menu = document.getElementById(`menu-${id}`);
+    menu.classList.toggle("hidden");
+  });
+});
 
-    // Delete card
-    document.querySelectorAll(".delete-option").forEach(btn => {
-      btn.addEventListener("click", async () => {
-        const id = btn.dataset.id;
-        const confirmDelete = confirm("Are you sure you want to delete this property?");
-        if (confirmDelete) {
-          const res = await fetch(`http://127.0.0.1:5050/api/properties/${id}`, {
-            method: 'DELETE'
-          });
-          if (res.ok) {
-            alert("Property deleted.");
-            document.querySelector(`.property-card[data-id="${id}"]`)?.remove();
-          }          
-           else {
-            alert("Error deleting property.");
-          }
-        }
+// Delete card
+document.querySelectorAll(".delete-option").forEach(btn => {
+  btn.addEventListener("click", async (e) => {
+    e.stopPropagation(); // ✅ empêche la redirection
+    const id = btn.dataset.id;
+    const confirmDelete = confirm("Are you sure you want to delete this property?");
+    if (confirmDelete) {
+      const res = await fetch(`http://127.0.0.1:5050/api/properties/${id}`, {
+        method: 'DELETE'
       });
-    });
-   
-    //edit card
+      if (res.ok) {
+        alert("Property deleted.");
+        document.querySelector(`.property-card[data-id="${id}"]`)?.remove();
+      } else {
+        alert("Error deleting property.");
+      }
+    }
+  });
+});
+
+// Edit card
 document.querySelectorAll(".edit-option").forEach(btn => {
-  btn.addEventListener("click", () => {
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation(); // ✅ empêche la redirection
     const id = btn.dataset.id;
     window.location.href = `edit-property.html?id=${id}`;
   });
 });
+
 
     // Clic hors menu → fermeture
     document.addEventListener("click", () => {
