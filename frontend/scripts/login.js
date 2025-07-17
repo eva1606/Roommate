@@ -24,7 +24,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       if (user.role === "owner") {
         window.location.href = "owner-dashboard.html";
       } else {
-        window.location.href = "roommate-dashboard.html";
+        window.location.href = "roomate-dashboard.html";
       }
     } catch (err) {
       console.error("Login error:", err);
