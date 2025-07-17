@@ -1,0 +1,371 @@
+/* Reset de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #fff;
+    color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* ---------- HEADER ---------- */
+  header {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .top-bar {
+    display: flex;
+    align-items: normal;
+    width: 100%;
+  }
+  
+  .logo {
+    width: 97px;
+    height: 97px;
+    margin-right: 0;
+  }
+  
+  .top-bar h1 {
+    font-size: 1.2rem;
+    color: #004AAD;
+    margin-left: 0;
+
+  }
+  
+  .hamburger-icon {
+    width: 30px;
+  }
+  
+  /* ---------- FOOTER ---------- */
+  footer {
+    background-color: #FBFDFF;
+    border-top: 1px solid #e5e7eb;
+    padding: 15px 0;
+  }
+
+  .footer-link.active {
+    font-weight: bold;
+    color: #004AAD;
+  }  
+
+  .bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .bottom-nav a {
+    text-align: center;
+    color: #004AAD;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  
+  .footer-icon {
+    display: block;
+    margin: 0 auto 5px;
+    width: 20px;
+  }
+  /* ---------- MAIN ---------- */
+  main {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  #welcome {
+    font-size: 1.3rem;
+    color: #004AAD;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+  
+  .property-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-bottom: 30px;
+    padding: 0; 
+    min-height: 130px;
+    position: relative;
+  }
+  
+  .property-photo {
+    width: 110px;
+    height: 140px;
+    object-fit: cover;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    flex-shrink: 0;
+  }
+  
+  .card-body {
+    flex: 1;
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .card-body h3 {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    color: #222;
+  }
+  
+  .icon-home {
+    width: 16px;
+  }
+  
+  .card-body p {
+    font-size: 0.9rem;
+    margin: 6px 0;
+  }
+  
+  .card-body .price {
+    font-weight: bold;
+    color: black;
+  }
+  
+  .card-body .status {
+    font-size: 0.8rem;
+    color: grey;
+  }
+  
+  .toggle-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  
+  .toggle-btn {
+    font-size: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .toggle-menu {
+    position: absolute;
+    right: 0;
+    top: 25px;
+    background: white;
+    border: 1px solid #ddd;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1000;
+  }
+  
+  .toggle-menu.hidden {
+    display: none;
+  }
+  
+  .toggle-menu button {
+    display: block;
+    background: none;
+    border: none;
+    padding: 5px 10px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+  }
+  
+  .btn-add-property {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    max-width: 300px;
+    margin: 30px auto;
+    padding: 30px 20px;
+    background-color: #f9f9f9;
+    border: none;
+    border-radius: 20px;
+    font-family: inherit;
+    text-align: center;
+    text-decoration: none;
+    color: #000;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .btn-add-property:hover {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+  }
+  
+  .btn-add-property::before {
+    content: "+";
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 10px;
+    line-height: 1;
+  }
+
+  /* ---------- FORMULAIRE ADD PROPERTY ---------- */
+h1 {
+  text-align: center;
+  margin: 40px auto 20px;
+  font-size: 1.8rem;
+  color: #1d4ed8;
+}
+
+form#propertyForm {
+  background-color: #ffffff;
+  padding: 30px 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Champs de saisie */
+form#propertyForm input[type="text"],
+form#propertyForm input[type="number"],
+form#propertyForm input[type="file"],
+form#propertyForm select {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border 0.2s ease-in-out;
+}
+
+form#propertyForm input:focus,
+form#propertyForm select:focus {
+  border-color: #1d4ed8;
+  outline: none;
+}
+
+/* Bouton de soumission */
+form#propertyForm button[type="submit"] {
+  background-color: #1d4ed8;
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+form#propertyForm button[type="submit"]:hover {
+  background-color: #153fbf;
+}
+.btn-back {
+  display: inline-block;
+  margin: 20px auto;
+  text-align: center;
+  padding: 10px 20px;
+  background-color: transparent;
+  color: #1d4ed8;
+  font-size: 1rem;
+  text-decoration: none;
+  border: 1px solid #1d4ed8;
+  border-radius: 10px;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-back:hover {
+  background-color: #1d4ed8;
+  color: white;
+}
+
+/* ---------- FORMULAIRE EDIT PROPERTY ---------- */
+
+form#editForm {
+  background-color: #ffffff;
+  padding: 30px 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 400px;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Champs texte / number / select / file */
+form#editForm input[type="text"],
+form#editForm input[type="number"],
+form#editForm input[type="file"],
+form#editForm select {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border 0.2s ease-in-out;
+}
+
+form#editForm input:focus,
+form#editForm select:focus {
+  border-color: #1d4ed8;
+  outline: none;
+}
+
+/* Bouton de soumission */
+form#editForm button[type="submit"] {
+  background-color: #1d4ed8;
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+form#editForm button[type="submit"]:hover {
+  background-color: #153fbf;
+}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 600px) {
+    .property-card {
+      flex-direction: row;
+    }
+  
+    .property-card img.property-photo {
+      width: 100%;
+      border-radius: 15px 15px 0 0;
+    }
+  
+    .card-body {
+      padding: 15px;
+    }
+  
+    #add-property-btn {
+      width: 90%;
+    }
+  
+    .top-bar h1 {
+      font-size: 1.2rem;
+    }
+  }
+  
