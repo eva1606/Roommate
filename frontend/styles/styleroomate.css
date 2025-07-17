@@ -316,154 +316,99 @@ a {
     margin-top: auto;
     text-align: center;
   }
-
-  /*
-  .view-items-btn {
-    padding: 12px 24px;
-    background-color: #d9d9d9;
-    border: none;
-    border-radius: 10px;
+/* Conteneur global */
+#apartment-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding: 1rem;
+  }
+  
+  /* Carte principale */
+  .apartment-card {
+    display: flex;
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+  }
+  
+  .apartment-card:hover {
+    transform: translateY(-2px);
+  }
+  
+  /* Image à gauche */
+  .card-image {
+    position: relative;
+    width: 40%;
+    min-width: 150px;
+    height: 160px;
+  }
+  
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Étiquette "NEW" */
+  .tag-new {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #f97316; /* orange */
+    color: white;
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+  
+  /* Contenu à droite */
+  .card-content {
+    flex: 1;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  /* Adresse */
+  .card-address {
+    font-size: 1rem;
     font-weight: bold;
+    color: #1d4ed8; /* bleu */
+    text-decoration: none;
+    margin-bottom: 0.3rem;
+  }
+  
+  /* Prix */
+  .card-price {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #111827;
+  }
+  
+  /* Nombre de pièces */
+  .card-rooms {
+    font-size: 0.85rem;
+    color: #4b5563; /* gris */
+  }
+  
+  /* Icônes d'action */
+  .card-icons {
+    margin-top: 0.6rem;
+  }
+  
+  .card-icons .icon {
+    width: 20px;
+    margin-right: 12px;
     cursor: pointer;
-    font-size: 16px;
+    transition: transform 0.2s;
   }
-/* formulaire */
- /* Font import 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-
-:root {
-  --primary-color: #4a3aff;
-  --bg-color: #f7f8fc;
-  --white: #fff;
-  --text-color: #333;
-  --border-color: #e0e0e0;
-  --input-bg: #f0f2f5;
-  --radius: 14px;
-  --shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-}
-
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--bg-color);
-  margin: 0;
-  padding: 0;
-  color: var(--text-color);
-}
-
-/* Form Container 
-form {
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 40px;
-  border-radius: var(--radius);
-  transition: all 0.3s ease-in-out;
-}
-
-/* Title 
-form h2 {
-  text-align: center;
-  color: var(--primary-color);
-  margin-bottom: 30px;
-  font-size: 28px;
-}
-
-/* Labels & Inputs 
-label {
-  font-weight: 600;
-  display: block;
-  margin-top: 20px;
-  margin-bottom: 8px;
-  color: blue;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="date"],
-input[type="password"],
-input[type="number"],
-input[type="file"],
-select,
-textarea {
-  width: 100%;
-  padding: 14px 16px;
-  font-size: 15px;
-  background-color: var(--input-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  box-sizing: border-box;
-}
-
-textarea {
-  resize: vertical;
-  min-height: 100px;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(74, 58, 255, 0.15);
-}
-
-/* Budget slider 
-input[type="range"] {
-  width: 100%;
-  margin-top: 10px;
-}
-
-output {
-  display: block;
-  text-align: right;
-  font-weight: 600;
-  margin-top: 5px;
-}
-
-/* Submit button 
-button {
-  width: 100%;
-  padding: 16px;
-  background-color: var(--primary-color);
-  color: var(--white);
-  font-size: 16px;
-  font-weight: 600;
-  border: none;
-  border-radius: var(--radius);
-  cursor: pointer;
-  margin-top: 30px;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #372ef7;
-}
-
-/* Profile picture preview 
-img.preview {
-  display: block;
-  margin: 16px auto;
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 3px solid var(--border-color);
-}
-
-/* Responsive 
-@media (max-width: 600px) {
-  form {
-    padding: 25px;
-    margin: 20px;
+  
+  .card-icons .icon:hover {
+    transform: scale(1.1);
   }
-
-  form h2 {
-    font-size: 22px;
-  }
-
-  button {
-    font-size: 15px;
-    padding: 14px;
-  }
-}
-/*
+  
