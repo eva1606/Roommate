@@ -83,40 +83,37 @@ document.addEventListener("DOMContentLoaded", () => {
     filterOverlay.classList.remove('show');
     filterOverlay.classList.add('hidden');
   });
-  // Fonction pour charger et afficher dynamiquement les propriétés disponibles
-async function loadAvailableApartments() {
+  async function fetchProperties() {
     try {
-      const res = await fetch('http://127.0.0.1:5500/api/available-properties');
+      const res = await fetch('http://127.0.0.1:5050/api/properties');
       const properties = await res.json();
+      const container = document.getElementById("roommate-properties");
+      container.innerHTML = ''; // vide les anciennes cards
   
-      const container = document.getElementById('apartment-list-container');
-      container.innerHTML = ''; // Nettoyer avant de recharger
-  
-      properties.forEach(property => {
-        const image = property.main_photo || 'images/default.jpg';
-  
-        const card = document.createElement('div');
-        card.className = 'apartment-card';
+      properties.forEach(prop => {
+        const card = document.createElement("div");
+        card.classList.add("property-card");
         card.innerHTML = `
-          <div class="card-image">
-            <img src="${image}" alt="Apartment image">
-            <span class="tag-new">NEW</span>
-          </div>
-          <div class="card-content">
-            <a href="#" class="card-address">${property.address}</a>
-            <p class="card-price">${property.price}₪/perMonth</p>
-            <p class="card-rooms">${property.rooms} Rooms</p>
-            <div class="card-icons">
-              <img src="icons/delete.svg" alt="Delete icon" class="icon" />
-              <img src="icons/heart-add.svg" alt="Favorite icon" class="icon" />
-            </div>
+          <img src="${prop.photo}" class="property-photo" />
+          <div class="card-body">
+            <h3>${prop.address}</h3>
+            <p>${prop.rooms} rooms - ${prop.price} sh</p>
+            <p>Status: ${prop.status}</p>
           </div>
         `;
+        card.addEventListener("click", () => {
+          window.location.href = `property-details.html?id=${prop.id}`;
+        });
         container.appendChild(card);
       });
+  
     } catch (err) {
-      console.error('Erreur lors du chargement des appartements :', err);
+      console.error("❌ Failed to fetch properties:", err);
     }
   }
   
+  document.addEventListener("DOMContentLoaded", () => {
+    fetchProperties();
+    setInterval(fetchProperties, 10000); // toutes les 10 sec
+  });
   
