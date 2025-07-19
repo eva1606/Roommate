@@ -245,6 +245,52 @@ const getRentedProperties = async (req, res) => {
     res.status(500).json({ error: "Error fetching rented properties" });
   }
 };
+const uploadDocument = async (req, res) => {
+  try {
+    console.log("📥 Upload reçu :", req.file);
+    console.log("🆔 Sender:", req.body.sender_id, "🏠 Property:", req.body.property_id);
+
+    const { sender_id, property_id } = req.body;
+    const file = req.file;
+
+    if (!file || !sender_id || !property_id) {
+      return res.status(400).json({ error: "Missing required fields or file" });
+    }
+
+    const result = await pool.query(
+      `INSERT INTO documents (file_name, file_url, sender_id, receiver_property_id)
+       VALUES ($1, $2, $3, $4) RETURNING *`,
+      [file.originalname, file.path, sender_id, property_id]
+    );
+
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error("❌ Error in uploadDocument:", err);
+    res.status(500).json({ error: "Upload failed on server" });
+  }
+};
+
+
+const getDocumentsForProperty = async (req, res) => {
+  const { propertyId } = req.params;
+
+  try {
+    const result = await pool.query(
+      `SELECT d.id, d.file_name, d.file_url, d.sent_at, d.sender_id, u.first_name AS sender_name
+       FROM documents d
+       JOIN users u ON d.sender_id = u.id
+       WHERE d.receiver_property_id = $1
+       ORDER BY d.sent_at DESC`,
+      [propertyId]
+    );
+
+    res.json(result.rows);
+  } catch (error) {
+    console.error("❌ Error in getDocumentsForProperty:", error);
+    res.status(500).json({ error: "Failed to fetch documents" });
+  }
+};
+
 
 module.exports = {
   addProperty,
@@ -254,5 +300,7 @@ module.exports = {
   updateProperty,
   getPropertiesForRoommate,
   getAvailableProperties,
-  getRentedProperties
+  getRentedProperties,
+  uploadDocument,
+  getDocumentsForProperty
 };

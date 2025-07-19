@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const upload = require('../middleware/cloudinary');
-const { addProperty, getProperties, deleteProperty, getPropertyById, updateProperty, getPropertiesForRoommate, getAvailableProperties, getRentedProperties} = require('../controllers/propertyController');
+const { addProperty, getProperties, deleteProperty, getPropertyById, updateProperty, getPropertiesForRoommate, getAvailableProperties, getRentedProperties, uploadDocument, getDocumentsForProperty} = require('../controllers/propertyController');
 
+router.get('/documents/:propertyId', getDocumentsForProperty);
 router.get('/available/:ownerId', getAvailableProperties);
 router.get('/rented/:ownerId', getRentedProperties);
 router.get('/:id', getPropertyById);
@@ -18,6 +19,7 @@ router.post(
   );
 router.put('/:id', updateProperty);
 router.post('/card', getPropertiesForRoommate);
+router.post('/upload', upload.single('file'), uploadDocument);
 
 
 module.exports = router;

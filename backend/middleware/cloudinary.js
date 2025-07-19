@@ -13,7 +13,8 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: 'roommate_properties', // tu peux changer le nom
-    allowed_formats: ['jpg', 'png', 'jpeg'],
+    allowed_formats: ['jpg', 'png', 'jpeg', 'pdf'],
+    ressource_type: 'auto'
   },
 });
 

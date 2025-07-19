@@ -449,6 +449,143 @@ form#editForm button[type="submit"]:hover {
   transform: scale(1.05);
 }
 
+/* ===========ADD ROOMMATES EDIT PROPERTY=========== */
+#roommatesSection {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  padding: 25px 20px;
+  margin-top: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+#roommatesSection h3 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: #1d4ed8;
+}
+
+.roommate-entry {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.roommate-entry input {
+  flex: 1 1 45%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+#addRoommateBtn {
+  margin-top: 10px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  background-color: #1d4ed8;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+#addRoommateBtn:hover {
+  background-color: #153fbf;
+}
+
+/* =========shared documents page========== */
+.upload-box {
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  padding: 50px 20px;
+  text-align: center;
+  background-color: #f8f8f8;
+  margin-bottom: 30px;
+}
+
+.icon-group {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.icon-group img {
+  width: 75px;
+  height: 92px;
+}
+
+#uploadBtn {
+  padding: 10px 30px;
+  font-size: 1rem;
+  background-color: #1d4ed8;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#uploadBtn:hover {
+  background-color: #2563eb;
+}
+
+.documents-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Style des documents */
+.document-card {
+  background-color: #f6f6f6;
+  border-radius: 15px;
+  padding: 20px 20px;
+  margin: 5px 10px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.doc-filename {
+  font-size: 20px;
+  color: #333;
+  text-decoration: none;
+  margin-bottom: 15px;
+}
+
+.doc-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  color: #333;
+}
+
+.doc-sender {
+  font-weight: 400;
+}
+
+.doc-date {
+  font-weight: 400;
+}
+
+
+/* Style du bouton de retour */
+.btn-back {
+  display: inline-block;
+  margin: 15px 20px;
+  text-decoration: none;
+  color: #1d4ed8;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.btn-back:hover {
+  text-decoration: underline;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   #property-details {

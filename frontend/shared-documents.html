@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shared Documents</title>
+  <link rel="stylesheet" href="styles/styleOwners.css">
+</head>
+<body>
+    <header>
+        <div class="top-bar">
+          <img src="images/logo.png" alt="Logo" class="logo"/>
+          <h1>Roommate</h1>
+          <img src="icons/hamburger.svg" alt="hamburger" class="hamburger-icon" />
+        </div>
+    </header>
+    <a href="my-properties.html" class="btn-back">← Back</a>
+
+  <main>
+    <section class="upload-box">
+      <div class="icon-group">
+        <img src="icons/document.svg" alt="file" class="doc-icon">
+        <img src="icons/upload.svg" alt="upload" class="upload-icon">
+      </div>
+      <input type="file" id="fileInput" style="display: none" accept="application/pdf">
+      <button id="uploadBtn">Upload File</button>
+    </section>
+
+    <section id="documentsList" class="documents-list">
+      <!-- Fichiers s'affichent ici -->
+    </section>
+  </main>
+  <footer>
+    <nav class="bottom-nav">
+      <a href="my-properties.html" class="footer-link"><img src="icons/key.svg" alt="properties" class="footer-icon"> My Properties</a>
+      <a href="owner-dashboard.html" class="footer-link"><img src="icons/homepage.svg" alt="Home" class="footer-icon"> Home</a>
+      <a href="#"><img src="icons/payments.svg" alt="Payments" class="footer-icon"> Payments</a>
+    </nav>
+  </footer>
+  <script src="scripts/shared-documents.js"></script>
+</body>
+</html>
