@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       container.innerHTML = "";
   
       properties.forEach(prop => {
+  
         if (!prop.id) {
             console.warn("❌ Pas de property_id pour cette propriété :", prop);
             return; // ignore cette carte
