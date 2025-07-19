@@ -299,6 +299,27 @@ const getDocumentsForProperty = async (req, res) => {
   }
 };
 
+const getRoommatesForProperty = async (req, res) => {
+  const { propertyId } = req.params;
+
+  try {
+    const { rows } = await pool.query(`
+      SELECT 
+        u.id AS user_id,
+        u.first_name,
+        u.last_name,
+        u.phone
+      FROM roommates_properties rp
+      JOIN users u ON u.id = rp.user_id
+      WHERE rp.property_id = $1
+    `, [propertyId]);
+
+    res.json(rows);
+  } catch (error) {
+    console.error("❌ Error fetching roommates:", error);
+    res.status(500).json({ error: "Error fetching roommates" });
+  }
+};
 
 module.exports = {
   addProperty,
@@ -310,5 +331,6 @@ module.exports = {
   getAvailableProperties,
   getRentedProperties,
   uploadDocument,
-  getDocumentsForProperty
+  getDocumentsForProperty,
+  getRoommatesForProperty
 };
