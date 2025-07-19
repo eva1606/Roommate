@@ -4,7 +4,7 @@ const upload = require('../middleware/cloudinary');
 const { addProperty, getProperties, deleteProperty, getPropertyById, updateProperty, getPropertiesForRoommate, getAvailableProperties, getRentedProperties, uploadDocument, getDocumentsForProperty} = require('../controllers/propertyController');
 
 router.get('/documents/:propertyId', getDocumentsForProperty);
-router.get('/available/:ownerId', getAvailableProperties);
+router.get('/available/:user_id', getAvailableProperties);
 router.get('/rented/:ownerId', getRentedProperties);
 router.get('/:id', getPropertyById);
 router.get('/', getProperties); 

@@ -212,17 +212,25 @@ const getPropertiesForRoommate = async (req, res) => {
 };
 
 const getAvailableProperties = async (req, res) => {
-  const { ownerId } = req.params;
+  const { user_id } = req.params;
+
+  if (!user_id || user_id === "null" || isNaN(Number(user_id))) {
+    return res.status(400).json({ error: "Invalid or missing userId" });
+  }
+
   try {
-    const result = await db.query(
+    const result = await pool.query(
       "SELECT * FROM properties WHERE owner_id = $1 AND status = 'available'",
-      [ownerId]
+      [user_id]
     );
     res.json(result.rows);
   } catch (err) {
+    console.error("❌ SQL ERROR in getAvailableProperties:", err);
     res.status(500).json({ error: "Error fetching available properties" });
   }
 };
+
+
 
 const getRentedProperties = async (req, res) => {
   const { ownerId } = req.params;

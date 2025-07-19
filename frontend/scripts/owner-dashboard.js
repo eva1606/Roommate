@@ -3,8 +3,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     const userName = localStorage.getItem("first_name") || "Owner";
     document.getElementById("welcome").textContent = `Hello, ${userName}`;
 
-    const userId = localStorage.getItem("userId");
-    const res = await fetch(`http://localhost:5050/api/properties/available/${userId}`);
+    const user_id = localStorage.getItem("user_id");
+
+    if (!user_id || user_id === "null" || user_id === "undefined") {
+      alert("❌ Erreur : Identifiant utilisateur manquant. Veuillez vous reconnecter.");
+      throw new Error("userId invalide dans localStorage");
+    }
+        
+    const res = await fetch(`http://localhost:5050/api/properties/available/${user_id}`);
 
     if (!res.ok) {
       const errorText = await res.text();
@@ -43,8 +49,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>
       `;
       card.addEventListener("click", () => {
-        window.location.href = `property-details.html?id=${prop.id}`;
+        if (prop.id) {
+          window.location.href = `property-details.html?id=${prop.id}`;
+        } else {
+          alert("Missing property ID");
+          console.warn("❌ prop.id is undefined:", prop);
+        }
       });
+      
       
 
       list.appendChild(card);
