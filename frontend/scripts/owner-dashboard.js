@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const userName = localStorage.getItem("first_name") || "Owner";
     document.getElementById("welcome").textContent = `Hello, ${userName}`;
 
-    const res = await fetch("http://127.0.0.1:5050/api/properties");
+    const userId = localStorage.getItem("userId");
+    const res = await fetch(`http://localhost:5050/api/properties/available/${userId}`);
 
     if (!res.ok) {
       const errorText = await res.text();

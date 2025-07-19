@@ -33,7 +33,16 @@
     <label>Gallery Photos:
       <input type="file" name="photos" accept="image/*" multiple />
     </label>
-
+    <div id="roommatesSection" style="display: none;">
+      <h3>Add Roommates</h3>
+      <div id="roommates-list">
+        <div class="roommate-entry">
+          <input type="text" name="roommate_name[]" placeholder="Full Name" />
+          <input type="tel" name="roommate_phone[]" placeholder="Phone Number" />
+        </div>
+      </div>
+      <button type="button" id="addRoommateBtn">+ Add Another Roommate</button>
+    </div>    
     <button type="submit">Update Property</button>
   </form>
 

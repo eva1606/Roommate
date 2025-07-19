@@ -37,17 +37,27 @@ const addProperty = async (req, res) => {
 
     const newPropertyId = result.rows[0].id;
 
-    // ✅ 2. Ajouter tous les colocataires à cette propriété
-    const roommatesResult = await pool.query(
-      `SELECT id FROM users WHERE role = 'roommate'`
+    const { roommates } = req.body;
+
+if (status === 'rented' && Array.isArray(roommates)) {
+  for (const phone of roommates) {
+    const userRes = await pool.query(
+      `SELECT id FROM users WHERE phone = $1 LIMIT 1`,
+      [phone]
     );
 
-    for (const roommate of roommatesResult.rows) {
+    if (userRes.rows.length > 0) {
+      const roommateId = userRes.rows[0].id;
+
       await pool.query(
-        `INSERT INTO roommates_properties (user_id, property_id) VALUES ($1, $2)`,
-        [roommate.id, newPropertyId]
+        `INSERT INTO roommates_properties (user_id, property_id) 
+         VALUES ($1, $2) 
+         ON CONFLICT DO NOTHING`, // évite les doublons
+         [roommateId, newPropertyId] 
       );
     }
+  }
+}
 
     res.status(201).json(result.rows[0]);
   } catch (err) {
@@ -139,6 +149,28 @@ const updateProperty = async (req, res) => {
     console.error("❌ Error in updateProperty:", err);
     res.status(500).json({ error: "Update failed" });
   }
+  const { roommates } = req.body;
+
+if (status === 'rented' && Array.isArray(roommates)) {
+  for (const phone of roommates) {
+    const userRes = await pool.query(
+      `SELECT id FROM users WHERE phone = $1 LIMIT 1`,
+      [phone]
+    );
+
+    if (userRes.rows.length > 0) {
+      const roommateId = userRes.rows[0].id;
+
+      await pool.query(
+        `INSERT INTO roommates_properties (user_id, property_id) 
+         VALUES ($1, $2) 
+         ON CONFLICT DO NOTHING`, // évite les doublons
+        [roommateId, id]
+      );
+    }
+  }
+}
+
 };
 
 const getPropertiesForRoommate = async (req, res) => {
@@ -179,11 +211,48 @@ const getPropertiesForRoommate = async (req, res) => {
   }
 };
 
+const getAvailableProperties = async (req, res) => {
+  const { ownerId } = req.params;
+  try {
+    const result = await db.query(
+      "SELECT * FROM properties WHERE owner_id = $1 AND status = 'available'",
+      [ownerId]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: "Error fetching available properties" });
+  }
+};
+
+const getRentedProperties = async (req, res) => {
+  const { ownerId } = req.params;
+  try {
+    const result = await pool.query(
+      `SELECT 
+         p.*, 
+         (
+           SELECT COUNT(*) 
+           FROM roommates_properties 
+           WHERE property_id = p.id
+         ) AS roommate_count
+       FROM properties p
+       WHERE p.owner_id = $1 AND p.status = 'rented'
+       ORDER BY p.id DESC`,
+      [ownerId]
+    );    
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: "Error fetching rented properties" });
+  }
+};
+
 module.exports = {
   addProperty,
   getProperties,
   deleteProperty,
   getPropertyById,
   updateProperty,
-  getPropertiesForRoommate
+  getPropertiesForRoommate,
+  getAvailableProperties,
+  getRentedProperties
 };

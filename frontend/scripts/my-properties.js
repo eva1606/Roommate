@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log("👤 userId:", userId); // Pour vérif
   
     try {
-      const res = await fetch(`http://127.0.0.1:5050/api/properties/card/${userId}`);
-      const properties = await res.json();
+        const res = await fetch(`http://localhost:5050/api/properties/rented/${userId}`);
+        const properties = await res.json();
       console.log("📦 Properties from API:", properties);
   
       const container = document.getElementById('propertiesContainer');
