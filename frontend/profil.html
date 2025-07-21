@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Profile</title>
+  <link rel="stylesheet" href="styles/profil.css" />
+</head>
+<body>
+  <main>
+    <h2 id="title"></h2>
+
+    <section id="user-profile-container" class="profile-section">
+      <div class="profile-header">
+        <img id="profile-photo" class="profile-photo" src="" alt="Profile Photo" />
+        <div class="profile-info">
+          <h3 id="profile-name"></h3>
+          <p id="profile-gender-age"></p>
+        </div>
+      </div>
+
+      <div class="profile-actions">
+        <button id="view-btn">👁️ View profil</button>
+        <button id="edit-btn">✏️ Edit profil</button>
+        <button id="roommate-btn">👥 My Roomate</button>
+      </div>
+
+      <div class="profile-details">
+        <div class="detail-row">
+          <span>Account Type</span><span id="profile-account-type"></span>
+        </div>
+        <div class="detail-row">
+          <span>Location</span><span id="profile-location"></span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="scripts/profil.js"></script>
+</body>
+</html>
