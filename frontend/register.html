@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register – Roommate</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+<body>
+  <div class="container">
+    <img src="images/logo.png" alt="Logo" class="logo" />
+    <h1>Create Your Account</h1>
+    <p>Join Roommate and find your ideal home partner!</p>
+
+    <form id="registerForm">
+      <input type="text" name="first_name" placeholder="First Name" required />
+      <input type="text" name="last_name" placeholder="Last Name" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="password" name="password" placeholder="Password" required />
+      <input type="tel" name="phone" placeholder="Phone Number" />
+      
+      <select name="role" required>
+        <option value="">Select your role</option>
+        <option value="owner">Owner</option>
+        <option value="roommate">Roommate</option>
+      </select>
+
+      <button type="submit" class="btn orange">Register</button>
+    </form>
+  </div>
+
+  <script src="scripts/register.js"></script>
+</body>
+</html>
