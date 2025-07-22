@@ -14,7 +14,7 @@
   </header>
 
   <main>
-    <form id="edit-profile-form" enctype="multipart/form-data" class="edit-form">
+    <form id="edit-profile-form" class="edit-form"> <!-- Retrait de enctype -->
 
       <label>
         First Name:
@@ -83,10 +83,7 @@
         <input type="number" id="budget" name="budget" min="0" max="10000" />
       </label>
 
-      <label>
-        Profile Photo:
-        <input type="file" id="photo" name="photo" accept="image/*" />
-      </label>
+      <!-- ✅ Champ photo supprimé -->
 
       <button type="submit" class="save-btn">💾 Save Profile</button>
     </form>
