@@ -1,0 +1,129 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f8f8f8;
+    color: #333;
+    padding-bottom: 80px; /* pour le footer */
+  }
+  
+  /* Header */
+  .header-bar {
+    background-color: #4a90e2;
+    color: white;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+  
+  .header-bar h2 {
+    font-size: 1.5rem;
+  }
+  
+  .btn-back {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+  }
+  
+  /* Form */
+  .edit-form {
+    max-width: 500px;
+    margin: 2rem auto;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .edit-form label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.2rem;
+    font-weight: 500;
+  }
+  
+  .edit-form input,
+  .edit-form select {
+    margin-top: 0.5rem;
+    padding: 0.7rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .edit-form input:focus,
+  .edit-form select:focus {
+    border-color: #4a90e2;
+    outline: none;
+    background-color: white;
+  }
+  
+  .save-btn {
+    margin-top: 1rem;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .save-btn:hover {
+    background-color: #357ac8;
+  }
+  
+  /* Footer */
+  .footer-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #ffffff;
+    border-top: 1px solid #ccc;
+    display: flex;
+    justify-content: space-around;
+    padding: 0.6rem 0;
+    box-shadow: 0 -2px 4px rgba(0,0,0,0.05);
+  }
+  
+  .footer-nav .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #4a4a4a;
+    text-decoration: none;
+    font-size: 0.8rem;
+  }
+  
+  .footer-nav .nav-item img {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 4px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 600px) {
+    .edit-form {
+      margin: 1rem;
+      padding: 1.5rem;
+    }
+  
+    .header-bar h2 {
+      font-size: 1.2rem;
+    }
+  
+    .btn-back {
+      font-size: 1rem;
+    }
+  }
+  
