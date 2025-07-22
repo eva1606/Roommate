@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { getUserProfile } = require('../controllers/profilController');
+const { getUserProfile, updateUserProfile } = require('../controllers/profilController');
 
-// GET /api/profil_users/:id
+// 📥 GET profil utilisateur
 router.get('/:id', getUserProfile);
+router.put('/:id', updateUserProfile);
 
 module.exports = router;
