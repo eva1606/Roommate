@@ -1,6 +1,6 @@
 const pool = require('../db'); // Connexion à ta base PostgreSQL
 
-// Récupère un profil utilisateur par user_id
+// ✅ Récupérer le profil par user_id
 const getUserProfile = async (req, res) => {
   const userId = req.params.id;
 
@@ -21,4 +21,44 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-module.exports = { getUserProfile };
+const updateUserProfile = async (req, res) => {
+  const userId = req.params.id;
+  const {
+    first_name,
+    last_name,
+    email,
+    gender,
+    looking_for,
+    profession,
+    age,
+    smoke,
+    pets,
+    budget
+  } = req.body;
+
+  try {
+    const result = await pool.query(
+      `UPDATE profil_users SET
+        first_name = $1,
+        last_name = $2,
+        email = $3,
+        gender = $4,
+        looking_for = $5,
+        profession = $6,
+        age = $7,
+        smoke = $8,
+        pets = $9,
+        budget = $10
+      WHERE user_id = $11
+      RETURNING *`,
+      [first_name, last_name, email, gender, looking_for, profession, age, smoke, pets, budget, userId]
+    );
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error('Erreur mise à jour profil:', err.message);
+    res.status(500).json({ message: 'Erreur lors de la mise à jour.' });
+  }
+};
+
+module.exports = { getUserProfile, updateUserProfile };
