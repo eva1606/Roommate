@@ -8,10 +8,13 @@ app.use(express.json());
 const userRoutes = require('./routes/users');
 const propertiesRoutes = require('./routes/properties');
 const profilRoutes = require('./routes/profilRoutes');
+const potentialRoommatesRoutes = require('./routes/potentialRoommatesRoutes');
 
 app.use('/api/users', userRoutes);
 app.use('/api/properties', propertiesRoutes);
 app.use('/api/profil_users', profilRoutes);
+app.use('/api/potential-roommates', potentialRoommatesRoutes);
+
 
 const PORT = process.env.PORT || 5050;
 const os = require("os");
