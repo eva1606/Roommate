@@ -38,27 +38,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("❌ Erreur chargement profil:", err);
     alert("Impossible de charger le profil.");
   }
-
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-
-    const formData = new FormData(form);
-    // Ajout explicite du user_id si nécessaire
-    formData.append("user_id", userId);
-
+  
+    const userId = localStorage.getItem("user_id");
+    const formData = new FormData(form); // ✅ NE PAS convertir en JSON
+  
     try {
-      const updateRes = await fetch(`http://127.0.0.1:5050/api/profil_users/${userId}`, {
+      const res = await fetch(`http://127.0.0.1:5050/api/profil_users/${userId}`, {
         method: "PUT",
-        body: formData  // ✅ Inclus les champs texte et le fichier
+        body: formData // ✅ multipart/form-data automatiquement géré
       });
-
-      if (updateRes.ok) {
+  
+      if (res.ok) {
         alert("✅ Profil mis à jour !");
         window.location.href = "profil.html";
       } else {
-        const errorText = await updateRes.text();
-        console.error("❌ Erreur serveur:", errorText);
-        alert("Erreur lors de la mise à jour du profil.");
+        const errText = await res.text();
+        console.error("❌ Erreur serveur:", errText);
+        alert("Erreur lors de la mise à jour.");
       }
     } catch (err) {
       console.error("❌ Erreur réseau:", err);
