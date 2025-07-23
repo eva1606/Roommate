@@ -219,233 +219,208 @@ a {
     cursor: pointer;
     font-size: 16px;
   }
-  .sort-container {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .sort-toggle {
-    background: #e6e6e6;
-    border: none;
-    padding: 10px 16px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border-radius: 12px;
-    cursor: pointer;
-  }
-  .sort-menu {
-    position: absolute;
-    background: #f3f3f3;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  }
-  
-  .sort-menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .sort-menu li {
-    padding: 8px 12px;
-    cursor: pointer;
-    border-bottom: 1px solid #ccc;
-    list-style: none;
-  }
-  
-  .sort-menu li:last-child {
-    border-bottom: none;
-  }
-  .hidden {
-    display: none;
-  } 
-  .filter-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;         /* toute la largeur de l’écran */
-    height: 100vh;        /* toute la hauteur de l’écran */
-    background-color: #ffffff; /* ou #f3f3f3 selon ton design */
-    z-index: 9999;        /* au-dessus de tout */
-    display: none;        /* caché par défaut */
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 20px;
-    overflow-y: auto;     /* scrollable si contenu long */
-  }
-  
-  .filter-overlay.show {
-    display: flex;
-  }
-  .hidden {
-    display: none;
-  }
-  
-  .hidden {
-    display: none;
-  }
-  
-  .filter-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .close-filter-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .filter-content {
-    margin-top: 20px;
-    flex-grow: 1;
-  }
-  
-  .filter-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    font-weight: 500;
-  }
-  
-  .filter-footer {
-    margin-top: auto;
-    text-align: center;
-  }
-/* Conteneur global */
-#apartment-list-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-    padding: 1rem;
-  }
-  
-  /* Carte principale */
-  .apartment-card {
-    display: flex;
-    background-color: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease;
-  }
-  
-  .apartment-card:hover {
-    transform: translateY(-2px);
-  }
-  
-  /* Image à gauche */
-  .card-image {
-    position: relative;
-    width: 40%;
-    min-width: 150px;
-    height: 160px;
-  }
-  
-  .card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  /* Étiquette "NEW" */
-  .tag-new {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: #f97316; /* orange */
-    color: white;
-    font-size: 0.7rem;
-    padding: 4px 8px;
-    border-radius: 8px;
-    font-weight: 600;
-  }
-  
-  /* Contenu à droite */
-  .card-content {
-    flex: 1;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  /* Adresse */
-  .card-address {
-    font-size: 1rem;
-    font-weight: bold;
-    color: #1d4ed8; /* bleu */
-    text-decoration: none;
-    margin-bottom: 0.3rem;
-  }
-  
-  /* Prix */
-  .card-price {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: #111827;
-  }
-  
-  /* Nombre de pièces */
-  .card-rooms {
-    font-size: 0.85rem;
-    color: #4b5563; /* gris */
-  }
-  
-  /* Icônes d'action */
-  .card-icons {
-    margin-top: 0.6rem;
-  }
-  
-  .card-icons .icon {
-    width: 20px;
-    margin-right: 12px;
-    cursor: pointer;
-    transition: transform 0.2s;
-  }
-  
-  .card-icons .icon:hover {
-    transform: scale(1.1);
-  }
+  /* ==========================
+   SORT BUTTON / DROPDOWN
+========================== */
+.sort-container {
+  position: relative;
+  display: inline-block;
+}
+
+.sort-toggle {
+  background: #e6e6e6;
+  border: none;
+  padding: 10px 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.sort-menu {
+  position: fixed;
+  background: #f3f3f3;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.sort-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sort-menu li {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+  list-style: none;
+}
+
+.sort-menu li:last-child {
+  border-bottom: none;
+}
+
+.sort-menu li:hover {
+  background: #e0e0e0;
+}
+
+.filter-overlay {
+  position: fixed;
+  width: 80%;
+  height: 100vh;
+  background-color: #ffffff;
+  z-index: 9999;
+  display: none; /* hidden by default */
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.filter-overlay.show {
+  display: flex;
+}
+
+.filter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.close-filter-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 5px;
+}
+
+.filter-content {
+  margin-top: 20px;
+  flex-grow: 1;
+}
+
+.filter-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  font-weight: 500;
+}
+
+.filter-footer {
+  margin-top: auto;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
   .property-card {
-    display: flex;
-    background-color: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease;
-    cursor: pointer;
-    margin: 1rem;
+   display: flex;
+  background-color: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+  margin: 1rem;
+  align-items: stretch;
+
   }
-  
-  .property-card:hover {
-    transform: translateY(-2px);
-  }
+
+
   
   .property-photo {
-    width: 40%;
-    height: auto;
-    object-fit: cover;
-    border-top-left-radius: 12px;
-    border-bottom-left-radius: 12px;
+   width: 160px;
+  height: 120px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+  display: flex;
   }
   
   .card-body {
-    padding: 1rem;
-    flex: 1;
+     padding: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    flex: 1;
+  }
+  .card-body h3 {
+    font-size: 25px;
+    font-weight: 600;
+    color: #1d4ed8; /* bleu comme le lien */
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Infos prix et chambres */
+  .card-body p {
+    font-size: 20px;
+    color: #374151; /* gris foncé */
+    margin: 2px 0;
   }
   #roommate-properties {
     display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-    padding: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
   }
   
+  /* Carte individuelle */
+  .roommates-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+  }
   
+  .roommates-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Photo ronde */
+  .roommates-card .property-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #004AAD;
+    margin-bottom: 16px;
+  }
+  
+  /* Contenu texte */
+  .roommates-card .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-family: Roboto, sans-serif;
+  }
+  
+  .roommates-card .card-body h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #004AAD;
+  }
+  
+  .roommates-card .card-body p {
+    font-size: 16px;
+    color: #555;
+    margin: 0;
+  }
