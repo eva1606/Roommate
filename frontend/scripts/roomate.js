@@ -149,15 +149,21 @@ async function fetchRoommates() {
   const container = document.getElementById("roommate-properties");
   if (!container) return;
 
+  const userId = localStorage.getItem("user_id");
+  if (!userId) {
+    alert("Utilisateur non connecté.");
+    return;
+  }
+
   try {
-    const res = await fetch(`http://127.0.0.1:5050/api/potential-roommates`);
-    if (!res.ok) throw new Error("Erreur lors du chargement des colocataires");
+    const res = await fetch(`http://127.0.0.1:5050/api/potential-roommates/${userId}`);
+    if (!res.ok) throw new Error("Erreur lors du chargement des colocataires compatibles");
 
     const roommates = await res.json();
     container.innerHTML = ''; // Nettoyer l'affichage
 
     if (roommates.length === 0) {
-      container.innerHTML = "<p>Aucun colocataire potentiel trouvé.</p>";
+      container.innerHTML = "<p>Aucun colocataire compatible trouvé.</p>";
       return;
     }
 
