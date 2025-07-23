@@ -1,11 +1,11 @@
-const db = require('../db'); // tu dois avoir un fichier db.js avec la connexion PG
+const db = require('../db');
 
 exports.getProfileById = async (req, res) => {
   const userId = req.params.id;
 
   try {
     const result = await db.query(`
-      SELECT u.first_name, u.last_name, u.email, p.*
+      SELECT u.first_name, u.last_name, u.email, u.photo_url, p.*
       FROM users u
       JOIN profil_users p ON u.id = p.user_id
       WHERE u.id = $1
@@ -24,18 +24,30 @@ exports.getProfileById = async (req, res) => {
 
 exports.updateProfileById = async (req, res) => {
   const userId = req.params.id;
+
   const {
     first_name, last_name, email,
     gender, looking_for, profession, age,
     smoke, pets, budget
   } = req.body;
 
-  try {
-    await db.query(
-      `UPDATE users SET first_name=$1, last_name=$2, email=$3 WHERE id=$4`,
-      [first_name, last_name, email, userId]
-    );
+  const photo_url = req.file?.path || null;
 
+  try {
+    // ✅ Mise à jour des infos générales
+    if (photo_url) {
+      await db.query(
+        `UPDATE users SET first_name=$1, last_name=$2, email=$3, photo_url=$4 WHERE id=$5`,
+        [first_name, last_name, email, photo_url, userId]
+      );
+    } else {
+      await db.query(
+        `UPDATE users SET first_name=$1, last_name=$2, email=$3 WHERE id=$4`,
+        [first_name, last_name, email, userId]
+      );
+    }
+
+    // ✅ Mise à jour du profil utilisateur
     await db.query(
       `UPDATE profil_users
        SET gender=$1, looking_for=$2, profession=$3, age=$4,
