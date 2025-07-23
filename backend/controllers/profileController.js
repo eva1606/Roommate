@@ -30,23 +30,37 @@ exports.updateProfileById = async (req, res) => {
     smoke, pets, budget
   } = req.body;
 
-  const photo_url = req.file?.path || null;
+  const photo_url = req.file?.path || null; // ✅ on récupère la nouvelle photo si elle existe
 
   try {
+    // ➤ Mise à jour de la table users
     await db.query(
-      `UPDATE users 
-       SET first_name=$1, last_name=$2, email=$3, photo_url=COALESCE($4, photo_url)
-       WHERE id=$5`,
-      [first_name, last_name, email, photo_url, userId]
+      `UPDATE users SET first_name=$1, last_name=$2, email=$3 WHERE id=$4`,
+      [first_name, last_name, email, userId]
     );
 
-    await db.query(
-      `UPDATE profil_users
-       SET gender=$1, looking_for=$2, profession=$3, age=$4,
-           smoke=$5, pets=$6, budget=$7
-       WHERE user_id=$8`,
-      [gender, looking_for, profession, age, smoke, pets, budget, userId]
-    );
+    // ➤ Mise à jour de la table profil_users
+    let query = `
+      UPDATE profil_users
+      SET gender=$1, looking_for=$2, profession=$3, age=$4,
+          smoke=$5, pets=$6, budget=$7
+          ${photo_url ? ', photo_url=$8' : ''}
+      WHERE user_id=${photo_url ? '$9' : '$8'}
+    `;
+
+    const params = [
+      gender, looking_for, profession, age,
+      smoke, pets, budget
+    ];
+
+    if (photo_url) {
+      params.push(photo_url); // 8
+      params.push(userId);    // 9
+    } else {
+      params.push(userId);    // 8
+    }
+
+    await db.query(query, params);
 
     res.sendStatus(200);
   } catch (err) {
