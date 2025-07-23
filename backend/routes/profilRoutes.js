@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { getProfileById, updateProfileById } = require('../controllers/profilController');
+const upload = require('../middleware/cloudinary'); // ✅ AJOUT OBLIGATOIRE
+const { getProfileById, updateProfileById } = require('../controllers/profileController');
 
+// Route GET pour récupérer le profil
 router.get('/:id', getProfileById);
-router.put('/:id', upload.single('photo'), updateProfileById); // ✅ upload photo
 
+// Route PUT avec upload de photo
+router.put('/:id', upload.single('photo'), updateProfileById); // ✅ Correctement défini
 
 module.exports = router;
