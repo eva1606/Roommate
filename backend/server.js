@@ -8,10 +8,9 @@ app.use(express.json());
 const userRoutes = require('./routes/users');
 const propertiesRoutes = require('./routes/properties');
 const profileRoutes = require('./routes/profilRoutes');
-const potentialRoomatesRoutes = require('./routes/potentialRoomatesRoutes');
+const { getCompatibleRoommates } = require('../controllers/potentialRoomatesController');
 
-// UTILISATION
-app.use('/api/potential-roommates', potentialRoomatesRoutes);
+router.get('/:id', getCompatibleRoommates); 
 app.use('/api/users', userRoutes);
 app.use('/api/properties', propertiesRoutes);
 app.use('/api/profil_users', profileRoutes);
