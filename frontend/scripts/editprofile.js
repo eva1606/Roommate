@@ -27,6 +27,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     form.querySelector('select[name="smoke"]').value = String(data.smoke);
     form.querySelector('select[name="pets"]').value = String(data.pets);
 
+    // ✅ Afficher la photo si elle existe
+    if (data.photo_url) {
+      const photoPreview = document.getElementById("current-photo");
+      photoPreview.src = data.photo_url;
+      photoPreview.style.display = "block";
+    }
+
   } catch (err) {
     console.error("❌ Erreur chargement profil:", err);
     alert("Impossible de charger le profil.");
@@ -36,27 +43,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     e.preventDefault();
 
     const formData = new FormData(form);
-
-    const body = {
-      first_name: formData.get("first_name").trim(),
-      last_name: formData.get("last_name").trim(),
-      email: formData.get("email").trim(),
-      profession: formData.get("profession").trim(),
-      gender: formData.get("gender"),
-      looking_for: formData.get("looking_for"),
-      smoke: formData.get("smoke") === "true",
-      pets: formData.get("pets") === "true",
-      age: parseInt(formData.get("age")) || null,
-      budget: parseFloat(formData.get("budget")) || null
-    };
+    // Ajout explicite du user_id si nécessaire
+    formData.append("user_id", userId);
 
     try {
       const updateRes = await fetch(`http://127.0.0.1:5050/api/profil_users/${userId}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
+        body: formData  // ✅ Inclus les champs texte et le fichier
       });
 
       if (updateRes.ok) {
