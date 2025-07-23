@@ -14,7 +14,15 @@
   </header>
 
   <main>
-    <form id="edit-profile-form" class="edit-form"> <!-- Retrait de enctype -->
+    <form id="edit-profile-form" class="edit-form" enctype="multipart/form-data">
+      
+      <label>
+        Profile Photo:
+        <div class="profile-photo-preview">
+          <img id="current-photo" src="" alt="Current Photo" style="max-width: 120px; border-radius: 50%; display: none;" />
+        </div>
+        <input type="file" id="photo" name="photo" accept="image/*" />
+      </label>
 
       <label>
         First Name:
