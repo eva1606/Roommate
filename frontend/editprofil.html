@@ -14,14 +14,11 @@
   </header>
 
   <main>
-    <form id="edit-profile-form" class="edit-form" enctype="multipart/form-data">
-      
+    <form id="edit-profile-form" enctype="multipart/form-data">
+
       <label>
         Profile Photo:
-        <div class="profile-photo-preview">
-          <img id="current-photo" src="" alt="Current Photo" style="max-width: 120px; border-radius: 50%; display: none;" />
-        </div>
-        <input type="file" id="photo" name="photo" accept="image/*" />
+        <input type="file" name="photo" accept="image/*" />
       </label>
 
       <label>
@@ -90,8 +87,6 @@
         Budget (shekels):
         <input type="number" id="budget" name="budget" min="0" max="10000" />
       </label>
-
-      <!-- ✅ Champ photo supprimé -->
 
       <button type="submit" class="save-btn">💾 Save Profile</button>
     </form>
