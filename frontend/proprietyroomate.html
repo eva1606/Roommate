@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apartment Details</title>
+
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <!-- Ton CSS local -->
+  <link rel="stylesheet" href="styles/detailsroomate.css" />
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <a href="roomate-dashboard.html" class="btn-back">← Back</a>
+    </div>
+  </header>
+
+  <main>
+    <section id="property-details">
+      <h2 class="property-header" id="property-address"></h2>
+
+      <img id="main-photo" class="main-photo" src="" alt="Main photo" />
+
+      <div class="details" id="property-description">
+        <!-- Injected from JS -->
+      </div>
+
+      <div class="features" id="property-features">
+        <!-- Injected from JS -->
+      </div>
+
+      <h3>Gallery</h3>
+      <div class="gallery" id="photo-gallery">
+        <!-- Injected from JS -->
+      </div>
+
+      <h3>Location</h3>
+      <div id="map" style="height: 300px; border-radius: 10px; margin-bottom: 20px;"></div>
+      <button id="mapBtn">📍 Voir sur la carte</button>
+
+      <button id="contactOwnerBtn">📞 Contact the owner</button>
+      <div id="ownerContactInfo" class="hidden"></div>
+      <button class="find-roommate-btn">Find a Roommate</button>
+    </section>
+  </main>
+
+  <footer class="footer-nav">
+    <a href="roomate-dashboard.html" class="nav-item">
+      <img src="icons/home.svg" alt="Home icon" />
+      <span>Home</span>
+    </a>
+    <a href="#" class="nav-item">
+      <img src="icons/messages.svg" alt="Messages icon" />
+      <span>Messages</span>
+    </a>
+    <a href="#" class="nav-item">
+      <img src="icons/tasks.svg" alt="Tasks icon" />
+      <span>Tasks</span>
+    </a>
+  </footer>
+
+  <!-- Leaflet JS -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+
+  <!-- Ton script principal -->
+  <script src="scripts/proprietyroomate.js"></script>
+</body>
+</html>
