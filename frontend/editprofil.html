@@ -18,8 +18,11 @@
 
       <label>
         Profile Photo:
-        <input type="file" name="photo" accept="image/*" />
+        <input type="file" name="photo" accept="image/*" id="photo-input" />
       </label>
+      
+      <!-- Prévisualisation de la photo actuelle -->
+      <img id="photo-preview" src="" alt="Current Profile Photo" style="display:none; max-width: 120px; border-radius: 50%; margin-bottom: 1rem;" />
 
       <label>
         First Name:
