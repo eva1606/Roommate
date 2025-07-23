@@ -230,8 +230,6 @@ const getAvailableProperties = async (req, res) => {
   }
 };
 
-
-
 const getRentedProperties = async (req, res) => {
   const { ownerId } = req.params;
   try {
@@ -320,6 +318,32 @@ const getRoommatesForProperty = async (req, res) => {
     res.status(500).json({ error: "Error fetching roommates" });
   }
 };
+const getOwnerPhoneByPropertyId = async (req, res) => {
+  const { propertyId } = req.params;
+
+  if (!propertyId || isNaN(Number(propertyId))) {
+    return res.status(400).json({ error: "Invalid property ID" });
+  }
+
+  try {
+    const result = await pool.query(`
+      SELECT u.phone
+      FROM properties p
+      JOIN users u ON u.id = p.owner_id
+      WHERE p.id = $1
+      LIMIT 1
+    `, [propertyId]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Owner not found for this property" });
+    }
+
+    res.json({ phone: result.rows[0].phone });
+  } catch (err) {
+    console.error("❌ Error in getOwnerPhoneByPropertyId:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 
 module.exports = {
   addProperty,
@@ -332,5 +356,6 @@ module.exports = {
   getRentedProperties,
   uploadDocument,
   getDocumentsForProperty,
-  getRoommatesForProperty
+  getRoommatesForProperty,
+  getOwnerPhoneByPropertyId 
 };
