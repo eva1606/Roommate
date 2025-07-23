@@ -29,20 +29,25 @@ const loginUser = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
-
 const registerUser = async (req, res) => {
   const { first_name, last_name, email, password, phone, role } = req.body;
+  const photo_url = req.file?.path || null; // récupère le lien Cloudinary
 
   try {
-    const existing = await pool.query('SELECT * FROM users WHERE LOWER(email) = LOWER($1)', [email]);
+    const existing = await pool.query(
+      'SELECT * FROM users WHERE LOWER(email) = LOWER($1)',
+      [email]
+    );
+
     if (existing.rows.length > 0) {
       return res.status(409).json({ error: "Email already in use" });
     }
 
     const result = await pool.query(
-      `INSERT INTO users (first_name, last_name, email, password, phone, role)
-       VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, first_name, role`,
-      [first_name, last_name, email, password, phone, role]
+      `INSERT INTO users (first_name, last_name, email, password, phone, role, photo_url)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)
+       RETURNING id, first_name, role`,
+      [first_name, last_name, email, password, phone, role, photo_url]
     );
 
     const user = result.rows[0];
@@ -52,6 +57,7 @@ const registerUser = async (req, res) => {
     res.status(500).json({ error: "Server error during registration" });
   }
 };
+
 
 module.exports = {
   loginUser,
