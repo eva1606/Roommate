@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { getPotentialRoommates } = require('../controllers/potentialRoommatesController');
+const { getCompatibleRoommates } = require('../controllers/potentialRoomatesController');
 
-// 📥 GET /api/potential-roommates/:id
-router.get('/:id', getPotentialRoommates);
+// 👇 Nouvelle route : GET /api/potential-roommates/:id
+router.get('/:id', getCompatibleRoommates);
 
 module.exports = router;
