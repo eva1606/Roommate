@@ -1,0 +1,130 @@
+/* Reset & Global Styles */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fff;
+    color: #333;
+  }
+  
+  h1, h2, h3 {
+    margin: 0 0 10px;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  /* Header */
+  .top-bar {
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+  }
+  
+  .top-bar .btn-back {
+    font-size: 1.2em;
+    color: #007bff;
+    margin-right: auto;
+  }
+  
+  .top-bar h1 {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    flex-grow: 1;
+  }
+  
+  /* Property Section */
+  #property-details {
+    padding: 20px;
+  }
+  
+  .property-header {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .main-photo {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+    margin-bottom: 15px;
+  }
+  
+  .details p,
+  .features p {
+    margin: 5px 0;
+    font-size: 1em;
+    line-height: 1.4;
+  }
+  
+  /* Gallery */
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .gallery-photo {
+    width: calc(33.33% - 10px);
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  /* Buttons */
+  .contact-owner,
+  .find-roommate-btn {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 12px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #0047ff;
+    color: #fff;
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .contact-owner:hover,
+  .find-roommate-btn:hover {
+    background-color: #0033cc;
+  }
+  
+  /* Footer */
+  .footer-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    background-color: #f1f1f1;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #ccc;
+  }
+  
+  .footer-nav .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #0047ff;
+    font-size: 0.8em;
+  }
+  
+  .footer-nav .nav-item img {
+    width: 20px;
+    height: 20px;
+    margin-bottom: 3px;
+  }
+  
