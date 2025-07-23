@@ -24,7 +24,6 @@ exports.getProfileById = async (req, res) => {
 
 exports.updateProfileById = async (req, res) => {
   const userId = req.params.id;
-
   const {
     first_name, last_name, email,
     gender, looking_for, profession, age,
@@ -34,20 +33,13 @@ exports.updateProfileById = async (req, res) => {
   const photo_url = req.file?.path || null;
 
   try {
-    // ✅ Mise à jour des infos générales
-    if (photo_url) {
-      await db.query(
-        `UPDATE users SET first_name=$1, last_name=$2, email=$3, photo_url=$4 WHERE id=$5`,
-        [first_name, last_name, email, photo_url, userId]
-      );
-    } else {
-      await db.query(
-        `UPDATE users SET first_name=$1, last_name=$2, email=$3 WHERE id=$4`,
-        [first_name, last_name, email, userId]
-      );
-    }
+    await db.query(
+      `UPDATE users 
+       SET first_name=$1, last_name=$2, email=$3, photo_url=COALESCE($4, photo_url)
+       WHERE id=$5`,
+      [first_name, last_name, email, photo_url, userId]
+    );
 
-    // ✅ Mise à jour du profil utilisateur
     await db.query(
       `UPDATE profil_users
        SET gender=$1, looking_for=$2, profession=$3, age=$4,
