@@ -17,7 +17,7 @@ exports.getProfileById = async (req, res) => {
 
     res.json(result.rows[0]);
   } catch (err) {
-    console.error(err);
+    console.error('❌ Erreur getProfileById :', err);
     res.status(500).json({ error: 'Erreur serveur' });
   }
 };
@@ -30,22 +30,22 @@ exports.updateProfileById = async (req, res) => {
     smoke, pets, budget
   } = req.body;
 
-  const photo_url = req.file?.path || null; // ✅ on récupère la nouvelle photo si elle existe
+  const photo_url = req.file?.path || null;
 
   try {
     // ➤ Mise à jour de la table users
     await db.query(
-      `UPDATE users SET first_name=$1, last_name=$2, email=$3 WHERE id=$4`,
+      `UPDATE users SET first_name = $1, last_name = $2, email = $3 WHERE id = $4`,
       [first_name, last_name, email, userId]
     );
 
     // ➤ Mise à jour de la table profil_users
     let query = `
       UPDATE profil_users
-      SET gender=$1, looking_for=$2, profession=$3, age=$4,
-          smoke=$5, pets=$6, budget=$7
-          ${photo_url ? ', photo_url=$8' : ''}
-      WHERE user_id=${photo_url ? '$9' : '$8'}
+      SET gender = $1, looking_for = $2, profession = $3, age = $4,
+          smoke = $5, pets = $6, budget = $7
+          ${photo_url ? ', photo_url = $8' : ''}
+      WHERE user_id = ${photo_url ? '$9' : '$8'}
     `;
 
     const params = [
@@ -54,17 +54,17 @@ exports.updateProfileById = async (req, res) => {
     ];
 
     if (photo_url) {
-      params.push(photo_url); // 8
-      params.push(userId);    // 9
+      params.push(photo_url); // $8
+      params.push(userId);    // $9
     } else {
-      params.push(userId);    // 8
+      params.push(userId);    // $8
     }
 
     await db.query(query, params);
 
     res.sendStatus(200);
   } catch (err) {
-    console.error('❌ Erreur update profil :', err);
+    console.error('❌ Erreur updateProfileById :', err);
     res.status(500).json({ error: 'Erreur serveur lors de la mise à jour' });
   }
 };
