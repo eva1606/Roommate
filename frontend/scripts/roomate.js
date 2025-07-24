@@ -159,25 +159,25 @@ async function fetchProperties() {
         }
       });
 
-      // ❤️ Favoris
       card.querySelector(".icon-fav").addEventListener("click", async (e) => {
         e.stopPropagation();
         const propertyId = e.currentTarget.dataset.id;
+      
         try {
           const res = await fetch(`http://127.0.0.1:5050/api/properties-available/favorites`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ user_id: userId, property_id: propertyId }),
           });
-
+      
           if (res.ok) {
-            e.currentTarget.style.color = "#2e86de";
+            const path = e.currentTarget.querySelector("svg path");
+            if (path) path.setAttribute("fill", "#2e86de");
           }
         } catch (err) {
           console.error("Erreur ajout favoris:", err);
         }
       });
-
       // 🗑️ Suppression
       card.querySelector(".icon-delete").addEventListener("click", async (e) => {
         e.stopPropagation();
