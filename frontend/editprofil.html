@@ -14,83 +14,89 @@
   </header>
 
   <main>
-    <form id="edit-profile-form" enctype="multipart/form-data">
-
-      <label>
-        Profile Photo:
-        <input type="file" name="photo" accept="image/*" id="photo-input" />
-      </label>
+    <form id="edit-profile-form" enctype="multipart/form-data" class="edit-form">
       
-      <!-- Prévisualisation de la photo actuelle -->
-      <img id="photo-preview" src="" alt="Current Profile Photo" style="display:none; max-width: 120px; border-radius: 50%; margin-bottom: 1rem;" />
+      <!-- Photo de profil -->
+      <div class="form-group center">
+        <label for="photo-input">Profile Photo:</label>
+        <input type="file" name="photo" accept="image/*" id="photo-input" />
+        <img id="photo-preview" src="" alt="Current Profile Photo" style="display:none;" />
+      </div>
 
-      <label>
-        First Name:
+      <!-- Informations de base -->
+      <div class="form-group">
+        <label for="first_name">First Name:</label>
         <input type="text" id="first_name" name="first_name" required />
-      </label>
+      </div>
 
-      <label>
-        Last Name:
+      <div class="form-group">
+        <label for="last_name">Last Name:</label>
         <input type="text" id="last_name" name="last_name" required />
-      </label>
+      </div>
 
-      <label>
-        Email:
+      <div class="form-group">
+        <label for="email">Email:</label>
         <input type="email" id="email" name="email" required />
-      </label>
+      </div>
 
-      <label>
-        Gender:
+      <div class="form-group">
+        <label for="gender">Gender:</label>
         <select id="gender" name="gender" required>
           <option value="">Select...</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
           <option value="other">Other</option>
         </select>
-      </label>
+      </div>
 
-      <label>
-        Looking For:
+      <div class="form-group">
+        <label for="looking_for">Looking For:</label>
         <select id="looking_for" name="looking_for" required>
           <option value="">Select...</option>
           <option value="roommate">Roommate</option>
           <option value="apartment">Apartment</option>
         </select>
-      </label>
+      </div>
 
-      <label>
-        Profession:
+      <div class="form-group">
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" placeholder="e.g. Tel Aviv, Florentin" />
+      </div>
+      
+      <div class="form-group">
+        <label for="profession">Profession:</label>
         <input type="text" id="profession" name="profession" />
-      </label>
+      </div>
 
-      <label>
-        Age:
+      <div class="form-group">
+        <label for="age">Age:</label>
         <input type="number" id="age" name="age" min="18" max="100" required />
-      </label>
+      </div>
 
-      <label>
-        Do you smoke?
+      <div class="form-group">
+        <label for="smoke">Do you smoke?</label>
         <select id="smoke" name="smoke">
           <option value="">Select...</option>
           <option value="true">Yes</option>
           <option value="false">No</option>
         </select>
-      </label>
+      </div>
 
-      <label>
-        Do you have pets?
+      <div class="form-group">
+        <label for="pets">Do you have pets?</label>
         <select id="pets" name="pets">
           <option value="">Select...</option>
           <option value="true">Yes</option>
           <option value="false">No</option>
         </select>
-      </label>
+      </div>
 
-      <label>
-        Budget (shekels):
+      <div class="form-group">
+        <label for="budget">Budget (shekels):</label>
         <input type="number" id="budget" name="budget" min="0" max="10000" />
-      </label>
+      </div>
 
+      <!-- Bouton de soumission -->
       <button type="submit" class="save-btn">💾 Save Profile</button>
     </form>
   </main>
