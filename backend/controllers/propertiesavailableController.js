@@ -11,7 +11,7 @@ exports.getFilteredApartments = async (req, res) => {
       JOIN profil_users pu ON pu.user_id = $1
       WHERE p.status = 'available'
         AND p.price BETWEEN (pu.budget - 1000) AND (pu.budget + 1000)
-        AND LOWER(p.adress) LIKE '%' || LOWER(pu.location) || '%'
+        AND LOWER(p.address) LIKE '%' || LOWER(pu.location) || '%'
       ORDER BY p.created_at DESC
       `,
       [userId]
