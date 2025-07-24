@@ -7,35 +7,50 @@
   <link rel="stylesheet" href="styles/profil.css" />
 </head>
 <body>
+
+  <header class="profile-header-bar">
+    <button id="closeBtn" class="close-btn">✕</button>
+  </header>
+
   <main>
-    <h2 id="title"></h2>
+    <h2 class="title">My Profile</h2>
 
-    <section id="user-profile-container" class="profile-section">
-      <div class="profile-header">
+    <section class="profile-card">
+      <div class="profile-photo-container">
         <img id="profile-photo" class="profile-photo" src="" alt="Profile Photo" />
-        <div class="profile-info">
-          <h3 id="profile-name"></h3>
-          <p id="profile-gender-age"></p>
-        </div>
       </div>
-
-      <div class="profile-actions">
-        <button id="view-btn">👁️ View profil</button>
-        <button id="edit-btn">✏️ Edit profil</button>
-        <button id="roommate-btn">👥 My Roomate</button>
+      <div class="profile-basic-info">
+        <h3 id="profile-name"></h3>
+        <p id="profile-gender-age"></p>
       </div>
+    </section>
 
-      <div class="profile-details">
-        <div class="detail-row">
-          <span>Account Type</span><span id="profile-account-type"></span>
-        </div>
-        <div class="detail-row">
-          <span>Location</span><span id="profile-location"></span>
-        </div>
+    <section class="profile-buttons">
+      <div class="profile-btn">
+        <img src="icons/eye.svg" class="icon" /> View profil
+      </div>
+    
+      <a href="editprofil.html" class="profile-btn" id="edit-btn">
+        <img src="icons/edit.svg" class="icon" /> Edit profil
+      </a>
+    
+      <div class="profile-btn">
+        <img src="icons/People.svg" class="icon" /> My Roomate
+      </div>
+    </section>
+    
+
+    <section class="profile-infos">
+      <div class="info-row">
+        <span class="label">Budget</span>
+        <span id="profile-budget"></span>
+      </div>
+      <div class="info-row">
+        <span class="label">Location</span>
+        <span id="profile-location"></span>
       </div>
     </section>
   </main>
-
   <script src="scripts/profil.js"></script>
 </body>
 </html>
