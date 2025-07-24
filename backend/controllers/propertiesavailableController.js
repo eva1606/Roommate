@@ -12,7 +12,6 @@ exports.getFilteredApartments = async (req, res) => {
       WHERE p.status = 'available'
         AND p.price BETWEEN (pu.budget - 1000) AND (pu.budget + 1000)
         AND LOWER(p.address) LIKE '%' || LOWER(pu.location) || '%'
-      ORDER BY p.created_at DESC
       `,
       [userId]
     );
