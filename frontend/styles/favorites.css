@@ -158,76 +158,74 @@ main {
   margin: auto;
 }
 
-/* Section d'appartements */
-.property-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-}
-
-/* Carte propriété */
 .property-card {
-  background-color: #fff;
+  background-color: white;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
   overflow: hidden;
-  transition: transform 0.2s ease;
-  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
-.property-card:hover {
-  transform: translateY(-4px);
+.image-wrapper {
+  position: relative;
 }
 
 .property-photo {
   width: 100%;
   height: 180px;
   object-fit: cover;
-  display: block;
+}
+
+.new-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: orange;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 4px;
+  z-index: 1;
 }
 
 .card-body {
-  padding: 1rem;
-}
-
-.card-body h3 {
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-  color: #2c3e50;
-}
-
-.card-body p {
-  font-size: 0.95rem;
-  color: #555;
-  margin-bottom: 0.5rem;
-}
-
-.property-actions {
+  padding: 12px;
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 10px;
-  margin-top: 0.5rem;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
-.icon-fav {
+.card-text h3 {
+  margin-bottom: 4px;
+  font-size: 18px;
+  color: #333;
+}
+
+.card-text p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.svg-action-btn {
+  background: none;
+  border: none;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  padding: 0;
 }
 
-.icon-fav:hover {
-  transform: scale(1.1);
+.svg-action-btn .svg-icon {
+  transition: fill 0.2s ease-in-out;
 }
 
-/* ❤️ Style cœur rempli */
-.icon-fav.filled path {
-  fill: #e74c3c;
-  stroke: #e74c3c;
+.svg-action-btn.favorited .svg-icon path {
+  fill: #2e86de; /* 💙 Bleu si favori */
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  .property-photo {
-    height: 150px;
-  }
+.svg-action-btn:not(.favorited) .svg-icon path {
+  fill: #B7B7B7; /* ⚪ Gris par défaut */
 }
