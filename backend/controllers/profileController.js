@@ -27,7 +27,7 @@ exports.updateProfileById = async (req, res) => {
   const {
     first_name, last_name, email,
     gender, looking_for, profession, age,
-    smoke, pets, budget
+    smoke, pets, budget, location // ✅ ajouté ici
   } = req.body;
 
   const photo_url = req.file?.path || null;
@@ -39,25 +39,25 @@ exports.updateProfileById = async (req, res) => {
       [first_name, last_name, email, userId]
     );
 
-    // ➤ Mise à jour de la table profil_users
+    // ➤ Mise à jour de la table profil_users (avec location et photo_url en option)
     let query = `
       UPDATE profil_users
       SET gender = $1, looking_for = $2, profession = $3, age = $4,
-          smoke = $5, pets = $6, budget = $7
-          ${photo_url ? ', photo_url = $8' : ''}
-      WHERE user_id = ${photo_url ? '$9' : '$8'}
+          smoke = $5, pets = $6, budget = $7, location = $8
+          ${photo_url ? ', photo_url = $9' : ''}
+      WHERE user_id = ${photo_url ? '$10' : '$9'}
     `;
 
     const params = [
       gender, looking_for, profession, age,
-      smoke, pets, budget
+      smoke, pets, budget, location
     ];
 
     if (photo_url) {
-      params.push(photo_url); // $8
-      params.push(userId);    // $9
+      params.push(photo_url); // $9
+      params.push(userId);    // $10
     } else {
-      params.push(userId);    // $8
+      params.push(userId);    // $9
     }
 
     await db.query(query, params);
