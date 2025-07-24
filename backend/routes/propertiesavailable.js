@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { getFilteredApartments, saveAvailableApartments,addToFavorites,deleteValidApartment } = require('../controllers/propertiesavailableController');
+const controller = require('../controllers/propertiesavailableController');
 
-router.get('/filtered/:id', getFilteredApartments);
-router.put('/save/:id', saveAvailableApartments); // 👈 Nouvelle route PUT
-router.post('/favorites', addToFavorites);
-router.delete('/apartment-valid/:id', deleteValidApartment);
+router.get('/filtered/:id', controller.getFilteredApartments);
+router.post('/save/:id', controller.saveAvailableApartments);
+router.post('/favorites/add', controller.addToFavorites);
+router.post('/available/remove', controller.removeAvailableApartment);
 
 module.exports = router;
