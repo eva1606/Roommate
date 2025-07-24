@@ -55,7 +55,8 @@ async function fetchProperties() {
       const card = document.createElement("div");
       card.classList.add("property-card");
       card.setAttribute("data-search", `${prop.address} ${prop.rooms} ${prop.price}`.toLowerCase());
-    
+      
+      const isFavorited = prop.is_favorited;
       const isNew = index === 0; // première = la plus récente
     
       card.innerHTML = `
@@ -86,23 +87,32 @@ async function fetchProperties() {
       card.querySelector(".svg-action-btn").addEventListener("click", async (e) => {
         e.stopPropagation();
       
+        const btn = e.currentTarget;
+        const propertyId = prop.id;
+        const userId = localStorage.getItem("user_id");
+      
         try {
           const res = await fetch("http://127.0.0.1:5050/api/properties-available/favorites", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ user_id: userId, property_id: prop.id }),
+            body: JSON.stringify({ user_id: userId, property_id: propertyId }),
           });
       
           if (res.ok) {
-            // Change la couleur du cœur
-            const path = card.querySelector(".svg-icon path");
+            // ✅ Rend le cœur bleu
+            const path = btn.querySelector("svg path");
             if (path) path.setAttribute("fill", "#2e86de");
+      
+            // ✅ Affiche un petit message
+            showToast("Ajouté aux favoris !");
+          } else {
+            showToast("Déjà dans vos favoris.", "warning");
           }
         } catch (err) {
-          console.error("❌ Erreur ajout favoris :", err);
+          console.error("Erreur favoris:", err);
+          showToast("Erreur lors de l'ajout aux favoris.", "error");
         }
       });
-      
     });
 
   } catch (err) {
@@ -110,6 +120,22 @@ async function fetchProperties() {
     container.innerHTML = "<p>Erreur lors du chargement des appartements.</p>";
   }
 
+  function showToast(message, type = "success") {
+    const toast = document.createElement("div");
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+  
+    setTimeout(() => {
+      toast.classList.add("visible");
+    }, 100);
+  
+    setTimeout(() => {
+      toast.classList.remove("visible");
+      setTimeout(() => toast.remove(), 500);
+    }, 2500);
+  }
+  
   // Gestion des onglets (apartments / roommates)
 const tabApartments = document.getElementById("tab-apartments");
 const tabRoommates = document.getElementById("tab-roommates");
