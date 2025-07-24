@@ -9,9 +9,43 @@
 <body>
 
   <header>
-    <a href="roomate-dashboard.html" id="logo"><span>Roommate</span></a>
-    <h2 style="text-align: center;">❤️ My Favorite Apartments</h2>
+    <a href="roomate-dashboard.html" id="logo">
+      <span>Roommate</span>
+    </a>
+
+    <!-- BOUTON HAMBURGER -->
+    <button id="hamburgerBtn" class="hamburger" aria-label="Open menu">
+      <img src="icons/Menu-3.svg" alt="Menu icon" />
+    </button>
   </header>
+
+  <!-- OVERLAY MENU -->
+  <section id="menuOverlay" class="menu-overlay hidden">
+    
+    <!-- BOUTON FERMETURE + ICÔNE -->
+    <button id="closeMenu" class="close-btn" aria-label="Close menu">
+      <img src="icons/close.svg" alt="Close icon"/>
+    </button>
+
+    <nav class="menu-list">
+        <ul>
+          <li>
+            <a href="profil.html"><img src="icons/users.svg" class="icon" /> <span>Profile</span></a>
+          </li>
+          <li>
+            <a href="favorite.html"><img src="icons/heart.svg" class="icon" /> <span>My Matches</span></a>
+          </li>
+          <li>
+            <a href="Setting.html"><img src="icons/settings.svg" class="icon" /> <span>Settings</span></a>
+          </li>
+        </ul>
+      </nav>
+      
+
+      <a href="#" id="logoutBtn" class="signout">
+      <img src="icons/logout.svg" class="menu-icon" /><span>Sign Out</span>
+    </a>
+  </section> 
 
   <main>
     <section class="property-list" id="favorite-properties">
@@ -20,13 +54,21 @@
   </main>
 
   <footer class="footer-nav">
-    <a href="roomate-dashboard.html" class="nav-item">
+    <a href="#" class="nav-item">
       <img src="icons/home.svg" alt="Home icon" />
       <span>Home</span>
     </a>
-    <a href="favorite.html" class="nav-item active">
-      <img src="icons/heart.svg" alt="Favorites icon" />
-      <span>Favorites</span>
+    <a href="#" class="nav-item">
+      <img src="icons/messages.svg" alt="Messages icon" />
+      <span>Messages</span>
+    </a>
+    <a href="#" class="nav-item">
+      <img src="icons/tasks.svg" alt="Tasks icon" />
+      <span>Tasks</span>
+    </a>
+    <a href="#" class="nav-item">
+      <img src="icons/payments.svg" alt="Payments icon" />
+      <span>Payments</span>
     </a>
   </footer>
 
