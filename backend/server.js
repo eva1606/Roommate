@@ -14,7 +14,7 @@ const propertiesAvailableRoutes = require('./routes/propertiesavailable');
 const favoritesRoutes = require('./routes/favorites');
 
 app.use('/api/properties/favorites', favoritesRoutes);
-app.use('/api/properties-available', propertiesAvailableRoutes); // ou '/api/properties-available' si tu préfères
+app.use('/api/properties-available', propertiesAvailableRoutes); 
 app.use('/api/potential-roommates', potentialRoommatesRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/properties', propertiesRoutes);
