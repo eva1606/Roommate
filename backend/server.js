@@ -11,9 +11,8 @@ const propertiesRoutes = require('./routes/properties');
 const profileRoutes = require('./routes/profilRoutes');
 const potentialRoommatesRoutes = require('./routes/potentialRoomatesRoutes');
 const propertiesAvailableRoutes = require('./routes/propertiesavailable');
-const favoritesRoutes = require('./routes/favorites');
 
-app.use('/api/properties/favorites', favoritesRoutes);
+
 app.use('/api/properties-available', propertiesAvailableRoutes); 
 app.use('/api/potential-roommates', potentialRoommatesRoutes);
 app.use('/api/users', userRoutes);
