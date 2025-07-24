@@ -6,13 +6,17 @@ exports.getFilteredApartments = async (req, res) => {
   try {
     const result = await db.query( // 👈 ici tu gardes db pour rester cohérent
       `
-      SELECT p.*
-      FROM properties p
-      JOIN profil_users pu ON pu.user_id = $1
-      WHERE p.status = 'available'
-        AND p.price BETWEEN (pu.budget - 1000) AND (pu.budget + 1000)
-        AND LOWER(p.address) LIKE '%' || LOWER(pu.location) || '%'
-        ORDER BY p.created_at DESC
+      SELECT p.*,
+      EXISTS (
+        SELECT 1 FROM favorite_apartments f
+        WHERE f.user_id = $1 AND f.property_id = p.id
+      ) AS is_favorited
+    FROM properties p
+    JOIN profil_users pu ON pu.user_id = $1
+    WHERE p.status = 'available'
+      AND p.price BETWEEN (pu.budget - 1000) AND (pu.budget + 1000)
+      AND LOWER(p.address) LIKE '%' || LOWER(pu.location) || '%'
+    ORDER BY p.created_at DESC    
       `,
       [userId]
     );
