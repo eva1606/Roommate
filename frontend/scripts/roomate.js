@@ -126,7 +126,7 @@ async function fetchProperties() {
           <p>${prop.rooms} rooms - ${prop.price} sh</p>
           <p>Status: ${prop.status}</p>
           <div class="card-actions">
-            <img src="icons/heart.svg" class="action-icon save-icon" title="Ajouter aux favoris" data-id="${prop.id}" />
+            <img src="icons/heartplus.svg" class="action-icon save-icon" title="Ajouter aux favoris" data-id="${prop.id}" />
             <img src="icons/trash.svg" class="action-icon delete-icon" title="Supprimer" data-id="${prop.id}" />
           </div>
         </div>
