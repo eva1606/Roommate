@@ -94,7 +94,7 @@ exports.removeAvailableApartment = async (req, res) => {
     res.status(500).json({ error: 'Erreur serveur.' });
   }
 };
-exports.getFavorites = async (req, res) => {
+exports.getFavoriteApartments = async (req, res) => {
   const { userId } = req.params;
 
   try {
@@ -114,3 +114,31 @@ exports.getFavorites = async (req, res) => {
     res.status(500).json({ error: "Erreur serveur" });
   }
 };
+// ✅ 4. Sauvegarder des propriétés disponibles pour un utilisateur
+exports.saveAvailableApartments = async (req, res) => {
+  const userId = req.params.id;
+  const { properties } = req.body;
+
+  if (!userId || !Array.isArray(properties)) {
+    return res.status(400).json({ error: "userId et tableau de propriétés requis" });
+  }
+
+  try {
+    // On supprime les anciennes pour éviter les doublons
+    await db.query(`DELETE FROM available_apartment WHERE user_id = $1`, [userId]);
+
+    // On insère les nouvelles
+    for (const propertyId of properties) {
+      await db.query(
+        `INSERT INTO available_apartment (user_id, property_id) VALUES ($1, $2)`,
+        [userId, propertyId]
+      );
+    }
+
+    res.status(200).json({ message: "Propriétés sauvegardées avec succès." });
+  } catch (err) {
+    console.error("❌ Erreur sauvegarde propriétés :", err);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+};
+
