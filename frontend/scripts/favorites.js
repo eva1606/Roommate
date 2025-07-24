@@ -1,59 +1,43 @@
-document.addEventListener("DOMContentLoaded", async () => {
-  // 🔐 Authentification
+document.addEventListener("DOMContentLoaded", () => {
   const userId = localStorage.getItem("user_id");
-  const role = localStorage.getItem("role");
-
-  if (!userId || role !== "roommate") {
-    alert("Accès non autorisé. Veuillez vous reconnecter.");
+  if (!userId) {
+    alert("Utilisateur non connecté.");
     window.location.href = "login.html";
     return;
   }
 
-  // 🍔 Menu burger
-  const hamburgerBtn = document.getElementById("hamburgerBtn");
-  const menuOverlay = document.getElementById("menuOverlay");
-  const closeMenu = document.getElementById("closeMenu");
+  fetchFavorites(userId);
+});
 
-  hamburgerBtn?.addEventListener("click", () => menuOverlay.classList.remove("hidden"));
-  closeMenu?.addEventListener("click", () => menuOverlay.classList.add("hidden"));
-
-  // 🚪 Déconnexion
-  const logoutBtn = document.getElementById("logoutBtn");
-  logoutBtn?.addEventListener("click", (e) => {
-    e.preventDefault();
-    localStorage.clear();
-    window.location.href = "login.html";
-  });
-
-  const container = document.getElementById("favorite-properties");
-  container.innerHTML = "<p>Chargement...</p>";
+async function fetchFavorites(userId) {
+  const container = document.getElementById("favorite-container");
+  container.innerHTML = "";
 
   try {
     const res = await fetch(`http://127.0.0.1:5050/api/properties-available/favorites/${userId}`);
-    const properties = await res.json();
+    const favorites = await res.json();
 
-    if (!Array.isArray(properties) || properties.length === 0) {
+    if (!Array.isArray(favorites) || favorites.length === 0) {
       container.innerHTML = "<p>Aucun favori trouvé.</p>";
       return;
     }
 
-    container.innerHTML = "";
-
-    properties.forEach((prop) => {
+    favorites.forEach((prop) => {
       const card = document.createElement("div");
       card.classList.add("property-card");
       card.innerHTML = `
-        <img src="${prop.photo || "default.jpg"}" class="property-photo" />
+        <img src="${prop.photo || 'default.jpg'}" class="property-photo" />
         <div class="card-body">
           <h3>${prop.address}</h3>
-          <p>${prop.rooms} rooms - ${prop.price}₪</p>
+          <p>${prop.price}₪/Month</p>
+          <p>${prop.rooms} Rooms</p>
         </div>
       `;
+
       container.appendChild(card);
     });
-
   } catch (err) {
-    console.error("Erreur chargement favoris :", err);
-    container.innerHTML = "<p>Erreur serveur</p>";
+    console.error("❌ Erreur lors du chargement des favoris :", err);
+    container.innerHTML = "<p>Erreur lors du chargement.</p>";
   }
-});
+}
