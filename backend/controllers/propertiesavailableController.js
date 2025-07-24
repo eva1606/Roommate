@@ -74,3 +74,18 @@ exports.getFavoriteApartments = async (req, res) => {
     res.status(500).json({ error: "Erreur serveur" });
   }
 };
+exports.removeFromFavorites = async (req, res) => {
+  const { user_id, property_id } = req.body;
+
+  try {
+    await db.query(
+      'DELETE FROM favorite_apartments WHERE user_id = $1 AND property_id = $2',
+      [user_id, property_id]
+    );
+
+    res.status(200).json({ message: 'Retiré des favoris' });
+  } catch (err) {
+    console.error("❌ Erreur suppression favori :", err);
+    res.status(500).json({ error: 'Erreur serveur' });
+  }
+};
