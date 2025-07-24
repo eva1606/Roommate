@@ -6,6 +6,6 @@ router.get('/filtered/:id', controller.getFilteredApartments);
 router.post('/save/:id', controller.saveAvailableApartments);
 router.post('/favorites', controller.addToFavorites);
 router.post('/available/remove', controller.removeAvailableApartment);
-router.get('/favorites/:userId', controller.getFavorites);
+router.get('/favorites/:userId', controller.getFavoriteApartments);
 
 module.exports = router;
