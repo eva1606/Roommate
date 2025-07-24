@@ -88,14 +88,24 @@ closeFilter?.addEventListener('click', () => {
   filterOverlay?.classList.remove('show');
   filterOverlay?.classList.add('hidden');
 });
-
-// 🏠 Chargement des propriétés
+// 🏠 Chargement des propriétés filtrées par user connecté
 async function fetchProperties() {
+  const userId = localStorage.getItem("user_id");
+  if (!userId) {
+    alert("Vous devez être connecté");
+    return;
+  }
+
   try {
-    const res = await fetch('http://127.0.0.1:5050/api/properties');
+    const res = await fetch(`http://127.0.0.1:5050/api/properties-available/filtered/${userId}`);
     const properties = await res.json();
     const container = document.getElementById("apartment-available");
-    container.innerHTML = ''; // vide les anciennes cartes
+    container.innerHTML = ''; // Vide les anciennes cartes
+
+    if (!Array.isArray(properties) || properties.length === 0) {
+      container.innerHTML = "<p>No matching apartments found.</p>";
+      return;
+    }
 
     properties.forEach(prop => {
       const card = document.createElement("div");
@@ -191,3 +201,16 @@ async function fetchRoommates() {
     container.innerHTML = "<p>Erreur lors du chargement des colocataires.</p>";
   }
 }
+document.addEventListener("DOMContentLoaded", () => {
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  logoutBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    // Supprime les données de session/localStorage
+    localStorage.removeItem("user_id"); // ou localStorage.clear() si tu veux tout vider
+
+    // Redirige vers la page de login
+    window.location.href = "login.html";
+  });
+});
