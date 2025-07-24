@@ -4,7 +4,7 @@ const controller = require('../controllers/propertiesavailableController');
 
 router.get('/filtered/:id', controller.getFilteredApartments);
 router.post('/save/:id', controller.saveAvailableApartments);
-router.post('/favorites/add', controller.addToFavorites);
+router.post('/favorites', controller.addToFavorites);
 router.post('/available/remove', controller.removeAvailableApartment);
 
 module.exports = router;
