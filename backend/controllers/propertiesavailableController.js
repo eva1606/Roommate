@@ -80,3 +80,33 @@ exports.saveAvailableApartments = async (req, res) => {
     res.status(500).json({ error: "Erreur serveur." });
   }
 };
+// Ajoute à la table favorites
+exports.addToFavorites = async (req, res) => {
+  const { user_id, property_id } = req.body;
+
+  try {
+    await db.query(`
+      INSERT INTO favorites (user_id, property_id)
+      VALUES ($1, $2)
+      ON CONFLICT DO NOTHING
+    `, [user_id, property_id]);
+
+    res.status(200).json({ message: 'Ajouté aux favoris.' });
+  } catch (err) {
+    console.error('Erreur ajout favori:', err);
+    res.status(500).json({ error: 'Erreur serveur' });
+  }
+};
+
+// Supprime de apartment_valid
+exports.deleteValidApartment = async (req, res) => {
+  const propertyId = req.params.id;
+
+  try {
+    await db.query(`DELETE FROM apartment_valid WHERE property_id = $1`, [propertyId]);
+    res.status(200).json({ message: 'Appartement supprimé' });
+  } catch (err) {
+    console.error('Erreur suppression:', err);
+    res.status(500).json({ error: 'Erreur serveur' });
+  }
+};
