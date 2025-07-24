@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     form.querySelector('input[name="last_name"]').value = data.last_name || "";
     form.querySelector('input[name="email"]').value = data.email || "";
     form.querySelector('input[name="profession"]').value = data.profession || "";
+    form.querySelector('input[name="location"]').value = data.location || ""; // ✅ Chargement location
     form.querySelector('input[name="age"]').value = data.age || "";
     form.querySelector('input[name="budget"]').value = data.budget || "";
     form.querySelector('select[name="gender"]').value = data.gender || "";
@@ -26,7 +27,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     form.querySelector('select[name="smoke"]').value = String(data.smoke);
     form.querySelector('select[name="pets"]').value = String(data.pets);
 
-    // ✅ Afficher la photo s’il y en a une
     if (data.photo_url) {
       photoPreview.src = data.photo_url;
       photoPreview.style.display = "block";
@@ -37,7 +37,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     alert("Impossible de charger le profil.");
   }
 
-  // ✅ Afficher la nouvelle photo sélectionnée en preview
   photoInput.addEventListener("change", (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -46,11 +45,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // ✅ Soumission du formulaire
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const formData = new FormData(form);
+    // ✅ Location est incluse automatiquement via le champ "name=location"
 
     try {
       const updateRes = await fetch(`http://127.0.0.1:5050/api/profil_users/${userId}`, {
