@@ -4,7 +4,6 @@ exports.getFilteredApartments = async (req, res) => {
   const userId = req.params.id;
 
   try {
-    // Récupère le budget et la location de l'utilisateur
     const userResult = await db.query(`
       SELECT budget, location
       FROM profil_users
@@ -21,14 +20,18 @@ exports.getFilteredApartments = async (req, res) => {
       return res.status(400).json({ error: 'Budget ou location manquant dans le profil utilisateur' });
     }
 
-    // Requête pour trouver les appartements disponibles correspondants
+    const budgetInt = Math.round(Number(budget));
+    const minBudget = budgetInt - 1000;
+    const maxBudget = budgetInt + 1000;
+
+    // 🎯 Ici, on filtre les adresses qui contiennent la ville (ex: "Tel Aviv") peu importe l'ordre ou la casse
     const propertiesResult = await db.query(`
       SELECT *
       FROM properties
       WHERE status = 'available'
         AND price BETWEEN $1 AND $2
-        AND LOWER(address) LIKE LOWER('%' || $3 || '%')
-    `, [budget - 1000, budget + 1000, location]);
+        AND LOWER(address) LIKE '%' || LOWER($3) || '%'
+    `, [minBudget, maxBudget, location]);
 
     res.json(propertiesResult.rows);
   } catch (error) {
