@@ -8,5 +8,4 @@ router.post('/favorites', controller.addToFavorites);
 router.post('/available/remove', controller.removeAvailableApartment);
 router.get('/favorites/:userId', controller.getFavorites);
 
-
 module.exports = router;
