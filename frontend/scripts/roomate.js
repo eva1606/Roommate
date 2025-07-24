@@ -88,7 +88,6 @@ closeFilter?.addEventListener('click', () => {
   filterOverlay?.classList.remove('show');
   filterOverlay?.classList.add('hidden');
 });
-// 🏠 Chargement des propriétés filtrées par user connecté
 async function fetchProperties() {
   const userId = localStorage.getItem("user_id");
   if (!userId) {
@@ -100,13 +99,22 @@ async function fetchProperties() {
     const res = await fetch(`http://127.0.0.1:5050/api/properties-available/filtered/${userId}`);
     const properties = await res.json();
     const container = document.getElementById("apartment-available");
-    container.innerHTML = ''; // Vide les anciennes cartes
+    container.innerHTML = '';
 
     if (!Array.isArray(properties) || properties.length === 0) {
       container.innerHTML = "<p>No matching apartments found.</p>";
       return;
     }
 
+    // 👇 Enregistre en BDD les propriétés affichées
+    const propertyIds = properties.map(p => p.id);
+    await fetch(`http://127.0.0.1:5050/api/properties-available/save/${userId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ properties: propertyIds })
+    });
+
+    // 👇 Affichage des cartes
     properties.forEach(prop => {
       const card = document.createElement("div");
       card.classList.add("property-card");
@@ -128,7 +136,6 @@ async function fetchProperties() {
     console.error("❌ Failed to fetch properties:", err);
   }
 }
-
 // 🔁 Mise à jour régulière
 document.addEventListener("DOMContentLoaded", () => {
   fetchProperties();
