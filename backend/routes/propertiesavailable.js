@@ -6,5 +6,6 @@ const controller = require('../controllers/propertiesavailableController');
 router.get('/filtered/:userId', controller.getFilteredApartments);
 router.post('/favorites', controller.addToFavorites);
 router.get('/favorites/:userId', controller.getFavoriteApartments);
+router.delete('/favorites/remove', propertiesAvailableController.removeFromFavorites);
 
 module.exports = router;
