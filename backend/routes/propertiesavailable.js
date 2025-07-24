@@ -4,5 +4,7 @@ const controller = require('../controllers/propertiesavailableController');
 
 // Route pour récupérer les propriétés filtrées selon le profil utilisateur
 router.get('/filtered/:userId', controller.getFilteredApartments);
+router.post('/favorites', controller.addToFavorites);
+router.get('/favorites/:userId', controller.getFavoriteApartments);
 
 module.exports = router;
