@@ -80,33 +80,46 @@ exports.saveAvailableApartments = async (req, res) => {
     res.status(500).json({ error: "Erreur serveur." });
   }
 };
-// Ajoute à la table favorites
+/// ✅ Ajoute une propriété aux favoris
 exports.addToFavorites = async (req, res) => {
   const { user_id, property_id } = req.body;
 
+  if (!user_id || !property_id) {
+    return res.status(400).json({ error: 'user_id et property_id requis' });
+  }
+
   try {
     await db.query(`
-      INSERT INTO favorites (user_id, property_id)
-      VALUES ($1, $2)
-      ON CONFLICT DO NOTHING
+      INSERT INTO favorite_apartments (user_id, property_id)
+      SELECT $1, $2
+      WHERE NOT EXISTS (
+        SELECT 1 FROM favorite_apartments WHERE user_id = $1 AND property_id = $2
+      )
     `, [user_id, property_id]);
 
     res.status(200).json({ message: 'Ajouté aux favoris.' });
   } catch (err) {
-    console.error('Erreur ajout favori:', err);
-    res.status(500).json({ error: 'Erreur serveur' });
+    console.error('❌ Erreur ajout favori :', err);
+    res.status(500).json({ error: 'Erreur serveur.' });
   }
 };
+// ✅ Supprime une propriété disponible pour un utilisateur donné
+exports.removeAvailableApartment = async (req, res) => {
+  const { user_id, property_id } = req.body;
 
-// Supprime de apartment_valid
-exports.deleteValidApartment = async (req, res) => {
-  const propertyId = req.params.id;
+  if (!user_id || !property_id) {
+    return res.status(400).json({ error: 'user_id et property_id requis' });
+  }
 
   try {
-    await db.query(`DELETE FROM apartment_valid WHERE property_id = $1`, [propertyId]);
-    res.status(200).json({ message: 'Appartement supprimé' });
+    await db.query(`
+      DELETE FROM available_apartment
+      WHERE user_id = $1 AND property_id = $2
+    `, [user_id, property_id]);
+
+    res.status(200).json({ message: 'Appartement retiré des disponibles.' });
   } catch (err) {
-    console.error('Erreur suppression:', err);
-    res.status(500).json({ error: 'Erreur serveur' });
+    console.error('❌ Erreur suppression available_apartment :', err);
+    res.status(500).json({ error: 'Erreur serveur.' });
   }
 };
