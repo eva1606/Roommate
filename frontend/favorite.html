@@ -21,41 +21,34 @@
 
   <!-- OVERLAY MENU -->
   <section id="menuOverlay" class="menu-overlay hidden">
-    
-    <!-- BOUTON FERMETURE + ICÔNE -->
     <button id="closeMenu" class="close-btn" aria-label="Close menu">
       <img src="icons/close.svg" alt="Close icon"/>
     </button>
-
     <nav class="menu-list">
-        <ul>
-          <li>
-            <a href="profil.html"><img src="icons/users.svg" class="icon" /> <span>Profile</span></a>
-          </li>
-          <li>
-            <a href="favorite.html"><img src="icons/heart.svg" class="icon" /> <span>My Matches</span></a>
-          </li>
-          <li>
-            <a href="Setting.html"><img src="icons/settings.svg" class="icon" /> <span>Settings</span></a>
-          </li>
-        </ul>
-      </nav>
-      
-
-      <a href="#" id="logoutBtn" class="signout">
+      <ul>
+        <li>
+          <a href="profil.html"><img src="icons/users.svg" class="icon" /> <span>Profile</span></a>
+        </li>
+        <li>
+          <a href="favorite.html"><img src="icons/heart.svg" class="icon" /> <span>My Matches</span></a>
+        </li>
+        <li>
+          <a href="Setting.html"><img src="icons/settings.svg" class="icon" /> <span>Settings</span></a>
+        </li>
+      </ul>
+    </nav>
+    <a href="#" id="logoutBtn" class="signout">
       <img src="icons/logout.svg" class="menu-icon" /><span>Sign Out</span>
     </a>
   </section> 
 
-  <body>
-    <main>
-      <h1>My favorites</h1>
-      <div id="favorite-container" class="property-list"></div>
-    </main>
-  
-    <script src="scripts/favorite.js"></script>
-  </body>
-  
+  <!-- ✅ Partie principale -->
+  <main>
+    <h1>My favorites</h1>
+    <div id="favorite-container" class="property-list"></div>
+  </main>
+
+  <!-- ✅ Footer -->
   <footer class="footer-nav">
     <a href="#" class="nav-item">
       <img src="icons/home.svg" alt="Home icon" />
@@ -75,6 +68,7 @@
     </a>
   </footer>
 
+  <!-- ✅ Script -->
   <script src="scripts/favorites.js"></script>
 </body>
 </html>
