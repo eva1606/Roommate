@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const { getFilteredApartments, saveAvailableApartments } = require('../controllers/propertiesavailableController');
 
-const { getFilteredApartments } = require('../controllers/propertiesavailableController');
-
-// Route pour récupérer les appartements filtrés selon le profil utilisateur
 router.get('/filtered/:id', getFilteredApartments);
+router.put('/save/:id', saveAvailableApartments); // 👈 Nouvelle route PUT
 
 module.exports = router;
