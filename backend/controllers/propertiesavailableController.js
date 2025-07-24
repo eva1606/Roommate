@@ -24,7 +24,7 @@ exports.getFilteredApartments = async (req, res) => {
     const minBudget = budgetInt - 1000;
     const maxBudget = budgetInt + 1000;
 
-    // 🎯 Ici, on filtre les adresses qui contiennent la ville (ex: "Tel Aviv") peu importe l'ordre ou la casse
+    // 🔎 Rechercher les propriétés compatibles
     const propertiesResult = await db.query(`
       SELECT *
       FROM properties
@@ -33,7 +33,20 @@ exports.getFilteredApartments = async (req, res) => {
         AND LOWER(address) LIKE '%' || LOWER($3) || '%'
     `, [minBudget, maxBudget, location]);
 
-    res.json(propertiesResult.rows);
+    const properties = propertiesResult.rows;
+
+    // 💾 Enregistrement dans available_apartment s'ils ne sont pas déjà liés à cet user
+    for (const prop of properties) {
+      await db.query(`
+        INSERT INTO available_apartment (user_id, property_id)
+        SELECT $1, $2
+        WHERE NOT EXISTS (
+          SELECT 1 FROM available_apartment WHERE user_id = $1 AND property_id = $2
+        )
+      `, [userId, prop.id]);
+    }
+
+    res.json(properties);
   } catch (error) {
     console.error('❌ Erreur getFilteredApartments :', error);
     res.status(500).json({ error: 'Erreur serveur' });
