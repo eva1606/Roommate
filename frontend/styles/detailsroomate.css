@@ -1,130 +1,170 @@
-/* Reset & Global Styles */
+/* styles/detailsroomate.css */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #fff;
-    color: #333;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f7fa;
+  color: #333;
+  line-height: 1.6;
+  padding-bottom: 80px;
+}
+
+header .top-bar {
+  background-color: #4a90e2;
+  padding: 1rem;
+  text-align: left;
+}
+
+.btn-back {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+main {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+}
+
+.property-header {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+.main-photo {
+  width: 100%;
+  max-height: 350px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.details {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  color: #555;
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin-bottom: 2rem;
+}
+
+.features span {
+  background-color: #eef2f7;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 2rem;
+}
+
+.gallery img {
+  width: calc(33.33% - 10px);
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+#map {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ddd;
+}
+
+#mapBtn,
+#contactOwnerBtn,
+.find-roommate-btn {
+  display: block;
+  width: 100%;
+  padding: 0.9rem;
+  margin: 0.8rem 0;
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#mapBtn:hover,
+#contactOwnerBtn:hover,
+.find-roommate-btn:hover {
+  background-color: #357ac8;
+}
+
+#ownerContactInfo {
+  padding: 1rem;
+  background-color: #eef6ff;
+  border: 1px solid #cce4ff;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Footer */
+.footer-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #ffffff;
+  border-top: 1px solid #ccc;
+  display: flex;
+  justify-content: space-around;
+  padding: 0.6rem 0;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.footer-nav .nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #4a4a4a;
+  text-decoration: none;
+  font-size: 0.8rem;
+}
+
+.footer-nav .nav-item img {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  main {
+    margin: 1rem;
+    padding: 1rem;
   }
-  
-  h1, h2, h3 {
-    margin: 0 0 10px;
+
+  .gallery img {
+    width: calc(50% - 10px);
   }
-  
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  /* Header */
-  .top-bar {
-    background-color: #fff;
-    display: flex;
-    align-items: center;
-    padding: 15px;
-  }
-  
-  .top-bar .btn-back {
-    font-size: 1.2em;
-    color: #007bff;
-    margin-right: auto;
-  }
-  
-  .top-bar h1 {
-    font-size: 1.5em;
-    font-weight: bold;
-    text-align: center;
-    flex-grow: 1;
-  }
-  
-  /* Property Section */
-  #property-details {
-    padding: 20px;
-  }
-  
+
   .property-header {
-    font-size: 1.8em;
-    font-weight: bold;
-    margin-bottom: 10px;
+    font-size: 1.4rem;
   }
-  
-  .main-photo {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    object-fit: cover;
-    margin-bottom: 15px;
-  }
-  
-  .details p,
-  .features p {
-    margin: 5px 0;
-    font-size: 1em;
-    line-height: 1.4;
-  }
-  
-  /* Gallery */
-  .gallery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .gallery-photo {
-    width: calc(33.33% - 10px);
-    height: 100px;
-    object-fit: cover;
-    border-radius: 8px;
-  }
-  
-  /* Buttons */
-  .contact-owner,
-  .find-roommate-btn {
-    display: block;
-    width: 100%;
-    margin: 10px 0;
-    padding: 12px;
-    font-size: 1.1em;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background-color: #0047ff;
-    color: #fff;
-    text-align: center;
-    transition: background-color 0.3s ease;
-  }
-  
-  .contact-owner:hover,
-  .find-roommate-btn:hover {
-    background-color: #0033cc;
-  }
-  
-  /* Footer */
-  .footer-nav {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px 0;
-    background-color: #f1f1f1;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    border-top: 1px solid #ccc;
-  }
-  
-  .footer-nav .nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: #0047ff;
-    font-size: 0.8em;
-  }
-  
-  .footer-nav .nav-item img {
-    width: 20px;
-    height: 20px;
-    margin-bottom: 3px;
-  }
-  
+}
