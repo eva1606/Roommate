@@ -1,54 +1,233 @@
-/* Section de favoris */
-#favorite-properties {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-    padding: 20px;
-  }
-  
-  /* Carte favorite */
-  .property-card {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-  }
-  
-  .property-card:hover {
-    transform: scale(1.02);
-  }
-  
-  /* Image dans la carte */
+* {
+  margin: 0;
+  padding: 0;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: -17px;
+}
+nav, main, aside, section, article, footer, div  {
+  display: block;
+}
+
+/* Reset */
+body, h1, h2, h3, p, ul {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background-color: #f7f9fc;
+  color: #333;
+}
+#wrapper {
+  margin: 0px 125px;
+}
+a {
+  text-decoration: none;
+}
+
+#logo {
+  background-image: url("../images/logo.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: flex;
+  align-items: center;
+  width: 97px;
+  height: 97px;
+  flex-shrink: 0;
+}
+#logo span {
+  padding-left: 70px; 
+  color: #004AAD;
+  font-family: Roboto;
+  font-size: 32px;
+  font-weight: 600;
+  margin-top:10px;
+}
+.hamburger {
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  background: none;
+}
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;         /* Ajustable : 80% ou 100% */
+  height: 100vh;
+  background-color: white;
+  z-index: 999;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  transition: transform 0.3s ease;
+}
+
+.menu-overlay.hidden {
+  display: none;
+}
+
+.menu-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 74px; /* Espace entre les items */
+  margin-top: 100px;
+}
+
+.menu-list li a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  font-size: 24px;
+  color: #004AAD;
+  font-weight: 600;
+}
+.icon {
+  width: 24px;
+  height: 24px;
+}  
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 60px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 33px;
+  height: 60px;
+}
+.signout {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: 600;
+  color: #004AAD;
+  margin-top: 390px;
+}
+.footer-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #f8fbff;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+  z-index: 99;
+  height: 78px;
+}
+
+.footer-nav .nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #004aad;
+  font-family: Roboto, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer-nav .nav-item img {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px;
+}
+
+main {
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Section d'appartements */
+.property-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Carte propriété */
+.property-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.property-card:hover {
+  transform: translateY(-4px);
+}
+
+.property-photo {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.card-body h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.card-body p {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.property-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 0.5rem;
+}
+
+.icon-fav {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.icon-fav:hover {
+  transform: scale(1.1);
+}
+
+/* ❤️ Style cœur rempli */
+.icon-fav.filled path {
+  fill: #e74c3c;
+  stroke: #e74c3c;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
   .property-photo {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
+    height: 150px;
   }
-  
-  /* Corps de la carte */
-  .card-body {
-    padding: 15px;
-  }
-  
-  .card-body h3 {
-    font-size: 1.2rem;
-    margin-bottom: 8px;
-    color: #333;
-  }
-  
-  .card-body p {
-    font-size: 0.95rem;
-    margin: 5px 0;
-    color: #666;
-  }
-  
-  /* Message vide */
-  #favorite-properties p {
-    text-align: center;
-    font-size: 1rem;
-    color: #999;
-    margin-top: 30px;
-  }
-  
+}
