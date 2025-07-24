@@ -1,11 +1,10 @@
 const db = require('../db');
 
-// ✅ 1. Obtenir les propriétés filtrées pour un utilisateur
 exports.getFilteredApartments = async (req, res) => {
   const userId = req.params.userId;
 
   try {
-    // On récupère les préférences de l'utilisateur
+    // On récupère les préférences de l'utilisateur dans la bonne table
     const user = await db.query(
       'SELECT budget, location FROM profil_users WHERE id = $1',
       [userId]
@@ -16,10 +15,10 @@ exports.getFilteredApartments = async (req, res) => {
     }
 
     const { budget, location } = user.rows[0];
-    const minBudget = budget - 1000;
-    const maxBudget = budget + 1000;
+    const minBudget = parseFloat(budget) - 1000;
+    const maxBudget = parseFloat(budget) + 1000;
 
-    // On récupère les propriétés disponibles + si elles sont déjà en favoris
+    // On récupère les propriétés disponibles, on compare price (int) vs budget (numeric)
     const propertiesResult = await db.query(
       `
       SELECT p.*,
@@ -30,7 +29,7 @@ exports.getFilteredApartments = async (req, res) => {
       FROM properties p
       WHERE p.status = 'available'
         AND p.price BETWEEN $1 AND $2
-        AND LOWER(p.address) LIKE '%' || LOWER($3) || '%'
+        AND LOWER(p.adress) LIKE '%' || LOWER($3) || '%'
       ORDER BY p.created_at DESC
       `,
       [minBudget, maxBudget, location, userId]
