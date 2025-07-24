@@ -1,0 +1,54 @@
+/* Section de favoris */
+#favorite-properties {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  /* Carte favorite */
+  .property-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .property-card:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Image dans la carte */
+  .property-photo {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  
+  /* Corps de la carte */
+  .card-body {
+    padding: 15px;
+  }
+  
+  .card-body h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: #333;
+  }
+  
+  .card-body p {
+    font-size: 0.95rem;
+    margin: 5px 0;
+    color: #666;
+  }
+  
+  /* Message vide */
+  #favorite-properties p {
+    text-align: center;
+    font-size: 1rem;
+    color: #999;
+    margin-top: 30px;
+  }
+  
