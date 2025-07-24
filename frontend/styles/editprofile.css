@@ -1,6 +1,4 @@
-/* ======================
-   RESET + BASE
-====================== */
+/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -9,119 +7,124 @@
 
 body {
   font-family: 'Segoe UI', sans-serif;
-  background-color: #f8f8f8;
+  background-color: #f4f6f8;
   color: #333;
-  padding-bottom: 80px; /* Espace pour le footer */
+  line-height: 1.6;
+  padding-bottom: 80px; /* Footer space */
 }
 
-/* ======================
-   HEADER BAR
-====================== */
+/* Header */
 .header-bar {
-  background-color: #4a90e2;
+  background-color: #0056b3;
   color: white;
-  padding: 1rem;
+  padding: 1.2rem 1.5rem;
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
 .header-bar h2 {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
+  font-weight: bold;
 }
 
 .btn-back {
   color: white;
   text-decoration: none;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
-/* ======================
-   FORMULAIRE
-====================== */
+/* Form */
+main {
+  padding: 2rem 1rem;
+}
+
 .edit-form {
-  max-width: 500px;
-  margin: 2rem auto;
+  max-width: 600px;
+  margin: 0 auto;
   background-color: white;
   padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .edit-form label {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1.2rem;
+  display: block;
+  margin-bottom: 1.5rem;
   font-weight: 500;
+  color: #222;
 }
 
 .edit-form input,
 .edit-form select {
+  width: 100%;
   margin-top: 0.5rem;
-  padding: 0.7rem;
+  padding: 0.75rem;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: #fafafa;
+  transition: border-color 0.3s;
 }
 
 .edit-form input:focus,
 .edit-form select:focus {
-  border-color: #4a90e2;
+  border-color: #007bff;
+  background-color: #fff;
   outline: none;
-  background-color: white;
 }
 
+/* Profile Photo Preview */
+#photo-preview {
+  display: block;
+  margin: 1rem auto 1.5rem auto;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #007bff;
+}
+
+/* Save button */
 .save-btn {
-  margin-top: 1rem;
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  background-color: #4a90e2;
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1.1rem;
+  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
 .save-btn:hover {
-  background-color: #357ac8;
+  background-color: #0056b3;
 }
 
-/* ======================
-   PHOTO DE PROFIL (si ajoutée)
-====================== */
-.profile-photo-preview {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 2px solid #4a90e2;
-  margin-bottom: 1rem;
-}
-
-/* ======================
-   FOOTER NAV
-====================== */
 .footer-nav {
   position: fixed;
   bottom: 0;
   width: 100%;
-  background-color: #ffffff;
-  border-top: 1px solid #ccc;
+  background-color: #f8fbff;
   display: flex;
   justify-content: space-around;
-  padding: 0.6rem 0;
-  box-shadow: 0 -2px 4px rgba(0,0,0,0.05);
+  align-items: center;
+  padding: 10px 0;
+  z-index: 99;
+  height: 78px;
 }
 
 .footer-nav .nav-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #4a4a4a;
+  color: #004aad;
+  font-family: Roboto, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
   text-decoration: none;
-  font-size: 0.8rem;
 }
 
 .footer-nav .nav-item img {
@@ -130,20 +133,35 @@ body {
   margin-bottom: 4px;
 }
 
-/* ======================
-   RESPONSIVE
-====================== */
+/* Responsive */
 @media (max-width: 600px) {
   .edit-form {
-    margin: 1rem;
     padding: 1.5rem;
+    margin: 1rem;
   }
 
   .header-bar h2 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
 
   .btn-back {
     font-size: 1rem;
   }
+}
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group.center {
+  text-align: center;
+}
+
+#photo-preview {
+  display: block;
+  margin: 1rem auto 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #007bff;
 }
