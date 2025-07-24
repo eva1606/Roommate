@@ -114,24 +114,65 @@ async function fetchProperties() {
       body: JSON.stringify({ properties: propertyIds })
     });
 
-    // 👇 Affichage des cartes
     properties.forEach(prop => {
       const card = document.createElement("div");
       card.classList.add("property-card");
       card.setAttribute('data-search', `${prop.address} ${prop.rooms} ${prop.price}`.toLowerCase());
+    
       card.innerHTML = `
         <img src="${prop.photo}" class="property-photo" />
         <div class="card-body">
           <h3>${prop.address}</h3>
           <p>${prop.rooms} rooms - ${prop.price} sh</p>
           <p>Status: ${prop.status}</p>
+          <div class="card-actions">
+            <img src="icons/heart.svg" class="action-icon save-icon" title="Ajouter aux favoris" data-id="${prop.id}" />
+            <img src="icons/trash.svg" class="action-icon delete-icon" title="Supprimer" data-id="${prop.id}" />
+          </div>
         </div>
       `;
-      card.addEventListener("click", () => {
+    
+      // 👉 Lien vers détails
+      card.addEventListener("click", (e) => {
+        // Empêche le click si on clique sur les icônes
+        if (e.target.classList.contains("save-icon") || e.target.classList.contains("delete-icon")) return;
         window.location.href = `proprietyroomate.html?id=${prop.id}`;
       });
+    
+      // ❤️ Ajout aux favoris
+      const saveIcon = card.querySelector('.save-icon');
+      saveIcon.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const propertyId = e.target.dataset.id;
+        try {
+          await fetch(`http://127.0.0.1:5050/api/properties/favorites`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: userId, property_id: propertyId })
+          });
+          alert("Propriété ajoutée à vos favoris !");
+        } catch (err) {
+          console.error("Erreur ajout favoris:", err);
+        }
+      });
+    
+      // 🗑️ Suppression
+      const deleteIcon = card.querySelector('.delete-icon');
+      deleteIcon.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const propertyId = e.target.dataset.id;
+        try {
+          await fetch(`http://127.0.0.1:5050/api/properties/apartment-valid/${propertyId}`, {
+            method: 'DELETE'
+          });
+          card.remove(); // Supprime la carte du DOM
+        } catch (err) {
+          console.error("Erreur suppression propriété:", err);
+        }
+      });
+    
       container.appendChild(card);
-    });
+    });    
   } catch (err) {
     console.error("❌ Failed to fetch properties:", err);
   }
