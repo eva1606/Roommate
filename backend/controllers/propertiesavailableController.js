@@ -6,7 +6,7 @@ exports.getFilteredApartments = async (req, res) => {
   try {
     // On récupère les préférences de l'utilisateur dans la bonne table
     const user = await db.query(
-      'SELECT budget, location FROM profil_users WHERE id = $1',
+      'SELECT budget, location FROM profil_users WHERE user_id = $1',
       [userId]
     );
 
