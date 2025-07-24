@@ -52,3 +52,31 @@ exports.getFilteredApartments = async (req, res) => {
     res.status(500).json({ error: 'Erreur serveur' });
   }
 };
+exports.saveAvailableApartments = async (req, res) => {
+  const userId = req.params.id;
+  const properties = req.body.properties; // tableau d'IDs
+
+  if (!Array.isArray(properties) || properties.length === 0) {
+    return res.status(400).json({ error: "Liste des propriétés vide ou invalide." });
+  }
+
+  try {
+    for (const propertyId of properties) {
+      await db.query(
+        `
+        INSERT INTO available_apartment (user_id, property_id)
+        SELECT $1, $2
+        WHERE NOT EXISTS (
+          SELECT 1 FROM available_apartment WHERE user_id = $1 AND property_id = $2
+        )
+        `,
+        [userId, propertyId]
+      );
+    }
+
+    res.status(200).json({ message: "Appartements enregistrés avec succès." });
+  } catch (err) {
+    console.error("❌ Erreur saveAvailableApartments :", err);
+    res.status(500).json({ error: "Erreur serveur." });
+  }
+};
