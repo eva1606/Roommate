@@ -1,5 +1,31 @@
 document.addEventListener("DOMContentLoaded", () => {
   const userId = localStorage.getItem("user_id");
+  const role = localStorage.getItem("role");
+
+  if (!userId || role !== "roommate") {
+    alert("Accès non autorisé. Veuillez vous reconnecter.");
+    window.location.href = "login.html";
+    return;
+  }
+
+  // Menu burger
+  document.getElementById("hamburgerBtn")?.addEventListener("click", () => {
+    document.getElementById("menuOverlay").classList.remove("hidden");
+  });
+  document.getElementById("closeMenu")?.addEventListener("click", () => {
+    document.getElementById("menuOverlay").classList.add("hidden");
+  });
+  
+  // Logout
+  document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.clear();
+    window.location.href = "login.html";
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const userId = localStorage.getItem("user_id");
   if (!userId) {
     alert("Utilisateur non connecté.");
     window.location.href = "login.html";
