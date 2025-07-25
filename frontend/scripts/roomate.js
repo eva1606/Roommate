@@ -51,6 +51,13 @@ async function fetchProperties() {
       container.innerHTML = "<p>Aucun appartement disponible trouvé.</p>";
       return;
     }
+    const propertyIds = properties.map(p => p.id);
+    await fetch(`http://127.0.0.1:5050/api/properties-available/save/${userId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ properties: propertyIds }),
+    });
+
     properties.forEach((prop, index) => {
       const card = document.createElement("div");
       card.classList.add("property-card");
@@ -77,6 +84,13 @@ async function fetchProperties() {
             fill="${isFavorited ? "#2e86de" : "#B7B7B7"}"/>
           </svg>
           </button>
+          <button class="svg-action-btn trash-btn" data-id="${prop.id}" title="Supprimer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
+            <path d="M9 0L7.5 1.2H0V3.6H4.5H19.5H24V1.2H16.5L15 0H9ZM1.5 6V21.6C1.5 22.92 2.85 24 4.5 24H19.5C21.15 24 22.5 22.92 22.5 21.6V6H1.5Z"
+              fill="#0021F5"/>
+          </svg>
+        </button>
+        </div>
         </div>
       `;
       
@@ -85,6 +99,7 @@ async function fetchProperties() {
       });
     
       container.appendChild(card);
+
       card.querySelector(".svg-action-btn").addEventListener("click", async (e) => {
         e.stopPropagation(); // Empêche d’ouvrir la page de détails
         const svgPath = e.currentTarget.querySelector("path");
@@ -112,10 +127,27 @@ async function fetchProperties() {
         } catch (err) {
           console.error("❌ Erreur lors du changement de favoris :", err);
         }
-      });      
+      }); 
+      card.querySelector(".trash-btn").addEventListener("click", async (e) => {
+        e.stopPropagation();
+        const propertyId = prop.id;
+
+        try {
+          await fetch(`http://127.0.0.1:5050/api/properties-available/available/remove`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_id: userId, property_id: propertyId }),
+          });
+
+          card.remove(); // supprime du DOM
+        } catch (err) {
+          console.error("❌ Erreur suppression propriété :", err);
+        }
+      });
     });
 
-  } catch (err) {
+  }    
+     catch (err) {
     console.error("❌ Erreur lors du chargement des propriétés :", err);
     container.innerHTML = "<p>Erreur lors du chargement des appartements.</p>";
   }
