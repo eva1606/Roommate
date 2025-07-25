@@ -51,13 +51,7 @@ async function fetchProperties() {
       container.innerHTML = "<p>Aucun appartement disponible trouvé.</p>";
       return;
     }
-    const propertyIds = properties.map(p => p.id);
-    await fetch(`http://127.0.0.1:5050/api/properties-available/save/${userId}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ properties: propertyIds }),
-    });
-
+    
     properties.forEach((prop, index) => {
       const card = document.createElement("div");
       card.classList.add("property-card");
@@ -133,11 +127,11 @@ async function fetchProperties() {
         const propertyId = prop.id;
 
         try {
-          await fetch(`http://127.0.0.1:5050/api/properties-available/available/remove`, {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ user_id: userId, property_id: propertyId }),
-          });
+          await fetch(`http://127.0.0.1:5050/api/properties-available/hidden`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ user_id: userId, property_id: propertyId }),
+});
 
           card.remove(); // supprime du DOM
         } catch (err) {
@@ -167,7 +161,40 @@ async function fetchProperties() {
       setTimeout(() => toast.remove(), 500);
     }, 2500);
   }
-  
+  // ✅ Affiche les colocataires compatibles avec l'utilisateur connecté
+async function fetchRoommates() {
+  const userId = localStorage.getItem("user_id");
+  const container = document.getElementById("roommates-section");
+  container.innerHTML = "";
+
+  try {
+    const res = await fetch(`http://127.0.0.1:5050/api/potential-roommates/${userId}`);
+    const roommates = await res.json();
+
+    if (!Array.isArray(roommates) || roommates.length === 0) {
+      container.innerHTML = "<p>Aucun colocataire potentiel trouvé.</p>";
+      return;
+    }
+
+    roommates.forEach((user) => {
+      const card = document.createElement("div");
+      card.className = "roommate-card";
+      card.innerHTML = `
+        <img src="${user.photo_url || 'default-profile.jpg'}" class="roommate-photo" />
+        <div class="roommate-info">
+          <h3>${user.first_name} ${user.last_name}</h3>
+          <p>Budget : ${user.budget}₪</p>
+          <p>Lieu : ${user.location}</p>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  } catch (err) {
+    console.error("❌ Erreur chargement colocataires :", err);
+    container.innerHTML = "<p>Erreur lors du chargement.</p>";
+  }
+}
+
   // Gestion des onglets (apartments / roommates)
 const tabApartments = document.getElementById("tab-apartments");
 const tabRoommates = document.getElementById("tab-roommates");
