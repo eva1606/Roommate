@@ -38,6 +38,15 @@ const addProperty = async (req, res) => {
     const newPropertyId = result.rows[0].id;
     
     const { roommates } = req.body;
+    
+    if (status === 'available') {
+      await pool.query(
+        `INSERT INTO available_apartment (property_id) 
+         VALUES ($1) 
+         ON CONFLICT DO NOTHING`,
+        [newPropertyId]
+      );
+    }
 
 if (status === 'rented' && Array.isArray(roommates)) {
   for (const phone of roommates) {
