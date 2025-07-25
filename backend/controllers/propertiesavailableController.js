@@ -4,19 +4,26 @@ exports.getFilteredApartments = async (req, res) => {
   const userId = req.params.userId;
 
   try {
-    const result = await db.query( // 👈 ici tu gardes db pour rester cohérent
+    const result = await db.query(
       `
-      SELECT p.*,
-      EXISTS (
-        SELECT 1 FROM favorite_apartments f
-        WHERE f.user_id = $1 AND f.property_id = p.id
-      ) AS is_favorited
-    FROM properties p
-    JOIN profil_users pu ON pu.user_id = $1
-    WHERE p.status = 'available'
-      AND p.price BETWEEN (pu.budget - 1000) AND (pu.budget + 1000)
-      AND LOWER(p.address) LIKE '%' || LOWER(pu.location) || '%'
-    ORDER BY p.created_at DESC    
+      SELECT 
+        p.*,
+        EXISTS (
+          SELECT 1 FROM favorite_apartments f
+          WHERE f.user_id = $1 AND f.property_id = p.id
+        ) AS is_favorited
+      FROM 
+        properties p
+      JOIN 
+        available_apartment a ON a.property_id = p.id
+      JOIN 
+        profil_users pu ON pu.user_id = $1
+      WHERE 
+        p.status = 'available'
+        AND p.price BETWEEN (pu.budget - 1000) AND (pu.budget + 1000)
+        AND LOWER(p.address) LIKE '%' || LOWER(pu.location) || '%'
+      ORDER BY 
+        p.created_at DESC
       `,
       [userId]
     );
@@ -27,6 +34,7 @@ exports.getFilteredApartments = async (req, res) => {
     res.status(500).json({ error: 'Erreur serveur' });
   }
 };
+;
 exports.addToFavorites = async (req, res) => {
   const { user_id, property_id } = req.body;
 
