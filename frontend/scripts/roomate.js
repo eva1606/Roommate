@@ -134,7 +134,7 @@ async function fetchProperties() {
 
         try {
           await fetch(`http://127.0.0.1:5050/api/properties-available/available/remove`, {
-            method: "POST",
+            method: "DELETE",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ user_id: userId, property_id: propertyId }),
           });
