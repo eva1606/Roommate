@@ -36,6 +36,16 @@ const addProperty = async (req, res) => {
     );
 
     const newPropertyId = result.rows[0].id;
+    
+      // ✅ 2. Ajout automatique dans available_apartment si "available"
+      if (status === 'available') {
+        await pool.query(
+          `INSERT INTO available_apartment (property_id) 
+           VALUES ($1) 
+           ON CONFLICT DO NOTHING`,
+          [newPropertyId]
+        );
+      }
 
     const { roommates } = req.body;
 
