@@ -89,3 +89,48 @@ exports.removeFromFavorites = async (req, res) => {
     res.status(500).json({ error: 'Erreur serveur' });
   }
 };
+exports.saveAvailableApartments = async (req, res) => {
+  const userId = req.params.id;
+  const { properties } = req.body; // tableau d'ID
+
+  if (!userId || !Array.isArray(properties)) {
+    return res.status(400).json({ error: "userId et tableau de propriétés requis" });
+  }
+
+  try {
+    for (const propertyId of properties) {
+      await db.query(
+        `INSERT INTO available_apartment (user_id, property_id)
+         SELECT $1, $2
+         WHERE NOT EXISTS (
+           SELECT 1 FROM available_apartment WHERE user_id = $1 AND property_id = $2
+         )`,
+        [userId, propertyId]
+      );
+    }
+
+    res.status(200).json({ message: "Propriétés enregistrées" });
+  } catch (err) {
+    console.error("❌ Erreur sauvegarde available_apartment :", err);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+};
+exports.removeAvailableApartment = async (req, res) => {
+  const { user_id, property_id } = req.body;
+
+  if (!user_id || !property_id) {
+    return res.status(400).json({ error: "user_id et property_id requis" });
+  }
+
+  try {
+    await db.query(
+      `DELETE FROM available_apartment WHERE user_id = $1 AND property_id = $2`,
+      [user_id, property_id]
+    );
+
+    res.status(200).json({ message: "Appartement retiré des disponibles." });
+  } catch (err) {
+    console.error("❌ Erreur suppression available_apartment :", err);
+    res.status(500).json({ error: "Erreur serveur." });
+  }
+};
