@@ -4,7 +4,7 @@ exports.getPotentialRoommates = async (req, res) => {
   const userId = req.params.userId;
 
   try {
-    // Récupère les infos du user connecté
+    // 🔹 Récupère le profil du user connecté
     const userProfile = await db.query(
       `SELECT location, budget FROM profil_users WHERE user_id = $1`,
       [userId]
@@ -17,13 +17,22 @@ exports.getPotentialRoommates = async (req, res) => {
     const { location, budget } = userProfile.rows[0];
     const numericBudget = Number(budget);
 
-    // Récupère les profils compatibles
+    // 🔹 Récupère les profils compatibles AVEC info de favoris
     const result = await db.query(
-      `SELECT id, first_name, last_name, location, budget, photo_url
-       FROM profil_users
-       WHERE user_id != $1
-         AND location ILIKE '%' || $2 || '%'
-         AND budget BETWEEN $3 AND $4`,
+      `SELECT 
+          p.id, 
+          p.first_name, 
+          p.last_name, 
+          p.location, 
+          p.budget, 
+          p.photo_url,
+          CASE WHEN f.profil_user_id IS NOT NULL THEN true ELSE false END AS is_favorited
+       FROM profil_users p
+       LEFT JOIN favorites_roommates f
+         ON p.id = f.profil_user_id AND f.user_id = $1
+       WHERE p.user_id != $1
+         AND p.location ILIKE '%' || $2 || '%'
+         AND p.budget BETWEEN $3 AND $4`,
       [userId, location, numericBudget - 1000, numericBudget + 1000]
     );
 
