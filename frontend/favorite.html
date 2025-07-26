@@ -8,19 +8,20 @@
 </head>
 <body>
 
+  <!-- ✅ Header -->
   <header>
     <a href="roomate-dashboard.html" id="logo">
       <span>Roommate</span>
     </a>
-    <button id="hamburgerBtn" class="hamburger" aria-label="Open menu">
-      <img src="icons/Menu-3.svg" alt="Menu icon" />
+    <button id="hamburgerBtn" class="hamburger" aria-label="Ouvrir le menu">
+      <img src="icons/Menu-3.svg" alt="Menu" />
     </button>
   </header>
 
-  <!-- OVERLAY MENU -->
+  <!-- ✅ Menu Burger Overlay -->
   <section id="menuOverlay" class="menu-overlay hidden">
-    <button id="closeMenu" class="close-btn" aria-label="Close menu">
-      <img src="icons/close.svg" alt="Close icon"/>
+    <button id="closeMenu" class="close-btn" aria-label="Fermer le menu">
+      <img src="icons/close.svg" alt="Close" />
     </button>
     <nav class="menu-list">
       <ul>
@@ -30,46 +31,54 @@
       </ul>
     </nav>
     <a href="login.html" id="logoutBtn" class="signout">
-      <img src="icons/logout.svg" class="menu-icon" /><span>Sign Out</span>
+      <img src="icons/logout.svg" class="menu-icon" /> <span>Sign Out</span>
     </a>
   </section> 
 
-  <!-- ✅ Partie principale -->
+  <!-- ✅ Contenu principal -->
   <main>
     <h1>My Matches</h1>
 
-    <!-- Filtres -->
+    <!-- ✅ Filtres (Appart / Roommates) -->
     <div class="filter-buttons">
       <button data-filter="all" class="filter-btn active">Tous</button>
       <button data-filter="apartment" class="filter-btn">Appartements</button>
       <button data-filter="roommate" class="filter-btn">Colocataires</button>
     </div>
 
-    <!-- Liste des favoris -->
-    <div id="favorite-container" class="property-list"></div>
+<!-- ✅ Appartements favoris -->
+<div id="property-container" class="property-list">
+  <!-- Les cartes d'appartements seront injectées ici -->
+</div>
+
+<!-- ✅ Colocataires favoris -->
+<div id="roommate-container" class="roommate-list">
+  <!-- Les cartes de colocataires seront injectées ici -->
+</div>
+
   </main>
 
-  <!-- ✅ Footer -->
+  <!-- ✅ Navigation bas de page -->
   <footer class="footer-nav">
     <a href="roomate-dashboard.html" class="nav-item">
-      <img src="icons/home.svg" alt="Home icon" />
+      <img src="icons/home.svg" alt="Accueil" />
       <span>Home</span>
     </a>
     <a href="#" class="nav-item">
-      <img src="icons/messages.svg" alt="Messages icon" />
+      <img src="icons/messages.svg" alt="Messages" />
       <span>Messages</span>
     </a>
     <a href="#" class="nav-item">
-      <img src="icons/tasks.svg" alt="Tasks icon" />
+      <img src="icons/tasks.svg" alt="Tâches" />
       <span>Tasks</span>
     </a>
     <a href="#" class="nav-item">
-      <img src="icons/payments.svg" alt="Payments icon" />
+      <img src="icons/payments.svg" alt="Paiements" />
       <span>Payments</span>
     </a>
   </footer>
 
-  <!-- ✅ Script -->
+  <!-- ✅ Script principal -->
   <script src="scripts/favorites.js"></script>
 </body>
 </html>
