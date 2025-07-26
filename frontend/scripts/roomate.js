@@ -221,6 +221,9 @@ async function fetchProperties() {
         });
   
         container.appendChild(card);
+        card.addEventListener("click", () => {
+          window.location.href = `detailsroomate.html?id=${roommate.id}`;
+        });
       });
     } catch (err) {
       console.error("❌ Erreur récupération roommates :", err);
