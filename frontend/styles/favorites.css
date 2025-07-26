@@ -1,107 +1,91 @@
+/* ========== RESET & BASE ========== */
 * {
   margin: 0;
   padding: 0;
-}
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-left: -17px;
-}
-nav, main, aside, section, article, footer, div  {
-  display: block;
-}
-
-/* Reset */
-body, h1, h2, h3, p, ul {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
+}
+body, h1, h2, h3, p, ul {
   font-family: 'Segoe UI', sans-serif;
 }
-
+a {
+  text-decoration: none;
+  color: inherit;
+}
 body {
   background-color: #f7f9fc;
   color: #333;
 }
-#wrapper {
-  margin: 0px 125px;
+main {
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: auto;
 }
-a {
-  text-decoration: none;
+/* ========== HEADER ========== */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
 }
-
 #logo {
-  background-image: url("../images/logo.png");
-  background-repeat: no-repeat;
-  background-size: contain;
   display: flex;
   align-items: center;
+  background-image: url("../images/logo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
   width: 97px;
   height: 97px;
-  flex-shrink: 0;
 }
 #logo span {
-  padding-left: 70px; 
+  padding-left: 70px;
   color: #004AAD;
-  font-family: Roboto;
   font-size: 32px;
   font-weight: 600;
-  margin-top:10px;
+  font-family: Roboto;
 }
 .hamburger {
   border: none;
   padding: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
   background: none;
+  cursor: pointer;
 }
+
+/* ========== OVERLAY MENU ========== */
 .menu-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;         /* Ajustable : 80% ou 100% */
+  top: 0; left: 0;
+  width: 100%;
   height: 100vh;
   background-color: white;
   z-index: 999;
   padding: 40px 24px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 32px;
   transition: transform 0.3s ease;
 }
-
 .menu-overlay.hidden {
   display: none;
 }
-
 .menu-list ul {
   list-style: none;
-  padding: 0;
-  margin: 0;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
-  gap: 74px; /* Espace entre les items */
-  margin-top: 100px;
+  gap: 74px;
 }
-
 .menu-list li a {
   display: flex;
   align-items: center;
   gap: 12px;
-  text-decoration: none;
   font-size: 24px;
-  color: #004AAD;
   font-weight: 600;
+  color: #004AAD;
 }
 .icon {
   width: 24px;
   height: 24px;
-}  
+}
 .close-btn {
   position: absolute;
   top: 20px;
@@ -109,19 +93,18 @@ a {
   background: none;
   border: none;
   cursor: pointer;
-  width: 33px;
-  height: 60px;
 }
 .signout {
   display: flex;
   align-items: center;
   gap: 12px;
-  text-decoration: none;
   font-size: 24px;
   font-weight: 600;
   color: #004AAD;
-  margin-top: 390px;
+  margin-top: auto;
 }
+
+/* ========== FOOTER NAV ========== */
 .footer-nav {
   position: fixed;
   bottom: 0;
@@ -131,101 +114,161 @@ a {
   justify-content: space-around;
   align-items: center;
   padding: 10px 0;
-  z-index: 99;
   height: 78px;
+  z-index: 99;
 }
-
 .footer-nav .nav-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   color: #004aad;
-  font-family: Roboto, sans-serif;
   font-size: 20px;
   font-weight: 600;
-  text-decoration: none;
 }
-
 .footer-nav .nav-item img {
   width: 24px;
   height: 24px;
   margin-bottom: 4px;
 }
 
-main {
-  padding: 2rem 1rem;
-  max-width: 1200px;
-  margin: auto;
+/* ========== APPARTEMENT CARDS ========== */
+.property-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
 }
-
 .property-card {
-  background-color: white;
-  border-radius: 12px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 16px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-.image-wrapper {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   position: relative;
 }
-
+.property-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
 .property-photo {
   width: 100%;
-  height: 180px;
+  height: 200px;
   object-fit: cover;
 }
-
-.new-badge {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background-color: orange;
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 2px 6px;
-  border-radius: 4px;
-  z-index: 1;
-}
-
 .card-body {
-  padding: 12px;
+  padding: 16px 20px;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-direction: column;
+  gap: 6px;
 }
-
-.card-text h3 {
-  margin-bottom: 4px;
+.card-body h3 {
   font-size: 18px;
-  color: #333;
+  font-weight: 600;
+  color: #00214d;
 }
-
-.card-text p {
-  margin: 0;
-  font-size: 14px;
+.card-body p {
+  font-size: 15px;
   color: #666;
 }
 
+/* Favori icône */
 .svg-action-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: white;
+  border-radius: 50%;
+  padding: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border: none;
+  cursor: pointer;
+}
+.svg-icon {
+  transition: fill 0.2s ease-in-out;
+}
+.svg-action-btn.favorited .svg-icon path {
+  fill: #004aad;
+}
+.svg-action-btn:not(.favorited) .svg-icon path {
+  fill: #F5F5F5;
+}
+
+/* ========== ROOMMATE CARDS ========== */
+.roommate-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 32px;
+}
+.roommate-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+.roommate-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.roommate-photo {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+.roommate-info {
+  display: flex;
+  flex-direction: column;
+}
+.roommate-info h3 {
+  font-size: 17px;
+  color: #004AAD;
+  margin-bottom: 4px;
+}
+.roommate-info p {
+  font-size: 14px;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.roommate-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.roommate-actions button {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
+}
+.roommate-actions svg {
+  width: 22px;
+  height: 22px;
 }
 
-.svg-action-btn .svg-icon {
-  transition: fill 0.2s ease-in-out;
+/* ========== FILTRES ========== */
+.filter-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
 }
-
-.svg-action-btn.favorited .svg-icon path {
-  fill: #2e86de; /* 💙 Bleu si favori */
+.filter-btn {
+  background: #e1e9f5;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 20px;
+  color: #004aad;
+  font-weight: 600;
+  cursor: pointer;
 }
-
-.svg-action-btn:not(.favorited) .svg-icon path {
-  fill: #B7B7B7; /* ⚪ Gris par défaut */
+.filter-btn.active,
+.filter-btn:hover {
+  background: #004aad;
+  color: white;
 }

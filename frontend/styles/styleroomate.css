@@ -414,27 +414,93 @@ a {
     z-index: 2;
   }
   .card-body {
-    padding: 1rem;
-  }
-  
-  .card-content {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* pour pousser le cœur à droite */
     align-items: center;
+    padding: 0.5rem;
+    background-color: #fff;
   }
   
-  .card-text {
-    flex: 1;
-  }
+  
   
   .svg-action-btn {
     background: none;
     border: none;
     cursor: pointer;
     padding: 4px;
+    margin-left: auto;
   }
   
   .svg-action-btn svg {
+    width: 24px;
+    height: 24px;
     transition: fill 0.3s ease;
+  }
+  #roommate-properties {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+  }
+  
+  .roommate-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  
+  .roommate-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .roommate-photo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .roommate-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .roommate-info h3 {
+    font-size: 16px;
+    color: #0056cc;
+    margin: 0 0 4px 0;
+  }
+  
+  .roommate-info p {
+    margin: 2px 0;
+    font-size: 14px;
+    color: #444;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .roommate-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .roommate-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .roommate-actions svg {
+    width: 22px;
+    height: 22px;
   }
   
