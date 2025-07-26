@@ -89,4 +89,37 @@ exports.getUserFavoriteRoommates = async (req, res) => {
     res.status(500).json({ error: "Erreur serveur" });
   }
 };
+exports.getRoommateDetail = async (req, res) => {
+  const roommateId = req.params.id;
 
+  try {
+    const result = await db.query(
+      `SELECT 
+        pu.id,
+        pu.first_name,
+        pu.last_name,
+        pu.age,
+        pu.location,
+        pu.profession,
+        pu.budget,
+        pu.rooms,
+        pu.diet,           -- ex: Vegan, Kosher, Halal
+        pu.pets,           -- BOOLEAN
+        pu.smoke,          -- BOOLEAN
+        pu.bio,
+        pu.photo_url
+      FROM profil_users pu
+      WHERE pu.id = $1`,
+      [roommateId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Roommate not found' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error("❌ Error fetching roommate detail:", err);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
