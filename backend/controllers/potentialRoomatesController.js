@@ -1,4 +1,4 @@
-const db = require('../config/db');
+const db = require('../db');
 
 exports.getPotentialRoommates = async (req, res) => {
   const userId = req.params.userId;
@@ -30,6 +30,50 @@ exports.getPotentialRoommates = async (req, res) => {
     res.json(result.rows);
   } catch (err) {
     console.error("❌ Erreur récupération roommates :", err);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+};
+exports.addFavoriteRoommate = async (req, res) => {
+  const { userId, profilUserId } = req.body;
+
+  try {
+    await db.query(
+      `INSERT INTO favorite_roommate (user_id, profil_user_id)
+       VALUES ($1, $2) ON CONFLICT DO NOTHING`,
+      [userId, profilUserId]
+    );
+    res.status(200).json({ message: "Ajouté aux favoris" });
+  } catch (err) {
+    console.error("Erreur ajout favori :", err);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+};
+exports.removeFavoriteRoommate = async (req, res) => {
+  const { userId, profilUserId } = req.body;
+
+  try {
+    await db.query(
+      `DELETE FROM favorite_roommate WHERE user_id = $1 AND profil_user_id = $2`,
+      [userId, profilUserId]
+    );
+    res.status(200).json({ message: "Supprimé des favoris" });
+  } catch (err) {
+    console.error("Erreur suppression favori :", err);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+};
+exports.getUserFavoriteRoommates = async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const result = await db.query(
+      `SELECT profil_user_id FROM favorite_roommate WHERE user_id = $1`,
+      [userId]
+    );
+    const favorites = result.rows.map(row => row.profil_user_id);
+    res.json(favorites);
+  } catch (err) {
+    console.error("Erreur récupération favoris :", err);
     res.status(500).json({ error: "Erreur serveur" });
   }
 };
