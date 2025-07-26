@@ -19,7 +19,7 @@ exports.getPotentialRoommates = async (req, res) => {
 
     // Récupère les profils compatibles
     const result = await db.query(
-      `SELECT first_name, last_name, location, budget, photo_url
+      `SELECT id, first_name, last_name, location, budget, photo_url
        FROM profil_users
        WHERE user_id != $1
          AND location ILIKE '%' || $2 || '%'
