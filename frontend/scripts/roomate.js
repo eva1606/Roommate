@@ -197,7 +197,7 @@ async function fetchProperties() {
           </div>
           <div class="roommate-actions">
             <button class="heart-btn" data-id="${roommate.id}" title="Ajouter aux favoris">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="${isFavorite ? '#0021F5' : '#B7B7B7'}" viewBox="0 0 24 24">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="${isFavorite ? '#0021F5' : '#F5F5F5'}" viewBox="0 0 24 24">
                 <path d="M11 21L7.825 18.15C6.625 17.0667 5.596 16.1 4.738 15.25C3.87933 14.4 3.171 13.6 2.613 12.85...Z" />
               </svg>
             </button>
