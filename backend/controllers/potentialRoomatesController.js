@@ -67,13 +67,17 @@ exports.getUserFavoriteRoommates = async (req, res) => {
 
   try {
     const result = await db.query(
-      `SELECT profil_user_id FROM favorite_roommate WHERE user_id = $1`,
+      `SELECT p.id, p.first_name, p.last_name, p.location, p.budget, p.photo_url
+       FROM favorite_roommate f
+       JOIN profil_users p ON f.profil_user_id = p.id
+       WHERE f.user_id = $1`,
       [userId]
     );
-    const favorites = result.rows.map(row => row.profil_user_id);
-    res.json(favorites);
+
+    res.json(result.rows);
   } catch (err) {
-    console.error("Erreur récupération favoris :", err);
+    console.error("Erreur récupération favoris colocataires :", err);
     res.status(500).json({ error: "Erreur serveur" });
   }
 };
+
