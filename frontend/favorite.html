@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Favorite Apartments</title>
+  <title>Mes Favoris</title>
   <link rel="stylesheet" href="styles/favorites.css" />
 </head>
 <body>
@@ -12,8 +12,6 @@
     <a href="roomate-dashboard.html" id="logo">
       <span>Roommate</span>
     </a>
-
-    <!-- BOUTON HAMBURGER -->
     <button id="hamburgerBtn" class="hamburger" aria-label="Open menu">
       <img src="icons/Menu-3.svg" alt="Menu icon" />
     </button>
@@ -26,15 +24,9 @@
     </button>
     <nav class="menu-list">
       <ul>
-        <li>
-          <a href="profil.html"><img src="icons/users.svg" class="icon" /> <span>Profile</span></a>
-        </li>
-        <li>
-          <a href="favorite.html"><img src="icons/heart.svg" class="icon" /> <span>My Matches</span></a>
-        </li>
-        <li>
-          <a href="Setting.html"><img src="icons/settings.svg" class="icon" /> <span>Settings</span></a>
-        </li>
+        <li><a href="profil.html"><img src="icons/users.svg" class="icon" /> <span>Profile</span></a></li>
+        <li><a href="favorite.html"><img src="icons/heart.svg" class="icon" /> <span>My Matches</span></a></li>
+        <li><a href="Setting.html"><img src="icons/settings.svg" class="icon" /> <span>Settings</span></a></li>
       </ul>
     </nav>
     <a href="login.html" id="logoutBtn" class="signout">
@@ -44,7 +36,16 @@
 
   <!-- ✅ Partie principale -->
   <main>
-    <h1>My favorites</h1>
+    <h1>My Matches</h1>
+
+    <!-- Filtres -->
+    <div class="filter-buttons">
+      <button data-filter="all" class="filter-btn active">Tous</button>
+      <button data-filter="apartment" class="filter-btn">Appartements</button>
+      <button data-filter="roommate" class="filter-btn">Colocataires</button>
+    </div>
+
+    <!-- Liste des favoris -->
     <div id="favorite-container" class="property-list"></div>
   </main>
 
