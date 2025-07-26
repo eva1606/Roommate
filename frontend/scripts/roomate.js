@@ -145,33 +145,13 @@ async function fetchProperties() {
     console.error("❌ Erreur lors du chargement des propriétés :", err);
     container.innerHTML = "<p>Erreur lors du chargement des appartements.</p>";
   }
-
-  function showToast(message, type = "success") {
-    const toast = document.createElement("div");
-    toast.className = `toast toast-${type}`;
-    toast.textContent = message;
-    document.body.appendChild(toast);
-  
-    setTimeout(() => {
-      toast.classList.add("visible");
-    }, 100);
-  
-    setTimeout(() => {
-      toast.classList.remove("visible");
-      setTimeout(() => toast.remove(), 500);
-    }, 2500);
-  }
   async function fetchRoommates() {
     const userId = localStorage.getItem("user_id");
     const container = document.getElementById("roommate-properties");
     container.innerHTML = "";
   
     try {
-      // 🔹 1. Récupère les favoris existants
-      const favRes = await fetch(`http://127.0.0.1:5050/api/potential-roommates/favorites/${userId}`);
-      const favoriteIds = await favRes.json(); // tableau de profil_user_id favoris
-  
-      // 🔹 2. Récupère les profils compatibles
+      // 🔹 Colocataires compatibles avec info de favoris (déjà inclus dans .is_favorited)
       const res = await fetch(`http://127.0.0.1:5050/api/potential-roommates/${userId}`);
       const roommates = await res.json();
   
@@ -180,8 +160,12 @@ async function fetchProperties() {
         return;
       }
   
-      roommates.forEach((roommate) => {
-        const isFavorite = favoriteIds.includes(roommate.id); // Assure-toi que roommate.id correspond à profil_user_id
+      // 🔹 Supprime les doublons par ID
+      const uniqueMap = new Map();
+      roommates.forEach((rm) => uniqueMap.set(rm.id, rm));
+  
+      uniqueMap.forEach((roommate) => {
+        const heartColor = roommate.is_favorited ? "#0021F5" : "#F5F5F5";
   
         const card = document.createElement("div");
         card.classList.add("roommate-card");
@@ -192,19 +176,22 @@ async function fetchProperties() {
             <div class="roommate-info">
               <h3>${roommate.first_name} ${roommate.last_name}</h3>
               <p>📍 ${roommate.location}</p>
-              <p>💰 ${roommate.budget}₪/Mo</p>
+              <p>💰 ${roommate.budget} ₪/mois</p>
             </div>
           </div>
           <div class="roommate-actions">
             <button class="heart-btn" data-id="${roommate.id}" title="Ajouter aux favoris">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="${isFavorite ? '#0021F5' : '#F5F5F5'}" viewBox="0 0 24 24">
-                <path d="M11 21L7.825 18.15C6.625 17.0667 5.596 16.1 4.738 15.25C3.87933 14.4 3.171 13.6 2.613 12.85...Z" />
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="${heartColor}" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                         2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09
+                         C13.09 3.81 14.76 3 16.5 3
+                         19.58 3 22 5.42 22 8.5
+                         c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
               </svg>
             </button>
           </div>
         `;
   
-        // 🔹 3. Gestion du clic sur le cœur
         const heartBtn = card.querySelector(".heart-btn");
         const svg = heartBtn.querySelector("svg");
   
@@ -212,31 +199,34 @@ async function fetchProperties() {
           const profilUserId = roommate.id;
           const isCurrentlyFavorite = svg.getAttribute("fill") === "#0021F5";
   
-          if (isCurrentlyFavorite) {
-            await fetch("http://127.0.0.1:5050/api/potential-roommates/remove-favorite", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ userId, profilUserId })
-            });
-            svg.setAttribute("fill", "#B7B7B7");
-          } else {
-            await fetch("http://127.0.0.1:5050/api/potential-roommates/add-favorite", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ userId, profilUserId })
-            });
-            svg.setAttribute("fill", "#0021F5");
+          try {
+            if (isCurrentlyFavorite) {
+              await fetch("http://127.0.0.1:5050/api/potential-roommates/remove-favorite", {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ userId, profilUserId })
+              });
+              svg.setAttribute("fill", "#F5F5F5");
+            } else {
+              await fetch("http://127.0.0.1:5050/api/potential-roommates/add-favorite", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ userId, profilUserId })
+              });
+              svg.setAttribute("fill", "#0021F5");
+            }
+          } catch (err) {
+            console.error("❌ Erreur favori :", err);
           }
         });
   
         container.appendChild(card);
       });
-  
     } catch (err) {
       console.error("❌ Erreur récupération roommates :", err);
       container.innerHTML = "<p>Erreur lors du chargement des colocataires.</p>";
     }
-  } 
+  }
   // Gestion des onglets (apartments / roommates)
 const tabApartments = document.getElementById("tab-apartments");
 const tabRoommates = document.getElementById("tab-roommates");
@@ -248,7 +238,6 @@ tabApartments?.addEventListener("click", () => {
   tabRoommates.classList.remove("active");
   apartmentsSection.classList.add("active");
   roommatesSection.classList.remove("active");
-  fetchProperties();
 });
 
 tabRoommates?.addEventListener("click", () => {
@@ -256,7 +245,7 @@ tabRoommates?.addEventListener("click", () => {
   tabApartments.classList.remove("active");
   roommatesSection.classList.add("active");
   apartmentsSection.classList.remove("active");
-  fetchRoommates(); // à créer si ce n’est pas encore fait
+  fetchRoommates(); 
 });
 
 }
