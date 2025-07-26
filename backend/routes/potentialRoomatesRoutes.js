@@ -12,7 +12,7 @@ router.get("/:userId", getPotentialRoommates);
 
 // Nouvelles routes pour favoris
 router.post("/add-favorite", addFavoriteRoommate);
-router.post("/remove-favorite", removeFavoriteRoommate);
+router.delete("/remove-favorite", removeFavoriteRoommate);
 router.get("/favorites/:userId", getUserFavoriteRoommates);
 
 module.exports = router;
