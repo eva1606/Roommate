@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "login.html";
   });
 
-  // Boutons de filtre
+  // Filtrage
   const filterButtons = document.querySelectorAll(".filter-btn");
   filterButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -31,31 +31,46 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.classList.add("active");
 
       const filter = btn.dataset.filter;
-      if (filter === "apartment") fetchFavorites(userId);
-      else if (filter === "roommate") fetchFavoriteRoommates(userId);
-      else {
-        // Tous → on combine les deux
-        fetchFavorites(userId);
-        fetchFavoriteRoommates(userId);
-      }
+      handleFilter(filter, userId);
     });
   });
 
-  // Charger par défaut les deux types
-  fetchFavorites(userId);
-  fetchFavoriteRoommates(userId);
+  // Affichage par défaut
+  handleFilter("all", userId);
 });
 
+function handleFilter(filter, userId) {
+  const propertyContainer = document.getElementById("property-container");
+  const roommateContainer = document.getElementById("roommate-container");
+
+  // Réinitialise les contenus
+  propertyContainer.innerHTML = "";
+  roommateContainer.innerHTML = "";
+
+  // Affiche/masque les sections
+  propertyContainer.style.display = (filter === "all" || filter === "apartment") ? "grid" : "none";
+  roommateContainer.style.display = (filter === "all" || filter === "roommate") ? "flex" : "none";
+
+  // Appelle les bons fetch
+  if (filter === "all") {
+    fetchFavorites(userId);
+    fetchFavoriteRoommates(userId);
+  } else if (filter === "apartment") {
+    fetchFavorites(userId);
+  } else if (filter === "roommate") {
+    fetchFavoriteRoommates(userId);
+  }
+}
+
 async function fetchFavorites(userId) {
-  const container = document.getElementById("favorite-container");
-  container.innerHTML = "";
+  const container = document.getElementById("property-container");
 
   try {
     const res = await fetch(`http://127.0.0.1:5050/api/properties-available/favorites/${userId}`);
     const favorites = await res.json();
 
     if (!Array.isArray(favorites) || favorites.length === 0) {
-      container.innerHTML = "<p>Aucun favori trouvé.</p>";
+      container.innerHTML = "<p>Aucun appartement favori trouvé.</p>";
       return;
     }
 
@@ -70,46 +85,55 @@ async function fetchFavorites(userId) {
           <p>${prop.rooms} Rooms</p>
         </div>
       `;
-
       container.appendChild(card);
     });
   } catch (err) {
-    console.error("❌ Erreur lors du chargement des favoris :", err);
+    console.error("❌ Erreur chargement propriétés :", err);
     container.innerHTML = "<p>Erreur lors du chargement.</p>";
   }
 }
+
 async function fetchFavoriteRoommates(userId) {
-  const container = document.getElementById("favorite-container");
+  const container = document.getElementById("roommate-container");
 
   try {
     const res = await fetch(`http://127.0.0.1:5050/api/potential-roommates/favorites/${userId}`);
     const roommates = await res.json();
 
-    if (!Array.isArray(roommates) || roommates.length === 0) {
-      if (container.innerHTML === "") {
-        container.innerHTML = "<p>Aucun favori trouvé.</p>";
+    // Filtrer les doublons par profil_user_id
+    const unique = [];
+    const seen = new Set();
+
+    roommates.forEach(r => {
+      if (!seen.has(r.profil_user_id)) {
+        seen.add(r.profil_user_id);
+        unique.push(r);
       }
+    });
+
+    if (!Array.isArray(unique) || unique.length === 0) {
+      container.innerHTML = "<p>Aucun colocataire favori trouvé.</p>";
       return;
     }
 
-    roommates.forEach((roommate) => {
+    unique.forEach((roommate) => {
       const card = document.createElement("div");
-      card.classList.add("property-card");
+      card.classList.add("roommate-card");
       card.innerHTML = `
-        <img src="${roommate.photo_url || 'default-avatar.jpg'}" class="property-photo" />
-        <div class="card-body">
-          <h3>${roommate.first_name} ${roommate.last_name}</h3>
-          <p>📍 ${roommate.location}</p>
-          <p>💰 ${roommate.budget} ₪/mois</p>
+        <div class="roommate-left">
+          <img src="${roommate.photo_url || 'default-avatar.jpg'}" class="roommate-photo" />
+          <div class="roommate-info">
+            <h3>${roommate.first_name} ${roommate.last_name}</h3>
+            <p>📍 ${roommate.location}</p>
+            <p>💰 ${roommate.budget} ₪/mois</p>
+          </div>
         </div>
       `;
-
       container.appendChild(card);
     });
   } catch (err) {
-    console.error("❌ Erreur lors du chargement des favoris colocataires :", err);
-    if (container.innerHTML === "") {
-      container.innerHTML = "<p>Erreur lors du chargement.</p>";
-    }
+    console.error("❌ Erreur chargement colocataires favoris :", err);
+    container.innerHTML = "<p>Erreur lors du chargement.</p>";
   }
 }
+
