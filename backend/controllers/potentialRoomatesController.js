@@ -28,7 +28,7 @@ exports.getPotentialRoommates = async (req, res) => {
           p.photo_url,
           CASE WHEN f.profil_user_id IS NOT NULL THEN true ELSE false END AS is_favorited
        FROM profil_users p
-       LEFT JOIN favorites_roommates f
+       LEFT JOIN favorite_roommate f
          ON p.id = f.profil_user_id AND f.user_id = $1
        WHERE p.user_id != $1
          AND p.location ILIKE '%' || $2 || '%'
