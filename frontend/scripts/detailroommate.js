@@ -15,14 +15,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.getElementById('roommate-photo').src = user.photo_url || 'default-avatar.jpg';
     document.getElementById('roommate-name').textContent = `${user.first_name.toUpperCase()} ${user.last_name.toUpperCase()}`;
-    document.getElementById('roommate-age').textContent = `🎂 ${user.age} Years`;
-    document.getElementById('roommate-location').textContent = `📍 ${user.location}`;
-    document.getElementById('roommate-job').textContent = `💼 ${user.profession || 'Job inconnu'}`;
-    document.getElementById('roommate-budget').textContent = `💰 ${user.budget}₪/Mo`;
-    document.getElementById('roommate-rooms').textContent = `🛏️ ${user.rooms || '?'} Rooms`;
-    document.getElementById('roommate-smoke').textContent = user.smoke ? '🚬 Smoker' : '🚭 Non Smoker';
-    document.getElementById('roommate-pets').textContent = user.pets ? '🐶 Pets Allowed' : '🚫 No Pets';
-    document.getElementById('roommate-food').textContent = user.diet|| '🥗 Non précisé';
+    document.getElementById('roommate-age').textContent = ` ${user.age} Years`;
+    document.getElementById('roommate-location').textContent = ` ${user.location}`;
+    document.getElementById('roommate-job').textContent = ` ${user.profession || 'Job inconnu'}`;
+    document.getElementById('roommate-budget').textContent = ` ${user.budget}₪/Mo`;
+    document.getElementById('roommate-rooms').textContent = ` ${user.rooms || '?'} Rooms`;
+    document.getElementById('roommate-smoke').textContent = user.smoke ? ' Smoker' : ' Non Smoker';
+    document.getElementById('roommate-pets').textContent = user.pets ? ' Pets Allowed' : ' No Pets';
+    document.getElementById('roommate-food').textContent = user.diet|| ' Non précisé';
     document.getElementById('roommate-description').textContent = user.bio || "Aucune description fournie.";
 
   } catch (err) {
@@ -33,5 +33,5 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // 🔙 Retour au dashboard
 document.getElementById('closeBtn').addEventListener('click', () => {
-  window.location.href = 'roommate.html'; // ou history.back();
+  window.location.href = 'roomate-dashboard.html'; // ou history.back();
 });
