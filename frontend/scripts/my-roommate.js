@@ -54,4 +54,19 @@ document.addEventListener("DOMContentLoaded", async () => {
       propertyContainer.innerHTML = `<p>Erreur lors du chargement des données.</p>`;
     }
   }
-  
+  // Ajoute après l’affichage des colocataires
+const docsContainer = document.getElementById("documents-list");
+docsContainer.innerHTML = "";
+
+if (data.documents && data.documents.length > 0) {
+  data.documents.forEach((doc) => {
+    const docLink = document.createElement("a");
+    docLink.href = doc.file_url;
+    docLink.target = "_blank";
+    docLink.textContent = `📄 ${doc.file_name}`;
+    docLink.classList.add("doc-link");
+    docsContainer.appendChild(docLink);
+  });
+} else {
+  docsContainer.innerHTML = "<p>Aucun document disponible.</p>";
+}
