@@ -107,7 +107,7 @@ exports.getRoommateDetail = async (req, res) => {
         pu.pets,           -- BOOLEAN
         pu.smoke,          -- BOOLEAN
         pu.bio,
-        pu.photo_url
+        pu.photo_url,
         pu.phone
       FROM profil_users pu
       WHERE pu.id = $1`,
