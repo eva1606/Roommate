@@ -31,7 +31,7 @@ const loginUser = async (req, res) => {
 };
 const registerUser = async (req, res) => {
   const { first_name, last_name, email, password, phone, role } = req.body;
-  const photo_url = req.file?.path || null;
+  const photo_url = req.file?.path || req.file?.secure_url || req.file?.url || null;
 
   try {
     // Vérifier si l'email existe déjà
