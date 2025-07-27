@@ -10,7 +10,7 @@ exports.getMyRoommateProperty = async (req, res) => {
     const propResult = await db.query(`
       SELECT p.*
       FROM properties p
-      JOIN roommate_properties rp ON p.id = rp.property_id
+      JOIN roommates_properties rp ON p.id = rp.property_id
       WHERE rp.user_id = $1
       LIMIT 1
     `, [userId]);
@@ -24,7 +24,7 @@ exports.getMyRoommateProperty = async (req, res) => {
     // Récupérer les colocataires liés à cette propriété
     const roomies = await db.query(`
       SELECT u.id, u.first_name, u.last_name, u.email, u.photo_url
-      FROM roommate_properties rp
+      FROM roommates_properties rp
       JOIN users u ON u.id = rp.user_id
       WHERE rp.property_id = $1
     `, [property.id]);
