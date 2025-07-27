@@ -1,5 +1,3 @@
-// roomate.js
-
 document.addEventListener("DOMContentLoaded", async () => {
     const userId = localStorage.getItem("user_id");
   
@@ -15,7 +13,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   async function fetchMyRoommateProperty(userId) {
     const propertyContainer = document.getElementById("property-details");
     const roommatesContainer = document.getElementById("roommates-list");
-    
+    const docsContainer = document.getElementById("documents-list");
+  
     try {
       const res = await fetch(`http://127.0.0.1:5050/api/roommate-property/${userId}`);
       if (!res.ok) throw new Error("Erreur lors de la récupération de la propriété");
@@ -24,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const property = data.property;
       const roommates = data.roommates;
   
-      // Affiche la propriété louée
+      // Propriété
       if (property) {
         propertyContainer.innerHTML = `
           <h2>${property.address}</h2>
@@ -36,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         propertyContainer.innerHTML = `<p>Vous n'avez pas encore de propriété louée.</p>`;
       }
   
-      // Affiche les colocataires
+      // Colocataires
       roommatesContainer.innerHTML = "";
       roommates.forEach((coloc) => {
         const div = document.createElement("div");
@@ -49,24 +48,24 @@ document.addEventListener("DOMContentLoaded", async () => {
         roommatesContainer.appendChild(div);
       });
   
+      // 📄 Documents
+      docsContainer.innerHTML = "";
+      if (data.documents && data.documents.length > 0) {
+        data.documents.forEach((doc) => {
+          const docLink = document.createElement("a");
+          docLink.href = doc.file_url;
+          docLink.target = "_blank";
+          docLink.textContent = `📄 ${doc.file_name}`;
+          docLink.classList.add("doc-link");
+          docsContainer.appendChild(docLink);
+        });
+      } else {
+        docsContainer.innerHTML = "<p>Aucun document disponible.</p>";
+      }
+  
     } catch (err) {
       console.error("❌ Erreur chargement propriété/colocataires:", err);
       propertyContainer.innerHTML = `<p>Erreur lors du chargement des données.</p>`;
     }
   }
-  // Ajoute après l’affichage des colocataires
-const docsContainer = document.getElementById("documents-list");
-docsContainer.innerHTML = "";
-
-if (data.documents && data.documents.length > 0) {
-  data.documents.forEach((doc) => {
-    const docLink = document.createElement("a");
-    docLink.href = doc.file_url;
-    docLink.target = "_blank";
-    docLink.textContent = `📄 ${doc.file_name}`;
-    docLink.classList.add("doc-link");
-    docsContainer.appendChild(docLink);
-  });
-} else {
-  docsContainer.innerHTML = "<p>Aucun document disponible.</p>";
-}
+  
