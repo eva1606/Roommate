@@ -18,14 +18,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Search
   const searchInput = document.querySelector(".search-input");
+
   searchInput?.addEventListener("input", () => {
-    const query = searchInput.value.toLowerCase();
-    document.querySelectorAll(".property-card").forEach((card) => {
-      const text = card.getAttribute("data-search") || "";
-      card.style.display = text.includes(query) ? "block" : "none";
+    const query = searchInput.value.toLowerCase().trim();
+    const allCards = document.querySelectorAll(".property-card, .roommate-card");
+  
+    allCards.forEach((card) => {
+      const text = card.getAttribute("data-search")?.toLowerCase() || "";
+      card.classList.toggle("hidden-card", !text.includes(query));
     });
   });
-
+  
   // Initialisation
   fetchProperties();
 
@@ -151,7 +154,6 @@ async function fetchProperties() {
     container.innerHTML = "";
   
     try {
-      // 🔹 Colocataires compatibles avec info de favoris (déjà inclus dans .is_favorited)
       const res = await fetch(`http://127.0.0.1:5050/api/potential-roommates/${userId}`);
       const roommates = await res.json();
   
@@ -160,7 +162,6 @@ async function fetchProperties() {
         return;
       }
   
-      // 🔹 Supprime les doublons par ID
       const uniqueMap = new Map();
       roommates.forEach((rm) => uniqueMap.set(rm.id, rm));
   
@@ -170,13 +171,19 @@ async function fetchProperties() {
         const card = document.createElement("div");
         card.classList.add("roommate-card");
   
+        // Ajout de l'attribut data-search avec les infos utiles
+        card.setAttribute(
+          "data-search",
+          `${roommate.first_name} ${roommate.last_name} ${roommate.location} ${roommate.budget}`.toLowerCase()
+        );
+  
         card.innerHTML = `
           <div class="roommate-left">
             <img src="${roommate.photo_url || 'default-avatar.jpg'}" class="roommate-photo" />
             <div class="roommate-info">
               <h3>${roommate.first_name} ${roommate.last_name}</h3>
               <p>📍 ${roommate.location}</p>
-              <p>💰 ${roommate.budget} ₪/mois</p>
+              <p>💰 ${roommate.budget} ₪/Months</p>
             </div>
           </div>
           <div class="roommate-actions">
@@ -204,14 +211,14 @@ async function fetchProperties() {
               await fetch("http://127.0.0.1:5050/api/potential-roommates/remove-favorite", {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ userId, profilUserId })
+                body: JSON.stringify({ userId, profilUserId }),
               });
               svg.setAttribute("fill", "#F5F5F5");
             } else {
               await fetch("http://127.0.0.1:5050/api/potential-roommates/add-favorite", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ userId, profilUserId })
+                body: JSON.stringify({ userId, profilUserId }),
               });
               svg.setAttribute("fill", "#0021F5");
             }
@@ -220,16 +227,17 @@ async function fetchProperties() {
           }
         });
   
-        container.appendChild(card);
         card.addEventListener("click", () => {
           window.location.href = `detailsroomate.html?id=${roommate.id}`;
         });
+  
+        container.appendChild(card);
       });
     } catch (err) {
       console.error("❌ Erreur récupération roommates :", err);
       container.innerHTML = "<p>Erreur lors du chargement des colocataires.</p>";
     }
-  }
+  }  
   // Gestion des onglets (apartments / roommates)
 const tabApartments = document.getElementById("tab-apartments");
 const tabRoommates = document.getElementById("tab-roommates");
