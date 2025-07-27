@@ -24,7 +24,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('roommate-pets').textContent = user.pets ? ' Pets Allowed' : ' No Pets';
     document.getElementById('roommate-food').textContent = user.diet|| ' Non précisé';
     document.getElementById('roommate-description').textContent = user.bio || "Aucune description fournie.";
-
+       // 👉 Numéro de téléphone
+       const phoneEl = document.getElementById('roommate-phone');
+       const btn = document.getElementById('show-phone-btn');
+   
+       if (phoneEl && btn) {
+         phoneEl.textContent = user.phone || 'Numéro non disponible';
+         btn.addEventListener('click', () => {
+           phoneEl.style.display = 'inline';
+           btn.style.display = 'none';
+         });
+       }
   } catch (err) {
     console.error("❌ Erreur chargement colocataire :", err);
     document.body.innerHTML = "<p>❌ Erreur lors du chargement du profil.</p>";
