@@ -33,7 +33,7 @@ exports.getMyRoommateProperty = async (req, res) => {
     const docs = await db.query(`
       SELECT file_name, file_url
       FROM documents
-      WHERE property_id = $1
+      WHERE receiver_property_id = $1
     `, [property.id]);
 
     res.json({
