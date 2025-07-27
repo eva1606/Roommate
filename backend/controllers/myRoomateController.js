@@ -1,40 +1,48 @@
-const pool = require('../db');
+// controllers/myRoommateController.js
 
-exports.getRoommatePropertyAndColocs = async (req, res) => {
+const db = require("../db");
+
+exports.getMyRoommateProperty = async (req, res) => {
   const userId = req.params.userId;
 
   try {
-    // 1. Trouver la propriété louée
-    const propRes = await pool.query(
-      `SELECT p.*
-       FROM roommates_properties rp
-       JOIN properties p ON rp.property_id = p.id
-       WHERE rp.user_id = $1`,
-      [userId]
-    );
+    // Trouver la propriété liée à l'utilisateur
+    const propResult = await db.query(`
+      SELECT p.*
+      FROM properties p
+      JOIN roommate_properties rp ON p.id = rp.property_id
+      WHERE rp.user_id = $1
+      LIMIT 1
+    `, [userId]);
 
-    const property = propRes.rows[0];
+    const property = propResult.rows[0];
 
     if (!property) {
-      return res.json({ property: null, roommates: [] });
+      return res.json({ property: null, roommates: [], documents: [] });
     }
 
-    // 2. Trouver les autres colocataires de cette propriété
-    const colocRes = await pool.query(
-      `SELECT u.id, u.first_name, u.last_name, u.email, u.photo_url
-       FROM roommates_properties rp
-       JOIN users u ON rp.user_id = u.id
-       WHERE rp.property_id = $1 AND rp.user_id != $2`,
-      [property.id, userId]
-    );
+    // Récupérer les colocataires liés à cette propriété
+    const roomies = await db.query(`
+      SELECT u.id, u.first_name, u.last_name, u.email, u.photo_url
+      FROM roommate_properties rp
+      JOIN users u ON u.id = rp.user_id
+      WHERE rp.property_id = $1
+    `, [property.id]);
+
+    // Récupérer les documents liés à cette propriété
+    const docs = await db.query(`
+      SELECT file_name, file_url
+      FROM documents
+      WHERE property_id = $1
+    `, [property.id]);
 
     res.json({
       property,
-      roommates: colocRes.rows
+      roommates: roomies.rows,
+      documents: docs.rows,
     });
-
   } catch (err) {
-    console.error("❌ Erreur récupération propriété/colocs :", err);
+    console.error("❌ getMyRoommateProperty error:", err);
     res.status(500).json({ error: "Erreur serveur" });
   }
 };
