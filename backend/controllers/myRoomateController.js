@@ -22,7 +22,7 @@ exports.getRoommatePropertyAndColocs = async (req, res) => {
     // 2. Trouver les autres colocataires de cette propriété
     const colocRes = await pool.query(
       `SELECT u.id, u.first_name, u.last_name, u.email, u.photo_url
-       FROM roomate_properties rp
+       FROM roommates_properties rp
        JOIN users u ON rp.user_id = u.id
        WHERE rp.property_id = $1 AND rp.user_id != $2`,
       [property.id, userId]
