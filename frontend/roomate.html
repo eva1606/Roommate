@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Roommate Dashboard</title>
+  <link rel="stylesheet" href="styles/my-roommate.css" />
+</head>
+<body>
+  <div class="dashboard-container">
+
+    <!-- 🏠 Propriété Louée -->
+    <section class="property-section">
+      <h2>🏠 Propriété Louée</h2>
+      <div class="property-card" id="property-card">
+        <img src="" alt="Apartment Photo" class="property-img" id="property-img" />
+        <div class="property-info">
+          <h3 id="property-address"></h3>
+          <p>🛏️ <span id="property-rooms"></span></p>
+          <p>💸 <span id="property-rent"></span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 👥 Colocataires -->
+    <section class="roommates-section">
+      <h2>👥 MY ROOMATES</h2>
+      <div class="roommates-list" id="roommates-list">
+        <!-- JS : Colocataires dynamiques -->
+      </div>
+    </section>
+
+  </div>
+
+  <script src="scripts/my-roommate.js"></script>
+</body>
+</html>
