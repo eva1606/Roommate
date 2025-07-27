@@ -7,7 +7,7 @@ exports.getRoommatePropertyAndColocs = async (req, res) => {
     // 1. Trouver la propriété louée
     const propRes = await pool.query(
       `SELECT p.*
-       FROM roomate_properties rp
+       FROM roommates_properties rp
        JOIN properties p ON rp.property_id = p.id
        WHERE rp.user_id = $1`,
       [userId]
