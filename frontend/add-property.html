@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add Property</title>
-  <link rel="stylesheet" href="styles/styleOwners.css" />
+  <link rel="stylesheet" href="styles/styleOwners.css">
 </head>
 <body>
   <h1>Add New Property</h1>
   <form id="propertyForm" enctype="multipart/form-data">
-    <input type="text" name="address" placeholder="Address" required />
-    <input type="number" name="rooms" placeholder="Number of Rooms" required />
-    <input type="number" name="price" placeholder="Price" required />
+    <input type="text" name="address" placeholder="Address" required>
+    <input type="number" name="rooms" placeholder="Number of Rooms" required>
+    <input type="number" name="price" placeholder="Price" required>
     <select name="status" required>
+      <option value="" disabled selected>Select status</option>
       <option value="available">Available</option>
       <option value="rented">Rented</option>
     </select>
-    <input type="number" name="floor" placeholder="Floor" />
-    <label><input type="checkbox" name="has_elevator" /> Elevator</label>
-    <label><input type="checkbox" name="has_balcony" /> Balcony</label>
-    <label><input type="checkbox" name="furnished" /> Furnished</label>
+    <input type="number" name="floor" placeholder="Floor">
+    <label><input type="checkbox" name="has_elevator"> Elevator</label>
+    <label><input type="checkbox" name="has_balcony"> Balcony</label>
+    <label><input type="checkbox" name="furnished"> Furnished</label>
     <textarea name="description" placeholder="Describe your property..."></textarea>
-    <input type="file" name="photo" accept="image/*" required />
-    <input type="file" name="photos" accept="image/*" multiple />
+    <input type="file" name="photo" accept="image/*" required>
+    <input type="file" name="photos" accept="image/*" multiple>
     <button type="submit">Add Property</button>
   </form>
   <a href="owner-dashboard.html" class="btn-back">← Back</a>
