@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>payments-owners</title>
+  <link rel="stylesheet" href="styles/styleOwners.css" />
+</head>
+<body>
+
+  <header>
+    <div class="top-bar">
+      <img src="images/logo.png" alt="Logo" class="logo"/>
+      <h1>Roommate</h1>
+      <button id="logoutBtn" class="logout-btn">Sign Out</button>
+    </div>
+  </header>
+
+  <main>
+    <h2>Payments</h2>
+
+    <div id="property-selector" class="hidden">
+      <h3>Select a rented property:</h3>
+      <ul class="property-list" id="property-list"></ul>
+    </div>
+
+    <div id="payments-section" class="hidden">
+      <div class="property-info">
+        <p id="property-address">Address loading...</p>
+        <p id="total-rent">Total Rent: </p>
+        <p id="split-rent">Split: </p>
+      </div>
+
+      <h3 id="month-title">Payments received</h3>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Roommates</th>
+              <th>Status</th>
+              <th>Date Paid</th>
+            </tr>
+          </thead>
+          <tbody id="payments-body"></tbody>
+        </table>
+      </div>
+
+      <div class="next-payment">
+        <h4>
+          <img src="icons/calendar.svg" alt="calendar" class="calendar-icon" />
+          Next Payment: <span id="next-payment-date">Not selected</span>
+        </h4>
+        <input type="date" id="next-payment-input" onchange="updateNextPayment()" />
+        <button class="btn blue" onclick="remindAll()">Remind all roommates</button>
+      </div>
+         
+
+      <div class="manual-payment">
+        <h3>Add a manual payment</h3>
+        <button class="btn orange" onclick="openModal()">Add Payment</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ✅ Modal pour ajout manuel -->
+  <div id="paymentModal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Add Payment</h3>
+      <form id="manual-payment-form">
+        <input type="text" name="phone" placeholder="Roommate Phone" required />
+        <input type="month" name="month" required />
+        <input type="date" name="date_paid" required />
+        <button type="submit" class="btn blue">Submit</button>
+        <button type="button" class="btn orange" onclick="closeModal()">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <nav class="bottom-nav">
+      <a href="my-properties.html" class="footer-link"><img src="icons/key.svg" alt="properties" class="footer-icon"> My Properties</a>
+      <a href="owner-dashboard.html" class="footer-link"><img src="icons/homepage.svg" alt="Home" class="footer-icon"> Home</a>
+      <a href="payments.html"><img src="icons/payments.svg" alt="Payments" class="footer-icon"> Payments</a>
+    </nav>
+  </footer>
+
+  <script src="scripts/payments.js"></script>
+</body>
+</html>

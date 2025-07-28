@@ -88,4 +88,8 @@ document.addEventListener("DOMContentLoaded", () => {
       fetchDocuments();
     }
   });
-  
+  document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.clear();
+    window.location.href = "login.html";
+  });

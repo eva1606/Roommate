@@ -24,6 +24,8 @@ app.use('/api/properties', propertiesRoutes);
 app.use('/api/profil_users', profileRoutes);
 // 🔓 Pour permettre l'accès aux photos uploadées
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+const frontendPath = path.join(__dirname, '../frontend'); 
+app.use(express.static(frontendPath));
 
 const PORT = process.env.PORT || 5050;
 const os = require("os");
