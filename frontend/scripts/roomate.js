@@ -8,7 +8,19 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Menu burger
+  const tabApartments = document.getElementById("tab-apartments");
+  const tabRoommates = document.getElementById("tab-roommates");
+  const apartmentsSection = document.getElementById("apartments-section");
+  const roommatesSection = document.getElementById("roommates-section");
+  const filterOverlay = document.getElementById("filterOverlay");
+  const filterTitle = document.getElementById("filterTitle");
+
+  const sortBtn = document.getElementById("sortBtn");
+  const sortMenuApartments = document.getElementById("sortMenuApartments");
+  const sortMenuRoommates = document.getElementById("sortMenuRoommates");
+  const filterBtn = document.getElementById("filterBtn");
+
+  // Navigation hamburger
   document.getElementById("hamburgerBtn")?.addEventListener("click", () => {
     document.getElementById("menuOverlay").classList.remove("hidden");
   });
@@ -16,21 +28,170 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("menuOverlay").classList.add("hidden");
   });
 
-  // Search
-  const searchInput = document.querySelector(".search-input");
+  document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.clear();
+    window.location.href = "login.html";
+  });
 
+  // Recherche
+  const searchInput = document.querySelector(".search-input");
   searchInput?.addEventListener("input", () => {
     const query = searchInput.value.toLowerCase().trim();
-    const allCards = document.querySelectorAll(".property-card, .roommate-card");
-  
-    allCards.forEach((card) => {
+    const cards = document.querySelectorAll(".property-card, .roommate-card");
+    cards.forEach((card) => {
       const text = card.getAttribute("data-search")?.toLowerCase() || "";
       card.classList.toggle("hidden-card", !text.includes(query));
     });
   });
+
+  // Tabs
+  tabApartments?.addEventListener("click", () => {
+    tabApartments.classList.add("active");
+    tabRoommates.classList.remove("active");
+    apartmentsSection.classList.add("active");
+    roommatesSection.classList.remove("active");
+    document.getElementById("filters-apartments").classList.remove("hidden");
+    document.getElementById("filters-roommates").classList.add("hidden");
+    if (filterTitle) filterTitle.textContent = "Filter Apartments";
+  });
+
+  tabRoommates?.addEventListener("click", () => {
+    tabRoommates.classList.add("active");
+    tabApartments.classList.remove("active");
+    roommatesSection.classList.add("active");
+    apartmentsSection.classList.remove("active");
+    document.getElementById("filters-apartments").classList.add("hidden");
+    document.getElementById("filters-roommates").classList.remove("hidden");
+    fetchRoommates();
+    if (filterTitle) filterTitle.textContent = "Filter Roommates";
+  });
+
+  // Toggle filtre
+  filterBtn?.addEventListener("click", () => {
+    filterOverlay.classList.toggle("hidden");
+    sortMenuApartments?.classList.add("hidden");
+    sortMenuRoommates?.classList.add("hidden");
+  });
+
+  document.getElementById("closeFilter")?.addEventListener("click", () => {
+    filterOverlay.classList.add("hidden");
+  });
+
+  sortBtn?.addEventListener("click", () => {
+    const isApartmentsTab = tabApartments.classList.contains("active");
   
-  // Initialisation
+    if (isApartmentsTab) {
+      // Toggle Apartments menu
+      const isVisible = !sortMenuApartments.classList.contains("hidden");
+      sortMenuApartments.classList.toggle("hidden", isVisible);
+      sortMenuRoommates.classList.add("hidden");
+    } else {
+      // Toggle Roommates menu
+      const isVisible = !sortMenuRoommates.classList.contains("hidden");
+      sortMenuRoommates.classList.toggle("hidden", isVisible);
+      sortMenuApartments.classList.add("hidden");
+    }
+  });
+
+  // Tri Apartments
+  sortMenuApartments?.querySelectorAll("li").forEach((item) => {
+    item.addEventListener("click", () => {
+      const sortType = item.dataset.sort;
+      const cards = Array.from(document.querySelectorAll("#apartment-available .property-card"));
+
+      cards.sort((a, b) => {
+        const priceA = parseInt(a.dataset.price || "0");
+        const priceB = parseInt(b.dataset.price || "0");
+        const dateA = new Date(a.dataset.date || "2000-01-01");
+        const dateB = new Date(b.dataset.date || "2000-01-01");
+
+        if (sortType === "price-high") return priceB - priceA;
+        if (sortType === "price-low") return priceA - priceB;
+        if (sortType === "recent") return dateB - dateA;
+        return 0;
+      });
+
+      const container = document.getElementById("apartment-available");
+      container.innerHTML = "";
+      cards.forEach(card => container.appendChild(card));
+      sortMenuApartments.classList.add("hidden");
+    });
+  });
+
+  // Tri Roommates
+  sortMenuRoommates?.querySelectorAll("li").forEach((item) => {
+    item.addEventListener("click", () => {
+      const criterion = item.textContent.trim();
+      const cards = Array.from(document.querySelectorAll("#roommate-properties .roommate-card"));
+
+      cards.sort((a, b) => {
+        if (criterion.includes("Budget")) return a.dataset.budget - b.dataset.budget;
+        if (criterion.includes("Location")) return a.dataset.location.localeCompare(b.dataset.location);
+        if (criterion.includes("Name")) return a.dataset.name.localeCompare(b.dataset.name);
+        return 0;
+      });
+
+      const container = document.getElementById("roommate-properties");
+      container.innerHTML = "";
+      cards.forEach(card => container.appendChild(card));
+      sortMenuRoommates.classList.add("hidden");
+    });
+  });
+
+  // Filtre Apartments
+  document.getElementById("applyFilterApt")?.addEventListener("click", () => {
+    const loc = document.getElementById("aptLocation").value.toLowerCase();
+    const budget = parseInt(document.getElementById("aptBudget").value);
+    const rooms = parseInt(document.getElementById("aptRooms").value);
+
+    document.querySelectorAll("#apartment-available .property-card").forEach(card => {
+      const cardLoc = card.dataset.location?.toLowerCase() || "";
+      const cardBudget = parseInt(card.dataset.budget || "0");
+      const cardRooms = parseInt(card.dataset.rooms || "0");
+
+      const show = (loc === "all" || cardLoc.includes(loc)) &&
+                   (isNaN(budget) || cardBudget <= budget) &&
+                   (isNaN(rooms) || cardRooms >= rooms);
+
+      card.style.display = show ? "flex" : "none";
+    });
+    filterOverlay.classList.add("hidden");
+  });
+
+  // Filtre Roommates
+  document.getElementById("applyFilterRoommates")?.addEventListener("click", () => {
+    const loc = document.getElementById("rmLocation").value.toLowerCase();
+    const budget = parseInt(document.getElementById("rmBudget").value);
+    const name = document.getElementById("rmName").value.toLowerCase();
+
+    document.querySelectorAll("#roommate-properties .roommate-card").forEach(card => {
+      const cardLoc = card.dataset.location?.toLowerCase() || "";
+      const cardBudget = parseInt(card.dataset.budget || "0");
+      const cardName = card.dataset.name?.toLowerCase() || "";
+
+      const show = (loc === "all" || cardLoc.includes(loc)) &&
+                   (isNaN(budget) || cardBudget <= budget) &&
+                   (!name || cardName.includes(name));
+
+      card.style.display = show ? "flex" : "none";
+    });
+    filterOverlay.classList.add("hidden");
+  });
+
+  // Fermer si clic extérieur
+  document.addEventListener("click", (event) => {
+    if (!sortBtn.contains(event.target)) {
+      sortMenuApartments?.classList.add("hidden");
+      sortMenuRoommates?.classList.add("hidden");
+    }
+    if (!filterBtn.contains(event.target) && !filterOverlay.contains(event.target)) {
+      filterOverlay.classList.add("hidden");
+    }
+  });
+
   fetchProperties();
+});
 
   // Logout
   document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
@@ -38,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.clear();
     window.location.href = "login.html";
   });
-});
+
 
 // ✅ Affiche les propriétés filtrées pour l'utilisateur connecté
 async function fetchProperties() {
@@ -59,7 +220,14 @@ async function fetchProperties() {
       const card = document.createElement("div");
       card.classList.add("property-card");
       card.setAttribute("data-search", `${prop.address} ${prop.rooms} ${prop.price}`.toLowerCase());
-      
+      card.setAttribute("data-price", prop.price);
+      card.setAttribute("data-date", prop.created_at || "2025-01-01");
+      card.setAttribute("data-location", prop.address || ""); // Ajoute ça
+      card.setAttribute("data-rooms", prop.rooms || ""); 
+      card.setAttribute("data-budget", prop.price); // 🔥 AJOUT OBLIGATOIRE
+      // Ajoute ça
+
+
       
       const isNew = index === 0; // première = la plus récente
       const isFavorited = prop.is_favorited;
@@ -147,7 +315,8 @@ async function fetchProperties() {
      catch (err) {
     console.error("❌ Erreur lors du chargement des propriétés :", err);
     container.innerHTML = "<p>Erreur lors du chargement des appartements.</p>";
-  }
+  } 
+}
   async function fetchRoommates() {
     const userId = localStorage.getItem("user_id");
     const container = document.getElementById("roommate-properties");
@@ -176,6 +345,9 @@ async function fetchProperties() {
           "data-search",
           `${roommate.first_name} ${roommate.last_name} ${roommate.location} ${roommate.budget}`.toLowerCase()
         );
+        card.setAttribute("data-budget", roommate.budget || "0");
+        card.setAttribute("data-name", `${roommate.first_name} ${roommate.last_name}`);
+        card.setAttribute("data-location", roommate.location || "");
   
         card.innerHTML = `
           <div class="roommate-left">
@@ -238,25 +410,5 @@ async function fetchProperties() {
       container.innerHTML = "<p>Erreur lors du chargement des colocataires.</p>";
     }
   }  
-  // Gestion des onglets (apartments / roommates)
-const tabApartments = document.getElementById("tab-apartments");
-const tabRoommates = document.getElementById("tab-roommates");
-const apartmentsSection = document.getElementById("apartments-section");
-const roommatesSection = document.getElementById("roommates-section");
 
-tabApartments?.addEventListener("click", () => {
-  tabApartments.classList.add("active");
-  tabRoommates.classList.remove("active");
-  apartmentsSection.classList.add("active");
-  roommatesSection.classList.remove("active");
-});
 
-tabRoommates?.addEventListener("click", () => {
-  tabRoommates.classList.add("active");
-  tabApartments.classList.remove("active");
-  roommatesSection.classList.add("active");
-  apartmentsSection.classList.remove("active");
-  fetchRoommates(); 
-});
-
-}
