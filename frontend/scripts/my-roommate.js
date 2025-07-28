@@ -99,7 +99,7 @@ async function fetchMyRoommateProperty(userId) {
         docsContainer.appendChild(docLink);
       });
     } else {
-      docsContainer.innerHTML = "<p>Aucun fichier partagé.</p>";
+      docsContainer.innerHTML = "<p>No file for this propriety.</p>";
     }
 
   } catch (err) {
