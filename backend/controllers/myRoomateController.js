@@ -1,6 +1,6 @@
 // controllers/myRoommateController.js
-
 const db = require("../db");
+const path = require('path');
 
 exports.getMyRoommateProperty = async (req, res) => {
   const userId = req.params.userId;
@@ -44,5 +44,39 @@ exports.getMyRoommateProperty = async (req, res) => {
   } catch (err) {
     console.error("❌ getMyRoommateProperty error:", err);
     res.status(500).json({ error: "Erreur serveur" });
+  }
+};
+exports.uploadDocument = async (req, res) => {
+  const { user_id } = req.body;
+  const file = req.file;
+
+  if (!file) {
+    return res.status(400).json({ error: "Aucun fichier reçu" });
+  }
+
+  try {
+    // Trouver la propriété liée au user
+    const result = await db.query(
+      `SELECT receiver_property_id FROM roommates_properties WHERE roommate_user_id = $1 LIMIT 1`,
+      [user_id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Aucune propriété trouvée" });
+    }
+
+    const propertyId = result.rows[0].receiver_property_id;
+
+    // Enregistrer le document en BDD
+    await db.query(
+      `INSERT INTO documents (file_name, file_url, property_id) VALUES ($1, $2, $3)`,
+      [file.originalname, `/uploads/${file.filename}`, propertyId]
+    );
+
+    res.status(201).json({ message: "📄 Document enregistré avec succès." });
+
+  } catch (err) {
+    console.error("❌ Upload document error:", err);
+    res.status(500).json({ error: "Erreur lors de l'enregistrement du document." });
   }
 };
