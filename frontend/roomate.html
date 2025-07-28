@@ -13,10 +13,16 @@
     <div id="roommates-list" class="roommates-container"></div>
     
     <div class="documents-section">
-      <h3>📁 Documents liés</h3>
+      <h3>Documents to share</h3>
       <div id="documents-list"></div>
     </div>
+    <form id="upload-form" enctype="multipart/form-data">
+      <input type="file" name="file" accept=".pdf,.jpg,.png,.docx" />
+      <button type="submit">Envoyer un document</button>
+    </form>
+    <p id="upload-status"></p>
     
+    <p id="upload-status"></p>
   <script src="scripts/my-roommate.js"></script>
 </body>
 </html>
