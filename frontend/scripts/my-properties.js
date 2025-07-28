@@ -32,16 +32,32 @@ document.addEventListener('DOMContentLoaded', () => {
   
         const card = document.createElement('div');
         card.classList.add('roommate-property-card');
-  
+        card.setAttribute('data-id', prop.id);
+
         card.innerHTML = `
           <h3>${prop.address}</h3>
           <p>🧍‍♂️ Occupied (${prop.roommate_count} roommates)</p>
           <p>${paymentText}</p>
-          <p>⚠️ Issues reported</p>
           <button onclick="window.location.href='shared-documents.html?property_id=${prop.property_id}'">View shared documents</button>
           <button onclick="window.location.href='contact-roommates.html?property_id=${prop.property_id}'">Contact roommates</button>
+          <button class="delete-btn">Delete</button>
         `;
-  
+        const deleteBtn = card.querySelector('.delete-btn');
+        deleteBtn.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          const confirmDelete = confirm("Are you sure you want to delete this property?");
+          if (confirmDelete) {
+            const res = await fetch(`http://localhost:5050/api/properties/${prop.id}`, {
+                method: 'DELETE'
+              });
+            if (res.ok) {
+              alert("Property deleted.");
+              card.remove();
+            } else {
+              alert("Error deleting property.");
+            }
+          }
+        });
         container.appendChild(card);
       });
     } catch (err) {

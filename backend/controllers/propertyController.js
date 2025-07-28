@@ -79,16 +79,31 @@ const getProperties = async (req, res) => {
 const deleteProperty = async (req, res) => {
   const { id } = req.params;
   try {
+    // Supprimer les documents liés
+    await pool.query('DELETE FROM documents WHERE receiver_property_id = $1', [id]);
+
+    // Supprimer les colocataires liés
+    await pool.query('DELETE FROM roommates_properties WHERE property_id = $1', [id]);
+
+    // Supprimer de available_apartment
+    await pool.query('DELETE FROM available_apartment WHERE property_id = $1', [id]);
+
+    // Maintenant tu peux supprimer de properties
     const result = await pool.query('DELETE FROM properties WHERE id = $1 RETURNING *', [id]);
+
     if (result.rowCount === 0) {
       return res.status(404).json({ error: "Property not found" });
     }
+
     res.status(200).json({ message: "Property deleted successfully" });
   } catch (err) {
     console.error("❌ Error in deleteProperty:", err);
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+
+
 
 const getPropertyById = async (req, res) => {
   const { id } = req.params;

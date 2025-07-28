@@ -79,9 +79,9 @@ document.querySelectorAll(".delete-option").forEach(btn => {
     const id = btn.dataset.id;
     const confirmDelete = confirm("Are you sure you want to delete this property?");
     if (confirmDelete) {
-      const res = await fetch(`http://127.0.0.1:5050/api/properties/${id}`, {
+      const res = await fetch(`http://localhost:5050/api/properties/${id}`, {
         method: 'DELETE'
-      });
+});
       if (res.ok) {
         alert("Property deleted.");
         document.querySelector(`.property-card[data-id="${id}"]`)?.remove();
