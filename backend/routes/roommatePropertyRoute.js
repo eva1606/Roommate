@@ -1,7 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const multer = require("multer");
-const path = require("path");
 
 // 📁 Contrôleur principal
 const {
@@ -9,17 +7,8 @@ const {
   uploadDocument
 } = require("../controllers/myRoomateController");
 
-// 🔧 Configuration Multer pour les uploads locaux
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/"); // ✅ Le dossier "uploads" doit exister
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
-
-const upload = multer({ storage });
+// 📤 Multer avec Cloudinary
+const upload = require("../middleware/cloudinary");
 
 // ✅ Route GET → récupère propriété, colocataires et documents
 router.get("/:userId", getMyRoommateProperty);
