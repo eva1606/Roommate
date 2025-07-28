@@ -33,31 +33,37 @@ document.addEventListener("DOMContentLoaded", () => {
       div.innerHTML = `
         <div class="task-title">${task.title}</div>
         <div class="task-meta">
-          <span>Status: <strong>${task.status}</strong></span>
+          <span>Status: ${task.status}</span>
           <span>Due: ${new Date(task.due_date).toLocaleDateString()}</span>
         </div>
         <div class="task-meta">
-          <span>Added by: ${task.first_name ?? "?"} ${task.last_name ?? ""}</span>
+          <span>Added by: ${task.created_by?.first_name || ""} ${task.created_by?.last_name || ""}</span>
+          ${
+            task.completed_by
+              ? `<span>✅ Completed by: ${task.completed_by.first_name} ${task.completed_by.last_name}</span>`
+              : ""
+          }
         </div>
         ${
           task.status !== "completed"
             ? `<button class="task-btn" data-id="${task.id}">Mark as Done</button>`
-            : `<span class="task-status-done">✅ Completed</span>`
+            : ""
         }
       `;
 
-      // 🎯 Bouton de validation
+      // Marquer comme fait
       if (task.status !== "completed") {
         const btn = div.querySelector(".task-btn");
         btn.addEventListener("click", async () => {
           try {
             await fetch(`http://127.0.0.1:5050/api/tasks/${task.id}/complete`, {
               method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ userId }),
             });
-            fetchTasks(); // Refresh
+            fetchTasks(); // Recharger
           } catch (err) {
             alert("Error marking task as done.");
-            console.error(err);
           }
         });
       }
@@ -83,10 +89,9 @@ document.addEventListener("DOMContentLoaded", () => {
           created_by: userId,
         }),
       });
-      fetchTasks(); // Refresh
+      fetchTasks();
     } catch (err) {
       alert("Error adding task.");
-      console.error(err);
     }
   });
 
