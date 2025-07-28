@@ -1,8 +1,20 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { getCompatibleRoommates } = require('../controllers/potentialRoomatesController');
+const {
+  getPotentialRoommates,
+  addFavoriteRoommate,
+  removeFavoriteRoommate,
+  getUserFavoriteRoommates,
+  getRoommateDetail
+} = require("../controllers/potentialRoomatesController"); // ✅ Vérifie le nom
 
-// 👇 Nouvelle route : GET /api/potential-roommates/:id
-router.get('/:id', getCompatibleRoommates);
+// Route existante
+router.get("/:userId", getPotentialRoommates);
+
+// Nouvelles routes pour favoris
+router.post("/add-favorite", addFavoriteRoommate);
+router.delete("/remove-favorite", removeFavoriteRoommate);
+router.get("/favorites/:userId", getUserFavoriteRoommates);
+router.get("/profil/:id", getRoommateDetail);
 
 module.exports = router;

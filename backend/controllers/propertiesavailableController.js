@@ -1,125 +1,111 @@
-const db = require('../db');
+const db = require('../db'); // ✅ Garde db si c'est ce que tu utilises partout ailleurs
 
 exports.getFilteredApartments = async (req, res) => {
-  const userId = req.params.id;
+  const userId = req.params.userId;
 
   try {
-    const userResult = await db.query(`
-      SELECT budget, location
-      FROM profil_users
-      WHERE user_id = $1
-    `, [userId]);
+    const result = await db.query(
+      `
+      SELECT p.*,
+  EXISTS (
+    SELECT 1 FROM favorite_apartments f
+    WHERE f.user_id = $1 AND f.property_id = p.id
+  ) AS is_favorited
+FROM properties p
+JOIN available_apartment a ON a.property_id = p.id
+JOIN profil_users pu ON pu.user_id = $1
+WHERE p.status = 'available'
+  AND p.price BETWEEN (pu.budget - 1000) AND (pu.budget + 1000)
+  AND LOWER(p.address) LIKE '%' || LOWER(pu.location) || '%'
+  AND NOT EXISTS (
+    SELECT 1 FROM hidden_apartments h
+    WHERE h.user_id = $1 AND h.property_id = p.id
+  )
+ORDER BY p.created_at DESC;
 
-    if (userResult.rows.length === 0) {
-      return res.status(404).json({ error: 'Utilisateur non trouvé' });
-    }
+      `,
+      [userId]
+    );
 
-    const { budget, location } = userResult.rows[0];
-
-    if (!budget || !location) {
-      return res.status(400).json({ error: 'Budget ou location manquant dans le profil utilisateur' });
-    }
-
-    const budgetInt = Math.round(Number(budget));
-    const minBudget = budgetInt - 1000;
-    const maxBudget = budgetInt + 1000;
-
-    // 🔎 Rechercher les propriétés compatibles
-    const propertiesResult = await db.query(`
-      SELECT *
-      FROM properties
-      WHERE status = 'available'
-        AND price BETWEEN $1 AND $2
-        AND LOWER(address) LIKE '%' || LOWER($3) || '%'
-    `, [minBudget, maxBudget, location]);
-
-    const properties = propertiesResult.rows;
-
-    // 💾 Enregistrement dans available_apartment s'ils ne sont pas déjà liés à cet user
-    for (const prop of properties) {
-      await db.query(`
-        INSERT INTO available_apartment (user_id, property_id)
-        SELECT $1, $2
-        WHERE NOT EXISTS (
-          SELECT 1 FROM available_apartment WHERE user_id = $1 AND property_id = $2
-        )
-      `, [userId, prop.id]);
-    }
-
-    res.json(properties);
-  } catch (error) {
-    console.error('❌ Erreur getFilteredApartments :', error);
+    return res.json(result.rows);
+  } catch (err) {
+    console.error('❌ Erreur lors du filtrage des propriétés :', err);
     res.status(500).json({ error: 'Erreur serveur' });
   }
 };
-exports.saveAvailableApartments = async (req, res) => {
-  const userId = req.params.id;
-  const properties = req.body.properties; // tableau d'IDs
-
-  if (!Array.isArray(properties) || properties.length === 0) {
-    return res.status(400).json({ error: "Liste des propriétés vide ou invalide." });
-  }
-
-  try {
-    for (const propertyId of properties) {
-      await db.query(
-        `
-        INSERT INTO available_apartment (user_id, property_id)
-        SELECT $1, $2
-        WHERE NOT EXISTS (
-          SELECT 1 FROM available_apartment WHERE user_id = $1 AND property_id = $2
-        )
-        `,
-        [userId, propertyId]
-      );
-    }
-
-    res.status(200).json({ message: "Appartements enregistrés avec succès." });
-  } catch (err) {
-    console.error("❌ Erreur saveAvailableApartments :", err);
-    res.status(500).json({ error: "Erreur serveur." });
-  }
-};
-/// ✅ Ajoute une propriété aux favoris
 exports.addToFavorites = async (req, res) => {
   const { user_id, property_id } = req.body;
 
-  if (!user_id || !property_id) {
-    return res.status(400).json({ error: 'user_id et property_id requis' });
-  }
-
   try {
-    await db.query(`
-      INSERT INTO favorite_apartments (user_id, property_id)
-      SELECT $1, $2
-      WHERE NOT EXISTS (
-        SELECT 1 FROM favorite_apartments WHERE user_id = $1 AND property_id = $2
-      )
-    `, [user_id, property_id]);
+    // Vérifie si le favori existe déjà
+    const existing = await db.query(
+      'SELECT * FROM favorite_apartments WHERE user_id = $1 AND property_id = $2',
+      [user_id, property_id]
+    );
 
-    res.status(200).json({ message: 'Ajouté aux favoris.' });
+    if (existing.rows.length > 0) {
+      return res.status(200).json({ message: 'Déjà dans les favoris' });
+    }
+
+    // Ajoute à la table
+    await db.query(
+      'INSERT INTO favorite_apartments (user_id, property_id) VALUES ($1, $2)',
+      [user_id, property_id]
+    );
+
+    res.status(201).json({ message: 'Ajouté aux favoris' });
   } catch (err) {
-    console.error('❌ Erreur ajout favori :', err);
-    res.status(500).json({ error: 'Erreur serveur.' });
+    console.error("❌ Erreur ajout favoris :", err);
+    res.status(500).json({ error: 'Erreur serveur' });
   }
 };
-// ✅ Supprime une propriété disponible pour un utilisateur donné
-exports.removeAvailableApartment = async (req, res) => {
-  const { user_id, property_id } = req.body;
-
-  if (!user_id || !property_id) {
-    return res.status(400).json({ error: 'user_id et property_id requis' });
-  }
+exports.getFavoriteApartments = async (req, res) => {
+  const { userId } = req.params;
 
   try {
-    await db.query(`
-      DELETE FROM available_apartment
-      WHERE user_id = $1 AND property_id = $2
-    `, [user_id, property_id]);
+    const result = await db.query(
+      `
+      SELECT p.*
+      FROM favorite_apartments f
+      JOIN properties p ON p.id = f.property_id
+      WHERE f.user_id = $1
+      ORDER BY f.id DESC
+      `,
+      [userId]
+    );
 
-    res.status(200).json({ message: 'Appartement retiré des disponibles.' });
+    res.status(200).json(result.rows);
   } catch (err) {
-    console.error('❌ Erreur suppression available_apartment :', err);
-    res.status(500).json({ error: 'Erreur serveur.' });
+    console.error("❌ Erreur récupération favoris :", err);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+};
+exports.removeFromFavorites = async (req, res) => {
+  const { user_id, property_id } = req.body;
+
+  try {
+    await db.query(
+      'DELETE FROM favorite_apartments WHERE user_id = $1 AND property_id = $2',
+      [user_id, property_id]
+    );
+
+    res.status(200).json({ message: 'Retiré des favoris' });
+  } catch (err) {
+    console.error("❌ Erreur suppression favori :", err);
+    res.status(500).json({ error: 'Erreur serveur' });
+  }
+};
+exports.hideApartment = async (req, res) => {
+  const { user_id, property_id } = req.body;
+
+  try {
+    await db.query(
+      'INSERT INTO hidden_apartments (user_id, property_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+      [user_id, property_id]
+    );
+    res.status(201).json({ message: "Appartement masqué" });
+  } catch (err) {
+    console.error("❌ Erreur hideApartment:", err);
+    res.status(500).json({ error: "Erreur serveur" });
   }
 };

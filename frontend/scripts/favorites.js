@@ -1,5 +1,4 @@
-document.addEventListener("DOMContentLoaded", async () => {
-  // 🔐 Authentification
+document.addEventListener("DOMContentLoaded", () => {
   const userId = localStorage.getItem("user_id");
   const role = localStorage.getItem("role");
 
@@ -9,64 +8,132 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // 🍔 Menu burger
-  const hamburgerBtn = document.getElementById("hamburgerBtn");
-  const menuOverlay = document.getElementById("menuOverlay");
-  const closeMenu = document.getElementById("closeMenu");
+  // Menu burger
+  document.getElementById("hamburgerBtn")?.addEventListener("click", () => {
+    document.getElementById("menuOverlay").classList.remove("hidden");
+  });
+  document.getElementById("closeMenu")?.addEventListener("click", () => {
+    document.getElementById("menuOverlay").classList.add("hidden");
+  });
 
-  hamburgerBtn?.addEventListener("click", () => menuOverlay.classList.remove("hidden"));
-  closeMenu?.addEventListener("click", () => menuOverlay.classList.add("hidden"));
-
-  // 🚪 Déconnexion
-  const logoutBtn = document.getElementById("logoutBtn");
-  logoutBtn?.addEventListener("click", (e) => {
+  // Logout
+  document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
     e.preventDefault();
     localStorage.clear();
     window.location.href = "login.html";
   });
 
-  const container = document.getElementById("favorite-properties");
+  // Filtrage
+  const filterButtons = document.querySelectorAll(".filter-btn");
+  filterButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      filterButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const filter = btn.dataset.filter;
+      handleFilter(filter, userId);
+    });
+  });
+
+  // Affichage par défaut
+  handleFilter("all", userId);
+});
+
+function handleFilter(filter, userId) {
+  const propertyContainer = document.getElementById("property-container");
+  const roommateContainer = document.getElementById("roommate-container");
+
+  // Réinitialise les contenus
+  propertyContainer.innerHTML = "";
+  roommateContainer.innerHTML = "";
+
+  // Affiche/masque les sections
+  propertyContainer.style.display = (filter === "all" || filter === "apartment") ? "grid" : "none";
+  roommateContainer.style.display = (filter === "all" || filter === "roommate") ? "flex" : "none";
+
+  // Appelle les bons fetch
+  if (filter === "all") {
+    fetchFavorites(userId);
+    fetchFavoriteRoommates(userId);
+  } else if (filter === "apartment") {
+    fetchFavorites(userId);
+  } else if (filter === "roommate") {
+    fetchFavoriteRoommates(userId);
+  }
+}
+
+async function fetchFavorites(userId) {
+  const container = document.getElementById("property-container");
 
   try {
     const res = await fetch(`http://127.0.0.1:5050/api/properties-available/favorites/${userId}`);
     const favorites = await res.json();
 
     if (!Array.isArray(favorites) || favorites.length === 0) {
-      container.innerHTML = "<p>Aucun appartement en favori.</p>";
+      container.innerHTML = "<p>Aucun appartement favori trouvé.</p>";
       return;
     }
 
-    container.innerHTML = ""; // reset
-
-    favorites.forEach(prop => {
+    favorites.forEach((prop) => {
       const card = document.createElement("div");
       card.classList.add("property-card");
-      card.setAttribute("data-search", `${prop.address} ${prop.rooms} ${prop.price}`.toLowerCase());
-
       card.innerHTML = `
         <img src="${prop.photo || 'default.jpg'}" class="property-photo" />
         <div class="card-body">
           <h3>${prop.address}</h3>
-          <p>${prop.rooms} rooms - ${prop.price}₪</p>
-          <div class="property-actions">
-            <svg class="icon-fav filled" data-id="${prop.id}" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-              <path d="M20.8 4.6c-1.5-1.5-4-1.5-5.5 0l-.8.8-.8-.8c-1.5-1.5-4-1.5-5.5 0-1.5 1.5-1.5 4 0 5.5l6.3 6.3 6.3-6.3c1.6-1.5 1.6-4 0-5.5z" stroke="#2e86de" fill="#2e86de"/>
-            </svg>
-          </div>
+          <p>${prop.price}₪/Month</p>
+          <p>${prop.rooms} Rooms</p>
         </div>
       `;
-
-      // Clic sur la carte → redirection vers la page détail
-      card.addEventListener("click", (e) => {
-        if (!e.target.closest(".icon-fav")) {
-          window.location.href = `proprietyroomate.html?id=${prop.id}`;
-        }
-      });
-
       container.appendChild(card);
     });
   } catch (err) {
-    console.error("❌ Erreur chargement favoris :", err);
-    container.innerHTML = "<p>Erreur lors du chargement des favoris.</p>";
+    console.error("❌ Erreur chargement propriétés :", err);
+    container.innerHTML = "<p>Erreur lors du chargement.</p>";
   }
-});
+}
+
+async function fetchFavoriteRoommates(userId) {
+  const container = document.getElementById("roommate-container");
+
+  try {
+    const res = await fetch(`http://127.0.0.1:5050/api/potential-roommates/favorites/${userId}`);
+    const roommates = await res.json();
+
+    // Filtrer les doublons par profil_user_id
+    const unique = [];
+    const seen = new Set();
+
+    roommates.forEach(r => {
+      if (!seen.has(r.profil_user_id)) {
+        seen.add(r.profil_user_id);
+        unique.push(r);
+      }
+    });
+
+    if (!Array.isArray(unique) || unique.length === 0) {
+      container.innerHTML = "<p>Aucun colocataire favori trouvé.</p>";
+      return;
+    }
+
+    unique.forEach((roommate) => {
+      const card = document.createElement("div");
+      card.classList.add("roommate-card");
+      card.innerHTML = `
+        <div class="roommate-left">
+          <img src="${roommate.photo_url || 'default-avatar.jpg'}" class="roommate-photo" />
+          <div class="roommate-info">
+            <h3>${roommate.first_name} ${roommate.last_name}</h3>
+            <p>📍 ${roommate.location}</p>
+            <p>💰 ${roommate.budget} ₪/mois</p>
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  } catch (err) {
+    console.error("❌ Erreur chargement colocataires favoris :", err);
+    container.innerHTML = "<p>Erreur lors du chargement.</p>";
+  }
+}
+

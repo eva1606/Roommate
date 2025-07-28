@@ -31,9 +31,13 @@ const loginUser = async (req, res) => {
 };
 const registerUser = async (req, res) => {
   const { first_name, last_name, email, password, phone, role } = req.body;
-  const photo_url = req.file?.path || null; // récupère le lien Cloudinary
+
+  // Supporte plusieurs formats de photo selon le middleware utilisé
+  const photo_url =
+    req.file?.secure_url || req.file?.path || req.file?.url || null;
 
   try {
+    // 🔍 Vérifie si l'utilisateur existe déjà
     const existing = await pool.query(
       'SELECT * FROM users WHERE LOWER(email) = LOWER($1)',
       [email]
@@ -43,17 +47,45 @@ const registerUser = async (req, res) => {
       return res.status(409).json({ error: "Email already in use" });
     }
 
+    // 🔹 1. Insère dans la table `users`
     const result = await pool.query(
       `INSERT INTO users (first_name, last_name, email, password, phone, role, photo_url)
        VALUES ($1, $2, $3, $4, $5, $6, $7)
-       RETURNING id, first_name, role`,
+       RETURNING id, first_name, last_name, email, photo_url, role`,
       [first_name, last_name, email, password, phone, role, photo_url]
     );
 
-    const user = result.rows[0];
-    res.status(201).json(user);
+    const newUser = result.rows[0];
+
+    // 🔹 2. Vérifie si un profil existe déjà
+    const profilExists = await pool.query(
+      'SELECT 1 FROM profil_users WHERE user_id = $1',
+      [newUser.id]
+    );
+
+    if (profilExists.rowCount === 0) {
+      // 🔹 3. Crée le profil minimal
+      await pool.query(
+        `INSERT INTO profil_users (user_id, first_name, last_name, email, photo_url)
+         VALUES ($1, $2, $3, $4, $5)`,
+        [
+          newUser.id,
+          newUser.first_name,
+          newUser.last_name,
+          newUser.email,
+          newUser.photo_url,
+        ]
+      );
+    }
+
+    // ✅ Réponse au client
+    res.status(201).json({
+      id: newUser.id,
+      first_name: newUser.first_name,
+      role: newUser.role,
+    });
   } catch (err) {
-    console.error("Register error:", err);
+    console.error("❌ Register error:", err);
     res.status(500).json({ error: "Server error during registration" });
   }
 };

@@ -1,77 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Favorite Apartments</title>
+  <title>Mes Favoris</title>
   <link rel="stylesheet" href="styles/favorites.css" />
 </head>
 <body>
 
+  <!-- ✅ Header -->
   <header>
     <a href="roomate-dashboard.html" id="logo">
       <span>Roommate</span>
     </a>
-
-    <!-- BOUTON HAMBURGER -->
-    <button id="hamburgerBtn" class="hamburger" aria-label="Open menu">
-      <img src="icons/Menu-3.svg" alt="Menu icon" />
+    <button id="hamburgerBtn" class="hamburger" aria-label="Ouvrir le menu">
+      <img src="icons/Menu-3.svg" alt="Menu" />
     </button>
   </header>
 
-  <!-- OVERLAY MENU -->
+  <!-- ✅ Menu Burger Overlay -->
   <section id="menuOverlay" class="menu-overlay hidden">
-    
-    <!-- BOUTON FERMETURE + ICÔNE -->
-    <button id="closeMenu" class="close-btn" aria-label="Close menu">
-      <img src="icons/close.svg" alt="Close icon"/>
+    <button id="closeMenu" class="close-btn" aria-label="Fermer le menu">
+      <img src="icons/close.svg" alt="Close" />
     </button>
-
     <nav class="menu-list">
-        <ul>
-          <li>
-            <a href="profil.html"><img src="icons/users.svg" class="icon" /> <span>Profile</span></a>
-          </li>
-          <li>
-            <a href="favorite.html"><img src="icons/heart.svg" class="icon" /> <span>My Matches</span></a>
-          </li>
-          <li>
-            <a href="Setting.html"><img src="icons/settings.svg" class="icon" /> <span>Settings</span></a>
-          </li>
-        </ul>
-      </nav>
-      
-
-      <a href="#" id="logoutBtn" class="signout">
-      <img src="icons/logout.svg" class="menu-icon" /><span>Sign Out</span>
+      <ul>
+        <li><a href="profil.html"><img src="icons/users.svg" class="icon" /> <span>Profile</span></a></li>
+        <li><a href="favorite.html"><img src="icons/heart.svg" class="icon" /> <span>My Matches</span></a></li>
+        <li><a href="Setting.html"><img src="icons/settings.svg" class="icon" /> <span>Settings</span></a></li>
+      </ul>
+    </nav>
+    <a href="login.html" id="logoutBtn" class="signout">
+      <img src="icons/logout.svg" class="menu-icon" /> <span>Sign Out</span>
     </a>
   </section> 
 
+  <!-- ✅ Contenu principal -->
   <main>
-    <section class="property-list" id="favorite-properties">
-      <p>Loading favorites...</p>
-    </section>
+    <h1>My Matches</h1>
+
+    <!-- ✅ Filtres (Appart / Roommates) -->
+    <div class="filter-buttons">
+      <button data-filter="all" class="filter-btn active">All</button>
+      <button data-filter="apartment" class="filter-btn">Properties</button>
+      <button data-filter="roommate" class="filter-btn">Roommates</button>
+    </div>
+
+<!-- ✅ Appartements favoris -->
+<div id="property-container" class="property-list">
+  <!-- Les cartes d'appartements seront injectées ici -->
+</div>
+
+<!-- ✅ Colocataires favoris -->
+<div id="roommate-container" class="roommate-list">
+  <!-- Les cartes de colocataires seront injectées ici -->
+</div>
+
   </main>
 
+  <!-- ✅ Navigation bas de page -->
   <footer class="footer-nav">
-    <a href="#" class="nav-item">
-      <img src="icons/home.svg" alt="Home icon" />
+    <a href="roomate-dashboard.html" class="nav-item">
+      <img src="icons/home.svg" alt="Accueil" />
       <span>Home</span>
     </a>
     <a href="#" class="nav-item">
-      <img src="icons/messages.svg" alt="Messages icon" />
+      <img src="icons/messages.svg" alt="Messages" />
       <span>Messages</span>
     </a>
     <a href="#" class="nav-item">
-      <img src="icons/tasks.svg" alt="Tasks icon" />
+      <img src="icons/tasks.svg" alt="Tâches" />
       <span>Tasks</span>
     </a>
     <a href="#" class="nav-item">
-      <img src="icons/payments.svg" alt="Payments icon" />
+      <img src="icons/payments.svg" alt="Paiements" />
       <span>Payments</span>
     </a>
   </footer>
 
+  <!-- ✅ Script principal -->
   <script src="scripts/favorites.js"></script>
 </body>
 </html>

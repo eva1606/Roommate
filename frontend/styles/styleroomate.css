@@ -2,16 +2,49 @@
     margin: 0;
     padding: 0;
 }
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-left: -17px;
-}
-nav, main, aside, section, article, footer, div  {
-    display: block;
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* empêche le scroll global */
 }
 
+header, footer {
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+  background-color: white;
+}
+
+header {
+  top: 0;
+  height: 100px;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between; /* Place logo à gauche, hamburger à droite */
+  align-items: center;
+  padding: 0 1rem;
+}
+
+footer {
+  bottom: 0;
+  height: 60px;
+  border-top: 1px solid #ccc;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+main {
+  position: absolute;
+  top: 60px; /* même que le header */
+  bottom: 60px; /* même que le footer */
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+  padding: 1rem;
+  background-color: #f7f7f7;
+}
 body {
     background-color: #F2F2F2;
 }
@@ -43,7 +76,7 @@ a {
   }
   .hamburger {
     border: none;
-    padding: 8px;
+    padding: 50px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -335,8 +368,8 @@ a {
   }
 
   .property-photo {
-   width: 160px;
-  height: 120px;
+  width: 250px;
+  height: 190px;
   object-fit: cover;
   flex-shrink: 0;
   border-top-left-radius: 16px;
@@ -356,82 +389,118 @@ a {
     font-weight: 600;
     color: #1d4ed8; /* bleu comme le lien */
     margin-bottom: 0.5rem;
+    margin-left: 0px;
   }
   
   /* Infos prix et chambres */
   .card-body p {
     font-size: 20px;
     color: #374151; /* gris foncé */
-    margin: 2px 0;
+    margin-top: 10px;
+  }
+  .image-wrapper {
+    position: relative;
+  }
+  .new-badge {
+    position: absolute;
+    margin-top: 0px;
+    left: 0px;
+    background-color: orange;
+    color: white;
+    padding: 8px 12px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    border-radius: 4px;
+    z-index: 2;
+  }
+  .card-body {
+    display: flex;
+    justify-content: space-between; /* pour pousser le cœur à droite */
+    align-items: center;
+    padding: 0.5rem;
+    background-color: #fff;
+  }
+  
+  
+  
+  .svg-action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    margin-left: auto;
+  }
+  
+  .svg-action-btn svg {
+    width: 24px;
+    height: 24px;
+    transition: fill 0.3s ease;
   }
   #roommate-properties {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
   }
   
-  /* Carte individuelle */
-  .roommates-card {
-    background-color: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
-    width: 260px;
+  .roommate-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  
+  .roommate-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .roommate-photo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .roommate-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .roommate-info h3 {
+    font-size: 16px;
+    color: #0056cc;
+    margin: 0 0 4px 0;
+  }
+  
+  .roommate-info p {
+    margin: 2px 0;
+    font-size: 14px;
+    color: #444;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .roommate-actions {
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    padding: 20px;
-    text-align: center;
+    gap: 8px;
+  }
+  
+  .roommate-actions button {
+    background: none;
+    border: none;
     cursor: pointer;
   }
   
-  .roommates-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-  }
-  
-  /* Photo ronde */
-  .roommates-card .property-photo {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #004AAD;
-    margin-bottom: 16px;
-  }
-  
-  /* Contenu texte */
-  .roommates-card .card-body {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    font-family: Roboto, sans-serif;
-  }
-  
-  .roommates-card .card-body h3 {
-    font-size: 20px;
-    font-weight: 600;
-    color: #004AAD;
-  }
-  
-  .roommates-card .card-body p {
-    font-size: 16px;
-    color: #555;
-    margin: 0;
-  }
-  .card-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 10px;
-  }
-  
-  .action-icon {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
+  .roommate-actions svg {
+    width: 22px;
+    height: 22px;
   }
   
