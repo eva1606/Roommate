@@ -32,14 +32,13 @@ document.addEventListener('DOMContentLoaded', () => {
   
         const card = document.createElement('div');
         card.classList.add('roommate-property-card');
-        card.setAttribute('data-id', prop.id);
-
+  
         card.innerHTML = `
           <h3>${prop.address}</h3>
           <p>🧍‍♂️ Occupied (${prop.roommate_count} roommates)</p>
           <p>${paymentText}</p>
-          <button onclick="window.location.href='shared-documents.html?property_id=${prop.property_id}'">View shared documents</button>
-          <button onclick="window.location.href='contact-roommates.html?property_id=${prop.property_id}'">Contact roommates</button>
+          <button onclick="window.location.href='shared-documents.html?property_id=${prop.id}'">View shared documents</button>
+          <button onclick="window.location.href='contact-roommates.html?property_id=${prop.id}'">Contact roommates</button>
           <button class="delete-btn">Delete</button>
         `;
         const deleteBtn = card.querySelector('.delete-btn');

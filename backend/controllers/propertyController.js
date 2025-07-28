@@ -300,11 +300,12 @@ const uploadDocument = async (req, res) => {
     console.log("📥 Upload reçu :", req.file);
     console.log("🆔 Sender:", req.body.sender_id, "🏠 Property:", req.body.property_id);
 
-    const { sender_id, property_id } = req.body;
+    const sender_id = parseInt(req.body.sender_id, 10);
+    const property_id = parseInt(req.body.property_id, 10);
     const file = req.file;
 
-    if (!file || !sender_id || !property_id) {
-      return res.status(400).json({ error: "Missing required fields or file" });
+    if (!file || isNaN(sender_id) || isNaN(property_id)) {
+      return res.status(400).json({ error: "Missing or invalid required fields" });
     }
 
     const result = await pool.query(
