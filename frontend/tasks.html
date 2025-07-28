@@ -1,24 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="styles/tasks.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tasks</title>
+  <link rel="stylesheet" href="styles/expenses.css" />
 </head>
 <body>
-    <!-- Main -->
+  <!-- Header -->
+  <header>
+    <a href="roomate-dashboard.html" id="logo"><span>Roommate</span></a>
+    <button id="hamburgerBtn" class="hamburger" aria-label="Open menu">
+      <img src="icons/Menu-3.svg" alt="Menu icon" />
+    </button>
+  </header>
+
+  <!-- Overlay Menu -->
+  <section id="menuOverlay" class="menu-overlay hidden">
+    <button id="closeMenu" class="close-btn" aria-label="Close menu">
+      <img src="icons/close.svg" alt="Close icon"/>
+    </button>
+
+    <nav class="menu-list">
+      <ul>
+        <li><a href="profil.html"><img src="icons/users.svg" class="icon" /> <span>Profile</span></a></li>
+        <li><a href="favorite.html"><img src="icons/heart.svg" class="icon" /> <span>My Matches</span></a></li>
+        <li><a href="Setting.html"><img src="icons/settings.svg" class="icon" /> <span>Settings</span></a></li>
+      </ul>
+    </nav>
+
+    <a href="#" id="logoutBtn" class="signout">
+      <img src="icons/logout.svg" class="menu-icon" /><span>Sign Out</span>
+    </a>
+  </section>
+
+  <!-- Main -->
   <main class="main-container">
-    <!-- Add Task -->
     <section class="add-section">
-      <button class="add-task-btn">➕ Add Tasks</button>
+      <button class="add-btn">➕ Add Task</button>
     </section>
 
-    <!-- Task List -->
-    <section class="task-list">
-      <!-- Dynamically filled via JS -->
-    </section>
-      <!-- Ton script principal -->
+    <section class="task-list"></section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer-nav">
+    <a href="roomate-dashboard.html" class="nav-item">
+      <img src="icons/home.svg" alt="Home icon" />
+      <span>Home</span>
+    </a>
+    <a href="tasks.html" class="nav-item active">
+      <img src="icons/tasks.svg" alt="Tasks icon" />
+      <span>Tasks</span>
+    </a>
+    <a href="paymentroomate.html" class="nav-item">
+      <img src="icons/payments.svg" alt="Payments icon" />
+      <span>Payments</span>
+    </a>
+  </footer>
+
   <script src="scripts/tasks.js"></script>
 </body>
 </html>
