@@ -68,3 +68,50 @@ exports.addTask = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur lors de l'ajout de la tâche." });
   }
 };
+// ✅ PATCH: Marquer une tâche comme faite + renvoyer avec nom/prénom du créateur
+exports.markTaskAsDone = async (req, res) => {
+  const { taskId } = req.params;
+
+  try {
+    // ✅ Mettre à jour le statut de la tâche
+    const updateResult = await pool.query(
+      `UPDATE tasks
+       SET status = 'done'
+       WHERE id = $1
+       RETURNING *`,
+      [taskId]
+    );
+
+    if (updateResult.rows.length === 0) {
+      return res.status(404).json({ message: "Task not found." });
+    }
+
+    const updatedTask = updateResult.rows[0];
+
+    // 🔁 Récupérer les infos de l’utilisateur (nom & prénom)
+    const { rows: userRows } = await pool.query(
+      `SELECT first_name, last_name FROM users WHERE id = $1`,
+      [updatedTask.created_by]
+    );
+
+    const user = userRows[0];
+
+    res.json({
+      message: "Task marked as done ✅",
+      task: {
+        id: updatedTask.id,
+        title: updatedTask.title,
+        status: updatedTask.status,
+        due_date: updatedTask.due_date,
+        created_by: {
+          id: updatedTask.created_by,
+          first_name: user.first_name,
+          last_name: user.last_name
+        }
+      }
+    });
+  } catch (err) {
+    console.error("❌ Error updating task status:", err);
+    res.status(500).json({ message: "Server error updating task." });
+  }
+};
