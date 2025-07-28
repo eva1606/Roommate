@@ -1,11 +1,11 @@
 const pool = require("../db");
 
-// ✅ GET: Dépenses liées à la propriété d’un user
+// ✅ GET: Dépenses avec nom & prénom liées à la propriété d’un user
 exports.getExpensesForUserProperty = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    // Récupérer l’ID de la propriété louée par l'utilisateur
+    // 🔍 Récupérer la propriété liée à cet utilisateur
     const { rows: propertyRows } = await pool.query(
       `SELECT property_id FROM roommates_properties WHERE user_id = $1 LIMIT 1`,
       [userId]
@@ -17,12 +17,19 @@ exports.getExpensesForUserProperty = async (req, res) => {
 
     const propertyId = propertyRows[0].property_id;
 
-    // Récupérer les dépenses associées à cette propriété
+    // 📦 Récupérer les dépenses + info utilisateur
     const { rows: expenses } = await pool.query(
-      `SELECT id, label, amount, date
-       FROM expenses
-       WHERE property_id = $1
-       ORDER BY date DESC`,
+      `SELECT 
+         e.id, 
+         e.label, 
+         e.amount, 
+         e.date,
+         u.first_name, 
+         u.last_name
+       FROM expenses e
+       JOIN users u ON e.user_id = u.id
+       WHERE e.property_id = $1
+       ORDER BY e.date DESC`,
       [propertyId]
     );
 
