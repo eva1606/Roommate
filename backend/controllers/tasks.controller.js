@@ -76,7 +76,7 @@ exports.markTaskAsDone = async (req, res) => {
     // ✅ Mettre à jour le statut de la tâche
     const updateResult = await pool.query(
       `UPDATE tasks
-       SET status = 'done'
+       SET status = 'completed'
        WHERE id = $1
        RETURNING *`,
       [taskId]
@@ -88,16 +88,17 @@ exports.markTaskAsDone = async (req, res) => {
 
     const updatedTask = updateResult.rows[0];
 
-    // 🔁 Récupérer les infos de l’utilisateur (nom & prénom)
+    // 🔁 Récupérer le nom/prénom de l'utilisateur qui a créé la tâche
     const { rows: userRows } = await pool.query(
       `SELECT first_name, last_name FROM users WHERE id = $1`,
       [updatedTask.created_by]
     );
 
-    const user = userRows[0];
+    const user = userRows[0] || { first_name: "Unknown", last_name: "" };
 
+    // ✅ Répondre avec infos enrichies
     res.json({
-      message: "Task marked as done ✅",
+      message: "Task marked as completed ✅",
       task: {
         id: updatedTask.id,
         title: updatedTask.title,
@@ -115,3 +116,4 @@ exports.markTaskAsDone = async (req, res) => {
     res.status(500).json({ message: "Server error updating task." });
   }
 };
+
