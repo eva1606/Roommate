@@ -68,18 +68,26 @@ exports.addTask = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur lors de l'ajout de la tâche." });
   }
 };
-// ✅ PATCH: Marquer une tâche comme faite + renvoyer avec nom/prénom du créateur
+const pool = require("../db");
+
+// ✅ PATCH: Marquer une tâche comme faite + enregistrer par qui
 exports.markTaskAsDone = async (req, res) => {
   const { taskId } = req.params;
+  const { userId } = req.body;
+
+  if (!userId) {
+    return res.status(400).json({ message: "userId is required in body." });
+  }
 
   try {
-    // ✅ Mettre à jour le statut de la tâche
+    // ✅ Marquer comme complétée + enregistrer qui l'a fait
     const updateResult = await pool.query(
       `UPDATE tasks
-       SET status = 'completed'
-       WHERE id = $1
+       SET status = 'completed',
+           completed_by = $1
+       WHERE id = $2
        RETURNING *`,
-      [taskId]
+      [userId, taskId]
     );
 
     if (updateResult.rows.length === 0) {
@@ -88,32 +96,32 @@ exports.markTaskAsDone = async (req, res) => {
 
     const updatedTask = updateResult.rows[0];
 
-    // 🔁 Récupérer le nom/prénom de l'utilisateur qui a créé la tâche
-    const { rows: userRows } = await pool.query(
-      `SELECT first_name, last_name FROM users WHERE id = $1`,
-      [updatedTask.created_by]
+    // 🔁 Récupérer noms des utilisateurs (créateur + validateur)
+    const userIds = [updatedTask.created_by, updatedTask.completed_by];
+
+    const usersResult = await pool.query(
+      `SELECT id, first_name, last_name FROM users WHERE id = ANY($1::int[])`,
+      [userIds]
     );
 
-    const user = userRows[0] || { first_name: "Unknown", last_name: "" };
+    const usersMap = {};
+    usersResult.rows.forEach(u => {
+      usersMap[u.id] = { first_name: u.first_name, last_name: u.last_name };
+    });
 
-    // ✅ Répondre avec infos enrichies
     res.json({
-      message: "Task marked as completed ✅",
+      message: "✅ Task marked as completed.",
       task: {
         id: updatedTask.id,
         title: updatedTask.title,
         status: updatedTask.status,
         due_date: updatedTask.due_date,
-        created_by: {
-          id: updatedTask.created_by,
-          first_name: user.first_name,
-          last_name: user.last_name
-        }
+        created_by: usersMap[updatedTask.created_by],
+        completed_by: usersMap[updatedTask.completed_by]
       }
     });
   } catch (err) {
-    console.error("❌ Error updating task status:", err);
-    res.status(500).json({ message: "Server error updating task." });
+    console.error("❌ Error marking task complete:", err);
+    res.status(500).json({ message: "Server error." });
   }
 };
-
