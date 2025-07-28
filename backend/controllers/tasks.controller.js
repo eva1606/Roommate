@@ -1,76 +1,81 @@
 const pool = require("../db");
 
-// 🔁 GET: All tasks for property of current user
+// ✅ GET: All tasks for the property of the current user
 exports.getTasksByUser = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    // Get user's property
-    const { rows } = await pool.query(
+    // 1. Trouver la propriété du colocataire
+    const { rows: propertyRows } = await pool.query(
       `SELECT property_id FROM roommates_properties WHERE user_id = $1 LIMIT 1`,
       [userId]
     );
 
-    if (!rows.length) return res.status(404).json({ message: "No property found." });
+    if (!propertyRows.length) {
+      return res.status(404).json({ message: "No property found for user." });
+    }
 
-    const propertyId = rows[0].property_id;
+    const propertyId = propertyRows[0].property_id;
 
-    const tasks = await pool.query(
-      `SELECT * FROM tasks WHERE property_id = $1 ORDER BY created_at DESC`,
+    // 2. Récupérer les tâches de cette propriété
+    const { rows: tasks } = await pool.query(
+      `SELECT id, title, status, due_date, created_by, assigned_to
+       FROM tasks
+       WHERE property_id = $1
+       ORDER BY due_date ASC`,
       [propertyId]
     );
 
-    res.json(tasks.rows);
+    res.json(tasks);
   } catch (err) {
     console.error("❌ Error fetching tasks:", err);
-    res.status(500).json({ message: "Server error." });
+    res.status(500).json({ message: "Server error fetching tasks." });
   }
 };
 
-// ➕ POST: Add task
+// ✅ POST: Ajouter une nouvelle tâche
 exports.addTask = async (req, res) => {
-  const { user_id, label } = req.body;
+  const { property_id, title, created_by, assigned_to, due_date } = req.body;
 
-  if (!user_id || !label) {
-    return res.status(400).json({ message: "user_id and label required." });
+  if (!property_id || !title || !created_by) {
+    return res.status(400).json({ message: "Missing required fields." });
   }
 
   try {
-    // Get property for user
     const { rows } = await pool.query(
-      `SELECT property_id FROM roommates_properties WHERE user_id = $1 LIMIT 1`,
-      [user_id]
-    );
-
-    if (!rows.length) {
-      return res.status(403).json({ message: "User has no linked property." });
-    }
-
-    const property_id = rows[0].property_id;
-
-    const result = await pool.query(
-      `INSERT INTO tasks (user_id, property_id, label)
-       VALUES ($1, $2, $3)
+      `INSERT INTO tasks (property_id, title, created_by, assigned_to, due_date)
+       VALUES ($1, $2, $3, $4, $5)
        RETURNING *`,
-      [user_id, property_id, label]
+      [property_id, title, created_by, assigned_to || null, due_date || null]
     );
 
-    res.status(201).json(result.rows[0]);
+    res.status(201).json(rows[0]);
   } catch (err) {
     console.error("❌ Error adding task:", err);
-    res.status(500).json({ message: "Server error." });
+    res.status(500).json({ message: "Server error adding task." });
   }
 };
-
-// ✅ PATCH: Mark task as done
-exports.markTaskDone = async (req, res) => {
+// ✅ PUT: Marquer une tâche comme complétée
+exports.markTaskAsDone = async (req, res) => {
   const { taskId } = req.params;
 
   try {
-    await pool.query(`UPDATE tasks SET is_done = true WHERE id = $1`, [taskId]);
-    res.json({ message: "Task marked as done." });
+    const { rows } = await pool.query(
+      `UPDATE tasks
+       SET status = 'done'
+       WHERE id = $1
+       RETURNING *`,
+      [taskId]
+    );
+
+    if (!rows.length) {
+      return res.status(404).json({ message: "Task not found." });
+    }
+
+    res.json(rows[0]);
   } catch (err) {
     console.error("❌ Error updating task:", err);
-    res.status(500).json({ message: "Server error." });
+    res.status(500).json({ message: "Server error updating task." });
   }
 };
+
