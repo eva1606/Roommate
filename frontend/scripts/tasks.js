@@ -37,12 +37,17 @@ document.addEventListener("DOMContentLoaded", () => {
           <span>Due: ${new Date(task.due_date).toLocaleDateString()}</span>
         </div>
         <div class="task-meta">
-          <span>Added by: ${task.created_by?.first_name || ""} ${task.created_by?.last_name || ""}</span>
-          ${
-            task.completed_by
-              ? `<span>✅ Completed by: ${task.completed_by.first_name} ${task.completed_by.last_name}</span>`
-              : ""
-          }
+        <span>Added by: ${task.created_by?.first_name || ""} ${task.created_by?.last_name || ""}</span>
+      </div>
+      
+      ${
+        task.status === "completed" && task.completed_by
+          ? `<div class="task-meta">
+               <span>Completed by: ${task.completed_by.first_name} ${task.completed_by.last_name}</span>
+             </div>`
+          : ""
+      }
+      
         </div>
         ${
           task.status !== "completed"
