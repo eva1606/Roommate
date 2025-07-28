@@ -61,60 +61,74 @@
   </section>
   <section class="action-buttons">
     <section class="sort-container">
-        <button id="sortBtn" class="sort-toggle">
-          <img src="icons/sort.svg" alt="Sort Icon" class="btn-icon" />
-          Sort By
-        </button>
-        <ul id="sortMenuApartments" class="sort-menu hidden">
-          <li data-sort="price-high">Price : High to Low</li>
-          <li data-sort="price-low">Price : Low to High</li>
-          <li data-sort="recent">Most Recent</li>
-        </ul>
-        <section id="sortMenuRoommates" class="sort-menu hidden">
-            <ul>
-              <li>Age</li>
-              <li>Location: A to Z </li>
-              <li>Name: A to Z</li>
-            </ul>
-        </section>
+      <button id="sortBtn" class="sort-toggle">
+        <img src="icons/sort.svg" alt="Sort Icon" class="btn-icon" />
+        Sort By
+      </button>
+      <ul id="sortMenuApartments" class="sort-menu hidden">
+        <li data-sort="price-high">Price : High to Low</li>
+        <li data-sort="price-low">Price : Low to High</li>
+        <li data-sort="recent">Most Recent</li>
+      </ul>
+      <ul id="sortMenuRoommates" class="sort-menu hidden">
+        <li data-sort="budget">Budget: Low to high</li>
+        <li data-sort="location">Location: A to Z</li>
+        <li data-sort="name">Name: A to Z</li>
+      </ul>
     </section>
+  
     <button id="filterBtn">
       <img src="icons/filter.svg" alt="Filter Icon" class="btn-icon" />
       Filter
     </button>
-    <section id="filterOverlay" class="filter-overlay hidden">
-        <div class="filter-header">
-          <button id="closeFilter" class="close-filter-btn">
-            <img src="icons/close.svg" alt="Close" />
-          </button>
-          <h2>Filter</h2>
+  
+    <div class="filter-content hidden" id="filterOverlay">
+      <!-- FILTERS FOR APARTMENTS -->
+      <div id="filters-apartments" class="filter-group">
+        <h3>Filter Apartments</h3>
+        <div class="filter-item">
+          <label for="aptLocation">Location</label>
+          <select id="aptLocation">
+            <option value="all">All</option>
+            <option value="Paris">Paris</option>
+            <option value="Tel Aviv">Tel Aviv</option>
+          </select>
         </div>
-        <div class="filter-content">
-          <div class="filter-item">
-            <span>Location</span>
-            <span class="filter-value">All</span>
-          </div>
-          <hr />
-          <div class="filter-item">
-            <span>Budget</span>
-            <span class="filter-value">All</span>
-          </div>
-          <hr />
-          <div class="filter-item">
-            <span>Availability</span>
-            <span class="filter-value">All</span>
-          </div>
-          <hr />
-          <div class="filter-item">
-            <span>Rooms</span>
-            <span class="filter-value">All</span>
-          </div>
+        <div class="filter-item">
+          <label for="aptBudget">Max Budget</label>
+          <input type="number" id="aptBudget" placeholder="Enter max budget" />
         </div>
-        <div class="filter-footer">
-          <button class="view-items-btn">View Items</button>
+        <div class="filter-item">
+          <label for="aptRooms">Min Rooms</label>
+          <input type="number" id="aptRooms" placeholder="Enter number" />
         </div>
-      </section>
-  </section>   
+        <button id="applyFilterApt">Apply Filters</button>
+      </div>
+  
+      <!-- FILTERS FOR ROOMMATES -->
+      <div id="filters-roommates" class="filter-group hidden">
+        <h3>Filter Roommates</h3>
+        <div class="filter-item">
+          <label for="rmLocation">Location</label>
+          <select id="rmLocation">
+            <option value="all">All</option>
+            <option value="Paris">Tel Aviv</option>
+            <option value="London">Raanana</option>
+          </select>
+        </div>
+        <div class="filter-item">
+          <label for="rmBudget">Max Budget</label>
+          <input type="number" id="rmBudget" placeholder="Enter max budget" />
+        </div>
+        <div class="filter-item">
+          <label for="rmName">Name</label>
+          <input type="text" id="rmName" placeholder="Search name" />
+        </div>
+        <button id="applyFilterRoommates">Apply Filters</button>
+      </div>
+    </div>
+  </section>
+    
   <!-- Contenu des onglets -->
   <section id="apartments-section" class="tab-content active">
     <div id="apartment-available" class="property-list"></div>
@@ -129,15 +143,12 @@
       <img src="icons/home.svg" alt="Home icon" />
       <span>Home</span>
     </a>
-    <a href="#" class="nav-item">
-      <img src="icons/messages.svg" alt="Messages icon" />
-      <span>Messages</span>
-    </a>
+
     <a href="#" class="nav-item">
       <img src="icons/tasks.svg" alt="Tasks icon" />
       <span>Tasks</span>
     </a>
-    <a href="#" class="nav-item">
+    <a href="paymentroomate.html" class="nav-item">
       <img src="icons/payments.svg" alt="Payments icon" />
       <span>Payments</span>
     </a>
