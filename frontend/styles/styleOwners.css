@@ -659,6 +659,286 @@ textarea {
   cursor: pointer;
 }
 
+/* === Payments Owner Section === */
+.property-info {
+  background-color: #f9f9f9;
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.property-info p {
+  margin: 5px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+h3 {
+  margin-top: 25px;
+  font-size: 20px;
+  color: #222;
+}
+
+/* Table Styles */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+th, td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  font-size: 15px;
+}
+
+th {
+  background-color: #f0f0f0;
+  color: #444;
+}
+
+tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* Action Sections */
+.next-payment,
+.manual-payment {
+  margin: 30px 0;
+  padding: 20px;
+  background-color: #fdfdfd;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.next-payment h4,
+.manual-payment h3 {
+  margin-bottom: 10px;
+  font-size: 17px;
+  color: #111;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 10px 18px;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn.blue {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn.orange {
+  background-color: #ff6600;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+/* === MODAL === */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+#manualPaymentForm input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.property-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.property-list li button {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+#manual-payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#manual-payment-form input,
+#manual-payment-form button {
+  padding: 10px 14px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: inherit;
+}
+
+#manual-payment-form input:focus {
+  border-color: #4a90e2;
+  outline: none;
+  box-shadow: 0 0 3px #4a90e2;
+}
+
+#manual-payment-form button {
+  background-color: #4a90e2;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+#manual-payment-form button:hover {
+  background-color: #357ABD;
+}
+.next-payment {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 30px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.next-payment h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#next-payment-input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  display: block;
+  margin-top: 10px;
+}
+
+.next-payment .btn {
+  margin-top: 10px;
+  margin-right: 10px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.next-payment .btn.blue {
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+.next-payment .btn.orange {
+  background-color: #ff6600;
+  color: white;
+  border: none;
+}
+
+.next-payment .btn:hover {
+  opacity: 0.9;
+}
+
+.calendar-icon {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+#next-payment-input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-top: 8px;
+  display: inline-block;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .table-wrapper {
+    overflow-x: scroll;
+  }
+
+  th, td {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .modal-content {
+    padding: 20px;
+  }
+}
 
 /* Responsive */
 @media (max-width: 768px) {
