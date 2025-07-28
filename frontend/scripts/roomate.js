@@ -354,8 +354,12 @@ async function fetchProperties() {
             <img src="${roommate.photo_url || 'default-avatar.jpg'}" class="roommate-photo" />
             <div class="roommate-info">
               <h3>${roommate.first_name} ${roommate.last_name}</h3>
-              <p>📍 ${roommate.location}</p>
-              <p>💰 ${roommate.budget} ₪/Months</p>
+              <p>   
+              <img src="icons/Location.svg" alt="Location" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" />
+              ${roommate.location}
+              </p>
+              <p> <img src="icons/money.svg" alt="Budget"width="16" height="16" style="vertical-align: middle; margin-right: 6px;"  />
+              ${roommate.budget} ₪/Months</p>
             </div>
           </div>
           <div class="roommate-actions">
