@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 🔁 Récupérer les tâches de la propriété
   async function fetchTasks() {
     try {
-      const res = await fetch(`http://localhost:5050/api/tasks/property/${userId}`);
+      const res = await fetch(`http://127.0.0.1:5050/api/tasks/property/${userId}`);
       const tasks = await res.json();
       if (!Array.isArray(tasks)) throw new Error("Invalid task data");
       renderTasks(tasks);
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.addEventListener("click", async () => {
         const id = btn.dataset.id;
         try {
-          await fetch(`http://localhost:5050/api/tasks/${id}/complete`, {
+          await fetch(`http://127.0.0.1:5050/api/tasks/${id}/complete`, {
             method: "PATCH",
           });
           fetchTasks(); // refresh
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!title || !due) return alert("All fields required.");
 
     try {
-      await fetch("http://localhost:5050/api/tasks", {
+      await fetch("hhttp://127.0.0.1:5050/api/tasks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title, due_date: due, created_by: userId }),
