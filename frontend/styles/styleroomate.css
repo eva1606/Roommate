@@ -7,6 +7,7 @@ body, html {
   padding: 0;
   height: 100%;
   overflow: hidden; /* empêche le scroll global */
+  background-color: white;
 }
 
 header, footer {
@@ -19,7 +20,7 @@ header, footer {
 header {
   top: 0;
   height: 100px;
-  border-bottom: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-between; /* Place logo à gauche, hamburger à droite */
   align-items: center;
@@ -36,14 +37,14 @@ footer {
 }
 
 main {
-  position: absolute;
+  position: fixed;
   top: 60px; /* même que le header */
   bottom: 60px; /* même que le footer */
   left: 0;
   right: 0;
   overflow-y: auto;
   padding: 1rem;
-  background-color: #f7f7f7;
+  background-color: white
 }
 body {
     background-color: #F2F2F2;
@@ -194,11 +195,10 @@ a {
     border-radius: 10px;
     font-size: 16px;
     outline: none;
-    color: #D0D5DD;
+    color: black;
     font-family: Roboto;
   }
-  
-  
+
   .tabs {
     display: flex;
     justify-content: center;
@@ -234,124 +234,121 @@ a {
   .tab-content.active {
     display: block;
   }
-  .action-buttons {
-    display: flex;
-    justify-content: space-around;
-    margin: 1rem 0;
-    transform: rotate(0.337deg);
-    height : 38px
-  }
-  
-  .action-buttons button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
-    background-color: #d9d9d9;
-    color: #333;
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  /* ==========================
-   SORT BUTTON / DROPDOWN
-========================== */
-.sort-container {
-  position: relative;
-  display: inline-block;
+/* Action Buttons Container */
+.action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 7.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
-.sort-toggle {
-  background: #e6e6e6;
+.sort-toggle,
+#filterBtn {
+  background-color: #e0e7ff;
+  color: #1e3a8a;
   border: none;
-  padding: 10px 16px;
+  padding: 10px 14px;
+  border-radius: 10px;
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 8px;
-  border-radius: 12px;
+  gap: 6px;
   cursor: pointer;
 }
 
-.sort-menu {
-  position: fixed;
-  background: #f3f3f3;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
+.sort-toggle img,
+#filterBtn img {
+  width: 18px;
 }
 
-.sort-menu ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+/* Sort Menu */
+.sort-menu {
+  position: absolute;
+  margin-top: 6px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  list-style: disc inside;
+  padding: 10px 0;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+  z-index: 10;
 }
 
 .sort-menu li {
-  padding: 8px 12px;
+  padding: 10px 20px;
   cursor: pointer;
-  border-bottom: 1px solid #ccc;
+  font-size: 0.95rem;
   list-style: none;
 }
 
-.sort-menu li:last-child {
-  border-bottom: none;
-}
-
 .sort-menu li:hover {
-  background: #e0e0e0;
+  background-color: #f3f4f6;
 }
 
-.filter-overlay {
-  position: fixed;
-  width: 80%;
-  height: 100vh;
-  background-color: #ffffff;
-  z-index: 9999;
-  display: none; /* hidden by default */
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 20px;
-  overflow-y: auto;
-}
-
-.filter-overlay.show {
-  display: flex;
-}
-
-.filter-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.close-filter-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
-  padding: 5px;
-}
-
+/* ========== Filter Panel ========== */
 .filter-content {
-  margin-top: 20px;
-  flex-grow: 1;
+  position: absolute;
+  right: 16px;
+  top: 234px;
+  width: 280px;
+  background-color: white;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  z-index: 50;
+  border: 1px solid #e5e7eb;
+}
+
+.filter-group {
+  margin-bottom: 16px;
+}
+
+.filter-group h3 {
+  font-size: 1.2rem;
+  color: #111827;
+  margin-bottom: 12px;
 }
 
 .filter-item {
   display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-  font-weight: 500;
+  flex-direction: column;
+  margin-bottom: 12px;
 }
 
-.filter-footer {
-  margin-top: auto;
-  text-align: center;
+.filter-item label {
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+  font-weight: 600;
 }
 
+.filter-item input,
+.filter-item select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+}
+
+.filter-group button {
+  padding: 10px;
+  background-color: #1d4ed8;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+/* Utilitaires */
 .hidden {
   display: none;
+}
+
+.hidden-card {
+  display: none !important;
 }
 
   .property-card {
@@ -502,5 +499,8 @@ a {
   .roommate-actions svg {
     width: 22px;
     height: 22px;
+  }
+  .hidden-card {
+    display: none; /* Ou visibility: hidden si tu veux garder la place */
   }
   

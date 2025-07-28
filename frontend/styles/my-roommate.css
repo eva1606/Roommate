@@ -1,0 +1,155 @@
+/* my-roommate.css */
+
+:root {
+  --primary-color: #0056cc;
+  --accent-color: #ff6600;
+  --bg-color: #f5f8fa;
+  --text-color: #111;
+  --card-bg: #fff;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --border-radius: 12px;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+h1, h3 {
+  text-align: center;
+  color: var(--primary-color);
+  margin-top: 20px;
+}
+
+section, .documents-section, #roommates-list {
+  margin: 20px auto;
+  padding: 20px;
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 12px var(--shadow);
+  width: 90%;
+  max-width: 800px;
+}
+
+.property-photo {
+  width: 100%;
+  border-radius: var(--border-radius);
+  margin-top: 10px;
+  object-fit: cover;
+}
+
+.roommates-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.roommate-card {
+  flex: 1 1 150px;
+  background-color: #ffffff;
+  padding: 16px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 6px var(--shadow);
+  text-align: center;
+  max-width: 180px;
+}
+
+.roommate-photo {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.doc-link {
+  display: block;
+  background-color: var(--accent-color);
+  color: white;
+  padding: 10px;
+  border-radius: var(--border-radius);
+  margin: 10px 0;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.doc-link:hover {
+  background-color: #e05500;
+}
+
+#upload-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+#upload-form input[type="file"] {
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+#upload-form button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#upload-form button:hover {
+  background-color: #0041a8;
+}
+
+#upload-status {
+  text-align: center;
+  font-weight: 500;
+  color: var(--primary-color);
+  margin-top: 10px;
+}
+.back-button {
+  display: inline-block;
+  margin: 20px auto 0;
+  margin-left: 70px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 6px var(--shadow);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+
+}
+
+.back-button:hover {
+  background-color: #0041a8;
+}
+
+
+@media (max-width: 600px) {
+  .roommates-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .roommate-card {
+    width: 100%;
+    max-width: 90%;
+  }
+}
