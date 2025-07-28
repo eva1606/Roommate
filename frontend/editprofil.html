@@ -16,14 +16,12 @@
   <main>
     <form id="edit-profile-form" enctype="multipart/form-data" class="edit-form">
       
-      <!-- Photo de profil -->
       <div class="form-group center">
         <label for="photo-input">Profile Photo:</label>
         <input type="file" name="photo" accept="image/*" id="photo-input" />
         <img id="photo-preview" src="" alt="Current Profile Photo" style="display:none;" />
       </div>
 
-      <!-- Informations de base -->
       <div class="form-group">
         <label for="first_name">First Name:</label>
         <input type="text" id="first_name" name="first_name" required />
@@ -96,7 +94,6 @@
         <input type="number" id="budget" name="budget" min="0" max="10000" />
       </div>
 
-      <!-- Bouton de soumission -->
       <button type="submit" class="save-btn">💾 Save Profile</button>
     </form>
   </main>
