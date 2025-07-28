@@ -231,26 +231,46 @@ const getAvailableProperties = async (req, res) => {
 };
 
 const getRentedProperties = async (req, res) => {
-  const { ownerId } = req.params;
+  const userId = req.params.ownerId; // ✅ corriger ici
+  const month = req.query.month;
+
   try {
-    const result = await pool.query(
-      `SELECT 
-         p.*, 
-         (
-           SELECT COUNT(*) 
-           FROM roommates_properties 
-           WHERE property_id = p.id
-         ) AS roommate_count
-       FROM properties p
-       WHERE p.owner_id = $1 AND p.status = 'rented'
-       ORDER BY p.id DESC`,
-      [ownerId]
-    );    
+    let result;
+
+    if (month) {
+      result = await pool.query(
+        `SELECT p.*, COUNT(DISTINCT rp.user_id) AS roommate_count,
+                COALESCE(SUM(CASE WHEN pay.status = 'paid' AND pay.month = $2 THEN 1 ELSE 0 END), 0) AS paid_count
+         FROM properties p
+         JOIN roommates_properties rp ON p.id = rp.property_id
+         LEFT JOIN payments pay ON pay.property_id = p.id AND pay.user_id = rp.user_id
+         WHERE p.owner_id = $1 AND p.status = 'rented'
+         GROUP BY p.id`,
+        [userId, month]
+      );
+    } else {
+      result = await pool.query(
+        `SELECT p.*, COUNT(DISTINCT rp.user_id) AS roommate_count,
+                COALESCE(SUM(CASE WHEN pay.status = 'paid' THEN 1 ELSE 0 END), 0) AS paid_count
+         FROM properties p
+         JOIN roommates_properties rp ON p.id = rp.property_id
+         LEFT JOIN payments pay ON pay.property_id = p.id AND pay.user_id = rp.user_id
+         WHERE p.owner_id = $1 AND p.status = 'rented'
+         GROUP BY p.id`,
+        [userId]
+      );
+    }
+
     res.json(result.rows);
   } catch (err) {
-    res.status(500).json({ error: "Error fetching rented properties" });
+    console.error("❌ Error in getRentedProperties:", err);
+    res.status(500).json({ error: "Server error" });
   }
 };
+
+
+
+
 const uploadDocument = async (req, res) => {
   try {
     console.log("📥 Upload reçu :", req.file);
@@ -345,6 +365,77 @@ const getOwnerPhoneByPropertyId = async (req, res) => {
   }
 };
 
+
+const getPaymentsForProperty = async (req, res) => {
+  const { propertyId } = req.params;
+  const month = req.query.month || 'July';
+
+  try {
+    const result = await pool.query(
+      `SELECT 
+         u.first_name || ' ' || u.last_name AS roommate_name,
+         p.status,
+         TO_CHAR(p.updated_at, 'Month DD, YYYY') AS date_paid
+       FROM payments p
+       JOIN users u ON p.user_id = u.id
+       WHERE p.property_id = $1 AND p.month = $2`,
+      [propertyId, month]
+    );
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching payments:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
+const addManualPayment = async (req, res) => {
+  const { phone, month, property_id, date_paid } = req.body;
+
+  if (!phone || !month || !property_id || !date_paid) {
+    return res.status(400).json({ error: "Missing fields" });
+  }
+
+  try {
+    const userResult = await pool.query(
+      `SELECT id, first_name, last_name FROM users WHERE phone = $1 LIMIT 1`,
+      [phone]
+    );
+
+    if (userResult.rows.length === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const user = userResult.rows[0];
+    // 🔁 S'assurer que le user est bien lié à la propriété
+    await pool.query(
+    `INSERT INTO roommates_properties (user_id, property_id)
+    VALUES ($1, $2)
+   ON CONFLICT DO NOTHING`,
+    [user.id, property_id]
+    );
+
+
+    await pool.query(
+      `INSERT INTO payments (user_id, property_id, month, status, updated_at)
+       VALUES ($1, $2, $3, 'paid', $4)`,
+      [user.id, property_id, month, date_paid]
+    );
+
+    res.status(201).json({
+      roommate_name: `${user.first_name} ${user.last_name}`,
+      status: "paid",
+      date_paid: new Date(date_paid).toLocaleDateString()
+    });
+  } catch (err) {
+    console.error("❌ Error in addManualPayment:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+
+
 module.exports = {
   addProperty,
   getProperties,
@@ -357,5 +448,7 @@ module.exports = {
   uploadDocument,
   getDocumentsForProperty,
   getRoommatesForProperty,
-  getOwnerPhoneByPropertyId 
+  getOwnerPhoneByPropertyId,
+  getPaymentsForProperty,
+  addManualPayment
 };
