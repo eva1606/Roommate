@@ -1,6 +1,6 @@
 // controllers/myRoommateController.js
 const db = require("../db");
-const path = require('path');
+
 
 exports.getMyRoommateProperty = async (req, res) => {
   const userId = req.params.userId;
