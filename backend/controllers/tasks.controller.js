@@ -33,49 +33,38 @@ exports.getTasksByUser = async (req, res) => {
   }
 };
 
-// ✅ POST: Ajouter une nouvelle tâche
+// ➕ POST: Ajouter une nouvelle tâche
 exports.addTask = async (req, res) => {
-  const { property_id, title, created_by, assigned_to, due_date } = req.body;
+  const { title, due_date, created_by } = req.body;
 
-  if (!property_id || !title || !created_by) {
-    return res.status(400).json({ message: "Missing required fields." });
+  if (!title || !due_date || !created_by) {
+    return res.status(400).json({ message: "Tous les champs sont obligatoires." });
   }
 
   try {
+    // Trouver la propriété de l'utilisateur
+    const { rows: propRows } = await pool.query(
+      `SELECT property_id FROM roommates_properties WHERE user_id = $1 LIMIT 1`,
+      [created_by]
+    );
+
+    if (!propRows.length) {
+      return res.status(403).json({ message: "Aucune propriété liée à cet utilisateur." });
+    }
+
+    const property_id = propRows[0].property_id;
+
+    // Insérer la tâche
     const { rows } = await pool.query(
-      `INSERT INTO tasks (property_id, title, created_by, assigned_to, due_date)
-       VALUES ($1, $2, $3, $4, $5)
-       RETURNING *`,
-      [property_id, title, created_by, assigned_to || null, due_date || null]
+      `INSERT INTO tasks (property_id, title, due_date, created_by)
+       VALUES ($1, $2, $3, $4)
+       RETURNING id, title, status, due_date`,
+      [property_id, title, due_date, created_by]
     );
 
     res.status(201).json(rows[0]);
   } catch (err) {
-    console.error("❌ Error adding task:", err);
-    res.status(500).json({ message: "Server error adding task." });
+    console.error("❌ Erreur lors de l'ajout de la tâche :", err);
+    res.status(500).json({ message: "Erreur serveur lors de l'ajout de la tâche." });
   }
 };
-// ✅ PUT: Marquer une tâche comme complétée
-exports.markTaskAsDone = async (req, res) => {
-  const { taskId } = req.params;
-
-  try {
-    const { rows } = await pool.query(
-      `UPDATE tasks
-       SET status = 'done'
-       WHERE id = $1
-       RETURNING *`,
-      [taskId]
-    );
-
-    if (!rows.length) {
-      return res.status(404).json({ message: "Task not found." });
-    }
-
-    res.json(rows[0]);
-  } catch (err) {
-    console.error("❌ Error updating task:", err);
-    res.status(500).json({ message: "Server error updating task." });
-  }
-};
-
