@@ -255,35 +255,24 @@ const getAvailableProperties = async (req, res) => {
 };
 
 const getRentedProperties = async (req, res) => {
-  const userId = req.params.ownerId; // ✅ corriger ici
+  const userId = req.params.ownerId;
   const month = req.query.month;
 
   try {
-    let result;
-
-    if (month) {
-      result = await pool.query(
-        `SELECT p.*, COUNT(DISTINCT rp.user_id) AS roommate_count,
-                COALESCE(SUM(CASE WHEN pay.status = 'paid' AND pay.month = $2 THEN 1 ELSE 0 END), 0) AS paid_count
-         FROM properties p
-         JOIN roommates_properties rp ON p.id = rp.property_id
-         LEFT JOIN payments pay ON pay.property_id = p.id AND pay.user_id = rp.user_id
-         WHERE p.owner_id = $1 AND p.status = 'rented'
-         GROUP BY p.id`,
-        [userId, month]
-      );
-    } else {
-      result = await pool.query(
-        `SELECT p.*, COUNT(DISTINCT rp.user_id) AS roommate_count,
-                COALESCE(SUM(CASE WHEN pay.status = 'paid' THEN 1 ELSE 0 END), 0) AS paid_count
-         FROM properties p
-         JOIN roommates_properties rp ON p.id = rp.property_id
-         LEFT JOIN payments pay ON pay.property_id = p.id AND pay.user_id = rp.user_id
-         WHERE p.owner_id = $1 AND p.status = 'rented'
-         GROUP BY p.id`,
-        [userId]
-      );
-    }
+    const result = await pool.query(
+      `
+      SELECT 
+        p.*, 
+        COUNT(DISTINCT rp.user_id) AS roommate_count,
+        COUNT(DISTINCT CASE WHEN pay.status = 'paid' ${month ? "AND pay.month = $2" : ""} THEN pay.user_id END) AS paid_count
+      FROM properties p
+      LEFT JOIN roommates_properties rp ON p.id = rp.property_id
+      LEFT JOIN payments pay ON pay.property_id = p.id AND pay.user_id = rp.user_id
+      WHERE p.owner_id = $1 AND p.status = 'rented'
+      GROUP BY p.id
+      `,
+      month ? [userId, month] : [userId]
+    );
 
     res.json(result.rows);
   } catch (err) {

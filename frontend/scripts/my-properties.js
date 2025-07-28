@@ -27,8 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
   
       properties.forEach(prop => {
-        const allPaid = Number(prop.paid_count) >= Number(prop.roommate_count);
-        const paymentText = allPaid ? `✅ Paid in full` : '❌ Unpaid';
+        const allPaid = prop.roommate_count > 0 && Number(prop.paid_count) >= Number(prop.roommate_count);
+const paymentText = allPaid ? `✅ Paid in full` : '❌ Unpaid';
+
   
         const card = document.createElement('div');
         card.classList.add('roommate-property-card');
