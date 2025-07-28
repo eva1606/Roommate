@@ -13,10 +13,10 @@ const potentialRoommatesRoutes = require('./routes/potentialRoomatesRoutes');
 const propertiesAvailableRoutes = require('./routes/propertiesavailable');
 const roommatePropertyRoute = require('./routes/roommatePropertyRoute');
 const expensesRoutes = require("./routes/expenses.routes");
-const taskRoutes = require("./routes/tasks.routes");
+const tasksRoutes = require("./routes/tasks.routes");
 
 app.use("/api/expenses", expensesRoutes);
-app.use("/api/tasks", taskRoutes);
+app.use("/api/tasks", tasksRoutes);
 app.use('/api/roommate-property', roommatePropertyRoute);
 app.use('/api/properties-available', propertiesAvailableRoutes); 
 app.use('/api/potential-roommates', potentialRoommatesRoutes);

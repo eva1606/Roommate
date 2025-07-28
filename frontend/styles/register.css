@@ -1,56 +1,51 @@
+/* === Reset & Base === */
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #f4f7f8;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  margin: 0;
-}
-
-.container {
-  background: white;
-  padding: 40px 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-  width: 100%;
-  max-width: 420px;
-  box-sizing: border-box;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 20px auto;
-  width: 80px;
-}
-
-h1 {
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
   text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+/* === Container === */
+.container {
+  padding: 60px 20px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+/* === Logo === */
+.logo {
+  width: 250px;
+}
+
+/* === Titles & Text === */
+h1 {
+  color: #0021F5; /* Bleu profond */
+  font-size: 1.8rem;
   margin-bottom: 10px;
-  font-size: 1.6rem;
-  color: #333;
 }
 
 p {
-  text-align: center;
-  margin-bottom: 25px;
+  color: #555;
   font-size: 0.95rem;
-  color: #666;
+  margin-bottom: 25px;
 }
 
+/* === Forms === */
 form {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  width: 100%;
 }
 
 input, select {
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  width: 100%;
-  box-sizing: border-box;
   font-size: 0.95rem;
+  box-sizing: border-box;
   transition: border-color 0.3s ease;
 }
 
@@ -60,21 +55,22 @@ input[type="file"] {
 }
 
 input:focus, select:focus {
-  border-color: #007BFF;
+  border-color: #0021F5;
   outline: none;
 }
 
 label {
+  text-align: left;
   font-weight: 500;
-  margin-top: 5px;
-  color: #444;
   font-size: 0.95rem;
+  color: #333;
 }
 
+/* === Buttons === */
 button {
   padding: 12px;
-  background-color: #007BFF;
-  color: white;
+  background-color: #FFC107; /* Jaune orangé */
+  color: blue;
   border: none;
   border-radius: 8px;
   font-weight: bold;
@@ -84,11 +80,12 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #e0a800;
 }
 
+/* === Errors === */
 .error {
   color: #e74c3c;
   margin-top: 10px;
-  text-align: center;
+  font-size: 0.9rem;
 }
