@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const taskList = document.querySelector(".task-list");
   const addBtn = document.querySelector(".add-btn");
 
-  // 🔁 Récupérer les tâches de la propriété
+  // 🔁 Charger les tâches
   async function fetchTasks() {
     try {
       const res = await fetch(`http://127.0.0.1:5050/api/tasks/property/${userId}`);
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // 🧾 Afficher les tâches dans le DOM
+  // 🧾 Affichage des tâches
   function renderTasks(tasks) {
     taskList.innerHTML = "";
     if (tasks.length === 0) {
@@ -29,32 +29,39 @@ document.addEventListener("DOMContentLoaded", () => {
     tasks.forEach((task) => {
       const div = document.createElement("div");
       div.className = "task-item";
+
       div.innerHTML = `
-        <h3>${task.title}</h3>
-        <p>Status: ${task.status}</p>
-        <p>Due: ${new Date(task.due_date).toLocaleDateString()}</p>
+        <div class="task-title">${task.title}</div>
+        <div class="task-meta">
+          <span>Status: ${task.status}</span>
+          <span>Due: ${new Date(task.due_date).toLocaleDateString()}</span>
+        </div>
+        <div class="task-meta">
+          <span>Added by: ${task.first_name} ${task.last_name}</span>
+        </div>
         ${
-          task.status !== "done"
-            ? `<button class="done-btn" data-id="${task.id}">✔ Mark Done</button>`
+          task.status !== "completed"
+            ? `<button class="task-btn" data-id="${task.id}">Mark as Done</button>`
             : ""
         }
       `;
-      taskList.appendChild(div);
-    });
 
-    // ✅ Ajouter les eventListeners sur les boutons "Mark Done"
-    document.querySelectorAll(".done-btn").forEach((btn) => {
-      btn.addEventListener("click", async () => {
-        const id = btn.dataset.id;
-        try {
-          await fetch(`http://127.0.0.1:5050/api/tasks/${id}/complete`, {
-            method: "PATCH",
-          });
-          fetchTasks(); // refresh
-        } catch (err) {
-          alert("Error marking task as done.");
-        }
-      });
+      // Bouton de validation
+      if (task.status !== "completed") {
+        const btn = div.querySelector(".task-btn");
+        btn.addEventListener("click", async () => {
+          try {
+            await fetch(`http://127.0.0.1:5050/api/tasks/${task.id}/complete`, {
+              method: "PATCH",
+            });
+            fetchTasks(); // Recharger
+          } catch (err) {
+            alert("Error marking task as done.");
+          }
+        });
+      }
+
+      taskList.appendChild(div);
     });
   }
 
@@ -69,7 +76,11 @@ document.addEventListener("DOMContentLoaded", () => {
       await fetch("http://127.0.0.1:5050/api/tasks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, due_date: due, created_by: userId }),
+        body: JSON.stringify({
+          title,
+          due_date: due,
+          created_by: userId,
+        }),
       });
       fetchTasks();
     } catch (err) {
@@ -77,6 +88,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 🚀 Initialisation
   fetchTasks();
 });
