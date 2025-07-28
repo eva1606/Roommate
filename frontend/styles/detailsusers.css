@@ -66,21 +66,32 @@ body {
     text-align: left;
     margin-top: 16px;
   }
-  
-  #send-match-btn {
-    background-color: #0056cc;
-    color: white;
-    font-weight: bold;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 24px;
-    width: 100%;
-    transition: background 0.3s ease;
+  .contact-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px auto;
   }
   
-  #send-match-btn:hover {
-    background-color: #003d99;
+  .contact-btn {
+    background-color: #0056cc;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 86, 204, 0.2);
+  }
+  
+  .contact-btn:hover {
+    background-color: #0041a8;
+  }
+  
+  .icon {
+    width: 24px;
+    height: 24px;
   }
   
