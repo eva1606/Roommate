@@ -96,12 +96,12 @@ const deleteProperty = async (req, res) => {
     }
 
     res.status(200).json({ message: "Property deleted successfully" });
-  } catch (err) {
+  } 
+  catch (err) {
     console.error("❌ Error in deleteProperty:", err);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
 
+  }
+}
 
 
 
