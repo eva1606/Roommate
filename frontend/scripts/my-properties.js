@@ -65,4 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
       container.innerHTML = "Error loading properties.";
     }
   }
-  
+  document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.clear();
+    window.location.href = "login.html";
+  });

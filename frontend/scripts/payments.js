@@ -116,6 +116,7 @@ if (savedDate) {
       console.error("payments.js:122 Error:", err);
       alert("Failed to add manual payment.");
     }
+
   });
   
   function openModal() {
@@ -156,4 +157,8 @@ if (savedDate) {
       span.textContent = selectedDate.toLocaleDateString('en-US', options);
     }
   }
-  
+  document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
+  e.preventDefault();
+  localStorage.clear();
+  window.location.href = "login.html";
+});

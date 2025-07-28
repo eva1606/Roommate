@@ -119,5 +119,10 @@ document.querySelectorAll(".footer-link").forEach(link => {
     link.classList.add("active");
   }
 });
+document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
+  e.preventDefault();
+  localStorage.clear();
+  window.location.href = "login.html";
+});
 
 });
