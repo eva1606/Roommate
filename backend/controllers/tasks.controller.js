@@ -1,28 +1,46 @@
 const pool = require("../db");
 
-// ✅ GET: All tasks for the property of the current user
 exports.getTasksByUser = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    // 🔍 Récupérer la propriété associée à l'utilisateur
+    // 🔍 Récupérer la propriété de l'utilisateur
     const { rows: propertyRows } = await pool.query(
       `SELECT property_id FROM roommates_properties WHERE user_id = $1 LIMIT 1`,
       [userId]
     );
 
     if (!propertyRows.length) {
-      return res.status(404).json({ message: "No property found for this user." });
+      return res.status(404).json({ message: "No property found." });
     }
 
     const propertyId = propertyRows[0].property_id;
 
-    // 📋 Récupérer les tâches associées à cette propriété
+    // 📦 Récupérer les tâches avec les infos créateur & compléteur
     const { rows: tasks } = await pool.query(
-      `SELECT id, title, status, due_date, assigned_to
-       FROM tasks
-       WHERE property_id = $1
-       ORDER BY due_date ASC`,
+      `SELECT 
+         t.id,
+         t.title,
+         t.status,
+         t.due_date,
+         json_build_object(
+           'id', creator.id,
+           'first_name', creator.first_name,
+           'last_name', creator.last_name
+         ) AS created_by,
+         CASE
+           WHEN completer.id IS NOT NULL THEN json_build_object(
+             'id', completer.id,
+             'first_name', completer.first_name,
+             'last_name', completer.last_name
+           )
+           ELSE NULL
+         END AS completed_by
+       FROM tasks t
+       JOIN users creator ON creator.id = t.created_by
+       LEFT JOIN users completer ON completer.id = t.completed_by
+       WHERE t.property_id = $1
+       ORDER BY t.due_date ASC`,
       [propertyId]
     );
 
@@ -33,7 +51,7 @@ exports.getTasksByUser = async (req, res) => {
   }
 };
 
-const pool = require("../db");
+
 
 // ✅ POST: Ajouter une tâche et retourner infos + nom/prénom du créateur
 exports.addTask = async (req, res) => {
