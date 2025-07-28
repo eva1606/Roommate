@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Payments</title>
+  <link rel="stylesheet" href="styles/expenses.css" />
+</head>
+<body>
+    <header>
+        <a href="roomate-dashboard.html" id="logo">
+          <span>Roommate</span>
+        </a>
+    
+        <!-- BOUTON HAMBURGER -->
+        <button id="hamburgerBtn" class="hamburger" aria-label="Open menu">
+          <img src="icons/Menu-3.svg" alt="Menu icon" />
+        </button>
+      </header>
+    
+      <!-- OVERLAY MENU -->
+      <section id="menuOverlay" class="menu-overlay hidden">
+        
+        <!-- BOUTON FERMETURE + ICÔNE -->
+        <button id="closeMenu" class="close-btn" aria-label="Close menu">
+          <img src="icons/close.svg" alt="Close icon"/>
+        </button>
+    
+        <nav class="menu-list">
+            <ul>
+              <li>
+                <a href="profil.html"><img src="icons/users.svg" class="icon" /> <span>Profile</span></a>
+              </li>
+              <li>
+                <a href="favorite.html"><img src="icons/heart.svg" class="icon" /> <span>My Matches</span></a>
+              </li>
+              <li>
+                <a href="Setting.html"><img src="icons/settings.svg" class="icon" /> <span>Settings</span></a>
+              </li>
+            </ul>
+          </nav>
+          
+    
+          <a href="#" id="logoutBtn" class="signout">
+          <img src="icons/logout.svg" class="menu-icon" /><span>Sign Out</span>
+        </a>
+      </section>  
+     
+  <!-- Add Payment -->
+  <main class="main-container">
+    <section class="add-section">
+      <button class="add-btn"> Add Payment</button>
+    </section>
+
+    <!-- List of Payments -->
+    <section class="payment-list">
+      <!-- Example Payment Item (to be replaced by JS) -->
+      <!--
+      <div class="payment-item">
+        <span class="payment-label">Electricity Bill</span>
+        <span class="payment-amount">₪120</span>
+        <button class="pay-btn">Pay</button>
+      </div>
+      -->
+    </section>
+  </main>
+
+  <footer class="footer-nav">
+    <a href="#" class="nav-item">
+      <img src="icons/home.svg" alt="Home icon" />
+      <span>Home</span>
+    </a>
+
+    <a href="#" class="nav-item">
+      <img src="icons/tasks.svg" alt="Tasks icon" />
+      <span>Tasks</span>
+    </a>
+    <a href="#" class="nav-item">
+      <img src="icons/payments.svg" alt="Payments icon" />
+      <span>Payments</span>
+    </a>
+  </footer>
+
+  <!-- Script for fetching and rendering payments -->
+  <script src="scripts/payment.js"></script>
+</body>
+</html>
