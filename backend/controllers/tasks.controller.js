@@ -33,42 +33,65 @@ exports.getTasksByUser = async (req, res) => {
   }
 };
 
-// ➕ POST: Ajouter une nouvelle tâche
+const pool = require("../db");
+
+// ✅ POST: Ajouter une tâche et retourner infos + nom/prénom du créateur
 exports.addTask = async (req, res) => {
   const { title, due_date, created_by } = req.body;
 
   if (!title || !due_date || !created_by) {
-    return res.status(400).json({ message: "Tous les champs sont obligatoires." });
+    return res.status(400).json({ message: "All fields are required." });
   }
 
   try {
-    // Trouver la propriété de l'utilisateur
-    const { rows: propRows } = await pool.query(
+    // 🔍 Trouver la propriété liée à l'utilisateur
+    const { rows: propertyRows } = await pool.query(
       `SELECT property_id FROM roommates_properties WHERE user_id = $1 LIMIT 1`,
       [created_by]
     );
 
-    if (!propRows.length) {
-      return res.status(403).json({ message: "Aucune propriété liée à cet utilisateur." });
+    if (!propertyRows.length) {
+      return res.status(403).json({ message: "User is not linked to a property." });
     }
 
-    const property_id = propRows[0].property_id;
+    const propertyId = propertyRows[0].property_id;
 
-    // Insérer la tâche
+    // ➕ Insérer la tâche
     const { rows } = await pool.query(
       `INSERT INTO tasks (property_id, title, due_date, created_by)
        VALUES ($1, $2, $3, $4)
-       RETURNING id, title, status, due_date`,
-      [property_id, title, due_date, created_by]
+       RETURNING *`,
+      [propertyId, title, due_date, created_by]
     );
 
-    res.status(201).json(rows[0]);
+    const task = rows[0];
+
+    // 👤 Récupérer le nom du créateur
+    const { rows: userRows } = await pool.query(
+      `SELECT first_name, last_name FROM users WHERE id = $1`,
+      [created_by]
+    );
+
+    const user = userRows[0];
+
+    // ✅ Répondre avec tout
+    res.status(201).json({
+      id: task.id,
+      title: task.title,
+      due_date: task.due_date,
+      status: task.status,
+      created_by: {
+        id: created_by,
+        first_name: user.first_name,
+        last_name: user.last_name
+      }
+    });
   } catch (err) {
-    console.error("❌ Erreur lors de l'ajout de la tâche :", err);
-    res.status(500).json({ message: "Erreur serveur lors de l'ajout de la tâche." });
+    console.error("❌ Error adding task:", err);
+    res.status(500).json({ message: "Server error adding task." });
   }
 };
-const pool = require("../db");
+
 
 // ✅ PATCH: Marquer une tâche comme faite + enregistrer par qui
 exports.markTaskAsDone = async (req, res) => {
