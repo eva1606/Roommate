@@ -62,12 +62,18 @@ document.addEventListener("DOMContentLoaded", () => {
       const div = document.createElement("div");
       div.className = "payment-item";
       div.innerHTML = `
-        <span class="payment-label">${item.label}</span>
-        <span class="payment-amount">₪${item.amount}</span>
-        <span class="payment-date">${new Date(item.date).toLocaleDateString()}</span>
+        <div class="payment-info">
+          <span class="payment-label">${item.label}</span>
+          <span class="payment-user">${item.first_name} ${item.last_name}</span>
+        </div>
+        <div class="payment-meta">
+          <span class="payment-amount">₪${item.amount}</span>
+          <span class="payment-date">${new Date(item.date).toLocaleDateString()}</span>
+        </div>
       `;
       paymentList.appendChild(div);
     });
+    
   }
 
   // 🔁 Initialisation
