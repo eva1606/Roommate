@@ -5,21 +5,21 @@ exports.getTasksByUser = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    // 1. Trouver la propriété du colocataire
+    // 🔍 Récupérer la propriété associée à l'utilisateur
     const { rows: propertyRows } = await pool.query(
       `SELECT property_id FROM roommates_properties WHERE user_id = $1 LIMIT 1`,
       [userId]
     );
 
     if (!propertyRows.length) {
-      return res.status(404).json({ message: "No property found for user." });
+      return res.status(404).json({ message: "No property found for this user." });
     }
 
     const propertyId = propertyRows[0].property_id;
 
-    // 2. Récupérer les tâches de cette propriété
+    // 📋 Récupérer les tâches associées à cette propriété
     const { rows: tasks } = await pool.query(
-      `SELECT id, title, status, due_date, created_by, assigned_to
+      `SELECT id, title, status, due_date, assigned_to
        FROM tasks
        WHERE property_id = $1
        ORDER BY due_date ASC`,
