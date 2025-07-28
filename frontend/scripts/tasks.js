@@ -5,12 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const taskList = document.querySelector(".task-list");
   const addBtn = document.querySelector(".add-btn");
 
-  // Récupérer les tâches de la propriété
+  // 🔁 Récupérer les tâches de la propriété
   async function fetchTasks() {
     try {
       const res = await fetch(`http://localhost:5050/api/tasks/property/${userId}`);
       const tasks = await res.json();
-
+      if (!Array.isArray(tasks)) throw new Error("Invalid task data");
       renderTasks(tasks);
     } catch (err) {
       console.error("❌ Failed to fetch tasks:", err);
@@ -18,39 +18,39 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Affichage des tâches
-  function renderTasks(list) {
+  // 🧾 Afficher les tâches dans le DOM
+  function renderTasks(tasks) {
     taskList.innerHTML = "";
-    if (!Array.isArray(list) || list.length === 0) {
+    if (tasks.length === 0) {
       taskList.innerHTML = "<p>No tasks yet.</p>";
       return;
     }
 
-    list.forEach(task => {
+    tasks.forEach((task) => {
       const div = document.createElement("div");
-      div.className = "payment-item";
+      div.className = "task-item";
       div.innerHTML = `
-        <span class="payment-label">${task.title}</span>
-        <span class="payment-date">${new Date(task.due_date).toLocaleDateString()}</span>
-        <span class="payment-status">${task.status}</span>
+        <h3>${task.title}</h3>
+        <p>Status: ${task.status}</p>
+        <p>Due: ${new Date(task.due_date).toLocaleDateString()}</p>
         ${
-          task.status !== "completed"
-            ? `<button class="pay-btn" data-id="${task.id}">Mark Done</button>`
+          task.status !== "done"
+            ? `<button class="done-btn" data-id="${task.id}">✔ Mark Done</button>`
             : ""
         }
       `;
       taskList.appendChild(div);
     });
 
-    // Boutons "Mark Done"
-    document.querySelectorAll(".pay-btn").forEach(btn => {
+    // ✅ Ajouter les eventListeners sur les boutons "Mark Done"
+    document.querySelectorAll(".done-btn").forEach((btn) => {
       btn.addEventListener("click", async () => {
         const id = btn.dataset.id;
         try {
           await fetch(`http://localhost:5050/api/tasks/${id}/complete`, {
             method: "PATCH",
           });
-          fetchTasks();
+          fetchTasks(); // refresh
         } catch (err) {
           alert("Error marking task as done.");
         }
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Ajouter une tâche
+  // ➕ Ajouter une tâche
   addBtn?.addEventListener("click", async () => {
     const title = prompt("Enter task title:");
     const due = prompt("Enter due date (YYYY-MM-DD):");
@@ -77,5 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // 🚀 Initialisation
   fetchTasks();
 });
