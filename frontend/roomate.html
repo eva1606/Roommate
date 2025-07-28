@@ -6,22 +6,21 @@
   <link rel="stylesheet" href="styles/my-roommate.css" />
 </head>
   <body>
-    <h1>My propertie</h1>
+    <h1>My property</h1>
+    <a href="profil.html" class="back-button">Back</a>
     <section id="property-details"></section>
   
-    <h3>Roommate</h3>
+    <h3>Roommates</h3>
     <div id="roommates-list" class="roommates-container"></div>
     
     <div class="documents-section">
-      <h3>Documents to share</h3>
+      <h3>Documents</h3>
       <div id="documents-list"></div>
     </div>
     <form id="upload-form" enctype="multipart/form-data">
       <input type="file" name="file" accept=".pdf,.jpg,.png,.docx" />
-      <button type="submit">Envoyer un document</button>
+      <button type="submit">Upload Documents</button>
     </form>
-    <p id="upload-status"></p>
-    
     <p id="upload-status"></p>
   <script src="scripts/my-roommate.js"></script>
 </body>
