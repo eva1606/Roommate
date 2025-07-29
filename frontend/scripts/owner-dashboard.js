@@ -77,20 +77,48 @@ document.querySelectorAll(".delete-option").forEach(btn => {
   btn.addEventListener("click", async (e) => {
     e.stopPropagation(); 
     const id = btn.dataset.id;
-    const confirmDelete = confirm("Are you sure you want to delete this property?");
-    if (confirmDelete) {
-      const res = await fetch(`http://localhost:5050/api/properties/${id}`, {
-        method: 'DELETE'
-});
-      if (res.ok) {
-        alert("Property deleted.");
-        document.querySelector(`.property-card[data-id="${id}"]`)?.remove();
-      } else {
-        alert("Error deleting property.");
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "This property will be deleted permanently.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#004AAD',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const res = await fetch(`http://localhost:5050/api/properties/${id}`, {
+          method: 'DELETE'
+        });
+
+        if (res.ok) {
+          Swal.fire(
+            'Deleted!',
+            'Your property has been removed.',
+            'success'
+          );
+          document.querySelector(`.property-card[data-id="${id}"]`)?.remove();
+        } else {
+          Swal.fire(
+            'Error!',
+            'Failed to delete the property.',
+            'error'
+          );
+        }
+      } catch (err) {
+        console.error("❌ Delete error:", err);
+        Swal.fire(
+          'Error!',
+          'There was a problem connecting to the server.',
+          'error'
+        );
       }
     }
   });
 });
+
 
 // Edit card
 document.querySelectorAll(".edit-option").forEach(btn => {
