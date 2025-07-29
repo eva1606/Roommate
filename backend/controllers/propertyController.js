@@ -11,7 +11,6 @@ const addProperty = async (req, res) => {
     const photo = req.files?.photo?.[0]?.path || null;
     const photos = req.files?.photos?.map(file => file.path) || [];
 
-    // ✅ 1. Insertion dans la table properties
     const result = await pool.query(
       `INSERT INTO properties (
         address, rooms, price, status, owner_id,
@@ -61,7 +60,7 @@ if (status === 'rented' && Array.isArray(roommates)) {
       await pool.query(
         `INSERT INTO roommates_properties (user_id, property_id) 
          VALUES ($1, $2) 
-         ON CONFLICT DO NOTHING`, // évite les doublons
+         ON CONFLICT DO NOTHING`, 
          [roommateId, newPropertyId] 
       );
     }
@@ -88,16 +87,12 @@ const getProperties = async (req, res) => {
 const deleteProperty = async (req, res) => {
   const { id } = req.params;
   try {
-    // Supprimer les documents liés
     await pool.query('DELETE FROM documents WHERE receiver_property_id = $1', [id]);
 
-    // Supprimer les colocataires liés
     await pool.query('DELETE FROM roommates_properties WHERE property_id = $1', [id]);
 
-    // Supprimer de available_apartment
     await pool.query('DELETE FROM available_apartment WHERE property_id = $1', [id]);
 
-    // Maintenant tu peux supprimer de properties
     const result = await pool.query('DELETE FROM properties WHERE id = $1 RETURNING *', [id]);
 
     if (result.rowCount === 0) {
@@ -188,7 +183,7 @@ if (status === 'rented' && Array.isArray(roommates)) {
       await pool.query(
         `INSERT INTO roommates_properties (user_id, property_id) 
          VALUES ($1, $2) 
-         ON CONFLICT DO NOTHING`, // évite les doublons
+         ON CONFLICT DO NOTHING`, 
         [roommateId, id]
       );
     }
@@ -422,7 +417,6 @@ const addManualPayment = async (req, res) => {
     }
 
     const user = userResult.rows[0];
-    // 🔁 S'assurer que le user est bien lié à la propriété
     await pool.query(
     `INSERT INTO roommates_properties (user_id, property_id)
     VALUES ($1, $2)
