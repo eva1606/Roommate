@@ -3,7 +3,7 @@ const propertyId = urlParams.get('id');
 
 async function loadPropertyDetails() {
   try {
-    const res = await fetch(`http://localhost:5050/api/properties/${propertyId}`);
+    const res = await fetch(`https://roommate-1.onrender.com/api/properties/${propertyId}`);
     const property = await res.json();
 
     document.querySelector('.property-header').textContent = property.address;

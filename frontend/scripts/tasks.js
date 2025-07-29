@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function fetchTasks() {
     try {
-      const res = await fetch(`http://127.0.0.1:5050/api/tasks/property/${userId}`);
+      const res = await fetch(`https://roommate-1.onrender.com/api/tasks/property/${userId}`);
       const data = await res.json();
   
       if (data.hasProperty === false || (Array.isArray(data.tasks) && data.tasks.length === 0)) {
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const btn = div.querySelector(".task-btn");
         btn.addEventListener("click", async () => {
           try {
-            await fetch(`http://127.0.0.1:5050/api/tasks/${task.id}/complete`, {
+            await fetch(`https://roommate-1.onrender.com/api/tasks/${task.id}/complete`, {
               method: "PATCH",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ userId }),

@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    const res = await fetch(`http://127.0.0.1:5050/api/properties/${id}`);
+    const res = await fetch(`https://roommate-1.onrender.com/api/properties/${id}`);
     if (!res.ok) throw new Error("Property not found");
 
     const property = await res.json();
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (contactBtn && contactDiv) {
       contactBtn.addEventListener("click", async () => {
         try {
-          const ownerRes = await fetch(`http://127.0.0.1:5050/api/properties/${property.id}/owner-phone`);
+          const ownerRes = await fetch(`https://roommate-1.onrender.com/api/properties/${property.id}/owner-phone`);
           if (!ownerRes.ok) throw new Error("Owner phone not found");
 
           const ownerData = await ownerRes.json();

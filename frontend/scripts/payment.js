@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 🔁 Get property ID where user is tenant
     async function fetchUserProperty() {
       try {
-        const res = await fetch(`http://127.0.0.1:5050/api/roommate-property/${userId}`);
+        const res = await fetch(`https://roommate-1.onrender.com/api/roommate-property/${userId}`);
         const data = await res.json();
         currentPropertyId = data?.property_id;
         if (!currentPropertyId) throw new Error("No property found.");
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 📥 Fetch payments for the property
     async function fetchPayments() {
       try {
-        const res = await fetch(`http://localhost:5050/api/expenses/property/${currentPropertyId}`);
+        const res = await fetch(`https://roommate-1.onrender.com/api/expenses/property/${currentPropertyId}`);
         const payments = await res.json();
         renderPayments(payments);
       } catch (err) {
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   
       try {
-        await fetch("http://localhost:5050/api/expenses", {
+        await fetch("https://roommate-1.onrender.com/api/expenses", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

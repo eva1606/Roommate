@@ -66,7 +66,7 @@ async function fetchFavorites(userId) {
   const container = document.getElementById("property-container");
 
   try {
-    const res = await fetch(`http://127.0.0.1:5050/api/properties-available/favorites/${userId}`);
+    const res = await fetch(`https://roommate-1.onrender.com/api/properties-available/favorites/${userId}`);
     const favorites = await res.json();
 
     if (!Array.isArray(favorites) || favorites.length === 0) {
@@ -97,7 +97,7 @@ async function fetchFavoriteRoommates(userId) {
   const container = document.getElementById("roommate-container");
 
   try {
-    const res = await fetch(`http://127.0.0.1:5050/api/potential-roommates/favorites/${userId}`);
+    const res = await fetch(`https://roommate-1.onrender.com/api/potential-roommates/favorites/${userId}`);
     const roommates = await res.json();
 
     

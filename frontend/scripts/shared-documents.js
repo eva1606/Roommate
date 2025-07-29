@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
       formData.append("sender_id", userId);
   
       try {
-        const res = await fetch("http://localhost:5050/api/properties/upload", {
+        const res = await fetch("https://roommate-1.onrender.com/api/properties/upload", {
           method: "POST",
           body: formData
         });
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     async function fetchDocuments() {
         try {
-          const res = await fetch(`http://localhost:5050/api/properties/documents/${propertyId}`);
+          const res = await fetch(`https://roommate-1.onrender.com/api/properties/documents/${propertyId}`);
           const docs = await res.json();
       
           if (!Array.isArray(docs)) {

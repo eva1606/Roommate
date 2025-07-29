@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     container.innerHTML = "Loading...";
   
     try {
-      const res = await fetch(`http://localhost:5050/api/properties/rented/${userId}`);
+      const res = await fetch(`https://roommate-1.onrender.com/api/properties/rented/${userId}`);
       const properties = await res.json();
   
       container.innerHTML = "";
@@ -56,7 +56,7 @@ const paymentText = allPaid ? `✅ Paid in full` : '❌ Unpaid';
           });
   
           if (result.isConfirmed) {
-            const res = await fetch(`http://localhost:5050/api/properties/${prop.id}`, {
+            const res = await fetch(`https://roommate-1.onrender.com/api/properties/${prop.id}`, {
                 method: 'DELETE'
               });
               if (res.ok) {

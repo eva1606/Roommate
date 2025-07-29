@@ -5,7 +5,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
   const formData = new FormData(form); 
 
   try {
-    const res = await fetch('http://127.0.0.1:5050/api/users/register', {
+    const res = await fetch('https://roommate-1.onrender.com/api/users/register', {
       method: 'POST',
       body: formData 
     });

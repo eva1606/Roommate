@@ -16,7 +16,7 @@ if (savedDate) {
     }
   
     if (!propertyId || propertyId === "null") {
-      const res = await fetch(`http://localhost:5050/api/properties/rented/${ownerId}`);
+      const res = await fetch(`https://roommate-1.onrender.com/api/properties/rented/${ownerId}`);
   
       if (!res.ok) {
         const err = await res.json();
@@ -46,20 +46,20 @@ if (savedDate) {
   
     document.getElementById("payments-section").classList.remove("hidden");
   
-    const propertyRes = await fetch(`http://localhost:5050/api/properties/${propertyId}`);
+    const propertyRes = await fetch(`https://roommate-1.onrender.com/api/properties/${propertyId}`);
     const property = await propertyRes.json();
   
     document.getElementById('property-address').textContent = property.address;
     document.getElementById('total-rent').textContent = `Total Rent: ${property.price} $`;
   
-    const roommatesRes = await fetch(`http://localhost:5050/api/properties/roommates/${propertyId}`);
+    const roommatesRes = await fetch(`https://roommate-1.onrender.com/api/properties/roommates/${propertyId}`);
     const roommates = await roommatesRes.json();
   
     const roommateCount = roommates.length || 1;
     document.getElementById('split-rent').textContent = `Split: ${Math.round(property.price / roommateCount)} $ each`;
   
     const selectedMonth = localStorage.getItem("selected_month") || "July";
-    const paymentsRes = await fetch(`http://localhost:5050/api/properties/${propertyId}/payments?month=${selectedMonth}`);
+    const paymentsRes = await fetch(`https://roommate-1.onrender.com/api/properties/${propertyId}/payments?month=${selectedMonth}`);
     const payments = await paymentsRes.json();
   
     document.getElementById("month-title").textContent = `Payments received (${selectedMonth})`;
@@ -87,7 +87,7 @@ if (savedDate) {
     const property_id = params.get("property_id");
   
     try {
-      const res = await fetch("http://localhost:5050/api/properties/manual", {
+      const res = await fetch("https://roommate-1.onrender.com/api/properties/manual", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phone, month, property_id, date_paid })

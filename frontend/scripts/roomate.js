@@ -208,7 +208,7 @@ async function fetchProperties() {
   container.innerHTML = "";
 
   try {
-    const res = await fetch(`http://127.0.0.1:5050/api/properties-available/filtered/${userId}`);
+    const res = await fetch(`https://roommate-1.onrender.com/api/properties-available/filtered/${userId}`);
     const properties = await res.json();
 
     if (!Array.isArray(properties) || properties.length === 0) {
@@ -274,7 +274,7 @@ async function fetchProperties() {
         try {
           if (isFavorited) {
             // ❌ Retirer des favoris
-            await fetch(`http://127.0.0.1:5050/api/properties-available/favorites/remove`, {
+            await fetch(`https://roommate-1.onrender.com/api/properties-available/favorites/remove`, {
               method: "DELETE",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ user_id: userId, property_id: propertyId }),
@@ -282,7 +282,7 @@ async function fetchProperties() {
             svgPath.setAttribute("fill", "#B7B7B7"); 
           } else {
             
-            await fetch(`http://127.0.0.1:5050/api/properties-available/favorites`, {
+            await fetch(`https://roommate-1.onrender.com/api/properties-available/favorites`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ user_id: userId, property_id: propertyId }),
@@ -298,7 +298,7 @@ async function fetchProperties() {
         const propertyId = prop.id;
 
         try {
-          await fetch(`http://127.0.0.1:5050/api/properties-available/hidden`, {
+          await fetch(`https://roommate-1.onrender.com/api/properties-available/hidden`, {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ user_id: userId, property_id: propertyId }),
@@ -323,7 +323,7 @@ async function fetchProperties() {
     container.innerHTML = "";
   
     try {
-      const res = await fetch(`http://127.0.0.1:5050/api/potential-roommates/${userId}`);
+      const res = await fetch(`https://roommate-1.onrender.com/api/potential-roommates/${userId}`);
       const roommates = await res.json();
   
       if (!Array.isArray(roommates) || roommates.length === 0) {
@@ -384,14 +384,14 @@ async function fetchProperties() {
   
           try {
             if (isCurrentlyFavorite) {
-              await fetch("http://127.0.0.1:5050/api/potential-roommates/remove-favorite", {
+              await fetch("https://roommate-1.onrender.com/api/potential-roommates/remove-favorite", {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ userId, profilUserId }),
               });
               svg.setAttribute("fill", "#F5F5F5");
             } else {
-              await fetch("http://127.0.0.1:5050/api/potential-roommates/add-favorite", {
+              await fetch("https://roommate-1.onrender.com/api/potential-roommates/add-favorite", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ userId, profilUserId }),
