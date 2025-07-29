@@ -23,10 +23,12 @@
     <label><input type="checkbox" name="has_balcony"> Balcony</label>
     <label><input type="checkbox" name="furnished"> Furnished</label>
     <textarea name="description" placeholder="Describe your property..."></textarea>
-    <input type="file" name="photo" accept="image/*" required>
-    <input type="file" name="photos" accept="image/*" multiple>
+    <label for="mainPhoto">Add Main Photo:</label>
+    <input type="file" id="mainPhoto" name="photo" accept="image/*" required>
+    <label for="galleryPhotos">Add Gallery Photos:</label>
+    <input type="file" id="galleryPhotos" name="photos" accept="image/*" multiple><br>
     <button type="submit">Add Property</button>
-  </form>
+  </form><br>
   <script src="scripts/add-property.js"></script>
 </body>
 </html>

@@ -11,12 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const fileInput = document.getElementById("fileInput");
     const documentsList = document.getElementById("documentsList");
   
-    // 📤 Lorsqu'on clique sur "Upload File", déclenche le file input
     uploadBtn.addEventListener("click", () => {
       fileInput.click();
     });
   
-    // 📁 Lorsqu'un fichier est sélectionné
     fileInput.addEventListener("change", async (event) => {
       const file = event.target.files[0];
       console.log("fichier selectionne :", file);
@@ -50,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const docs = await res.json();
       
           if (!Array.isArray(docs)) {
-            console.error("❌ Mauvais format reçu :", docs);
+            console.error("❌ Invalid format received :", docs);
             return;
           }
       
@@ -62,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       
   
-    // 🖼️ Crée l'affichage d'un document
     function displayDocument(doc) {
       const isSender = doc.sender_id == userId;
       const senderName = isSender ? "Sent by you" : `Received by ${doc.sender_name || 'roommate'}`;
@@ -83,13 +80,13 @@ document.addEventListener("DOMContentLoaded", () => {
       documentsList.prepend(div);
     }
   
-    // 🔄 Initialisation
     if (propertyId && userId) {
       fetchDocuments();
     }
   });
-  document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
-    e.preventDefault();
-    localStorage.clear();
-    window.location.href = "login.html";
+  const currentPage = window.location.pathname.split('/').pop();
+  document.querySelectorAll('.nav-link').forEach(link => {
+    if (link.getAttribute('href') === currentPage) {
+      link.classList.add('active');
+    }
   });

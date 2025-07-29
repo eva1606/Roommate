@@ -44,7 +44,6 @@ if (savedDate) {
       return;
     }
   
-    // ✅ Affichage des paiements
     document.getElementById("payments-section").classList.remove("hidden");
   
     const propertyRes = await fetch(`http://localhost:5050/api/properties/${propertyId}`);
@@ -59,7 +58,6 @@ if (savedDate) {
     const roommateCount = roommates.length || 1;
     document.getElementById('split-rent').textContent = `Split: ${Math.round(property.price / roommateCount)} $ each`;
   
-    // ✅ Récupération du mois sélectionné
     const selectedMonth = localStorage.getItem("selected_month") || "July";
     const paymentsRes = await fetch(`http://localhost:5050/api/properties/${propertyId}/payments?month=${selectedMonth}`);
     const payments = await paymentsRes.json();
@@ -97,7 +95,6 @@ if (savedDate) {
   
       if (!res.ok) throw new Error("Manual payment failed");
   
-      // ✅ On stocke le mois dans localStorage
       localStorage.setItem("selected_month", month);
   
       const payment = await res.json();
@@ -162,3 +159,5 @@ if (savedDate) {
   localStorage.clear();
   window.location.href = "login.html";
 });
+
+  

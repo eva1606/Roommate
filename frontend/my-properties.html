@@ -7,27 +7,26 @@
 </head>
 <body>
 
-    <header>
-        <div class="top-bar">
-          <img src="images/logo.png" alt="Logo" class="logo">
-          <h1>Roommate</h1>
-          <button id="logoutBtn" class="logout-btn">Sign Out</button>
-        </div>
-    </header>
+  <header>
+    <div class="top-bar">
+      <img src="images/logo.png" alt="Logo" class="logo"/>
+      <h1>Roommate</h1>
+      <nav class="top-navbar">
+        <a href="my-properties.html" class="nav-link">My Properties</a>
+        <a href="owner-dashboard.html" class="nav-link">Home</a>
+        <a href="payments.html" class="nav-link">Payments</a>
+      </nav>
+      <button id="logoutBtn" class="logout-btn">Sign Out</button>
+    </div>
+  </header>
 
+    <div class="page-container">
   <main>
     <h2>My Properties</h2>
 
     <div id="propertiesContainer"></div>
   </main>
-
-  <footer>
-    <nav class="bottom-nav">
-      <a href="my-properties.html" class="footer-link"><img src="icons/key.svg" alt="properties" class="footer-icon"> My Properties</a>
-      <a href="owner-dashboard.html" class="footer-link"><img src="icons/homepage.svg" alt="Home" class="footer-icon"> Home</a>
-      <a href="payments.html"><img src="icons/payments.svg" alt="Payments" class="footer-icon"> Payments</a>
-    </nav>
-  </footer>
+    </div>
 
   <script src="scripts/my-properties.js"></script>
 </body>

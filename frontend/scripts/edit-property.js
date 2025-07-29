@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const form = document.getElementById("editForm");
-  const roommatesSection = document.getElementById("roommatesSection"); // 👈 correspond à ton bloc HTML
+  const roommatesSection = document.getElementById("roommatesSection"); 
   const statusSelect = form.querySelector('select[name="status"]');
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
@@ -46,17 +46,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     e.preventDefault();
 
     const formData = new FormData(form);
-    // ✅ On récupère les téléphones des colocataires si le statut est "rented"
 let roommatePhones = [];
 if (formData.get("status") === "rented") {
   roommatePhones = Array.from(
     form.querySelectorAll('input[name="roommate_phone[]"]')
   )
     .map(input => input.value.trim())
-    .filter(phone => phone !== ""); // on enlève les champs vides
+    .filter(phone => phone !== ""); 
 }
 
-// ✅ On construit le body avec les données de la propriété + les colocataires
 const body = {
   address: formData.get("address"),
   rooms: Number(formData.get("rooms")),
@@ -67,7 +65,7 @@ const body = {
   has_balcony: formData.get("has_balcony") === "on",
   furnished: formData.get("furnished") === "on",
   description: formData.get("description"),
-  roommates: roommatePhones  // 👈 ajout des téléphones
+  roommates: roommatePhones  
 };
 
     try {

@@ -2,12 +2,12 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
   e.preventDefault();
 
   const form = document.getElementById('registerForm');
-  const formData = new FormData(form); // ✅ récupère tous les champs + le fichier
+  const formData = new FormData(form); 
 
   try {
     const res = await fetch('http://127.0.0.1:5050/api/users/register', {
       method: 'POST',
-      body: formData // ✅ ne pas ajouter headers, fetch s'en charge
+      body: formData 
     });
 
     if (!res.ok) {

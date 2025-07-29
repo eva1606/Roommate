@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const user_id = localStorage.getItem("user_id");
 
     if (!user_id || user_id === "null" || user_id === "undefined") {
-      alert("❌ Erreur : Identifiant utilisateur manquant. Veuillez vous reconnecter.");
-      throw new Error("userId invalide dans localStorage");
+      alert("❌ Error: Missing user ID. Please log in again.");
+      throw new Error("userId invalide in localStorage");
     }
         
     const res = await fetch(`http://localhost:5050/api/properties/available/${user_id}`);
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Toggle menu
 document.querySelectorAll(".toggle-btn").forEach(btn => {
   btn.addEventListener("click", (e) => {
-    e.stopPropagation(); // ✅ empêche la redirection
+    e.stopPropagation(); 
     const id = btn.dataset.id;
     const menu = document.getElementById(`menu-${id}`);
     menu.classList.toggle("hidden");
@@ -75,7 +75,7 @@ document.querySelectorAll(".toggle-btn").forEach(btn => {
 // Delete card
 document.querySelectorAll(".delete-option").forEach(btn => {
   btn.addEventListener("click", async (e) => {
-    e.stopPropagation(); // ✅ empêche la redirection
+    e.stopPropagation(); 
     const id = btn.dataset.id;
     const confirmDelete = confirm("Are you sure you want to delete this property?");
     if (confirmDelete) {
@@ -95,14 +95,13 @@ document.querySelectorAll(".delete-option").forEach(btn => {
 // Edit card
 document.querySelectorAll(".edit-option").forEach(btn => {
   btn.addEventListener("click", (e) => {
-    e.stopPropagation(); // ✅ empêche la redirection
+    e.stopPropagation(); 
     const id = btn.dataset.id;
     window.location.href = `edit-property.html?id=${id}`;
   });
 });
 
 
-    // Clic hors menu → fermeture
     document.addEventListener("click", () => {
       document.querySelectorAll(".toggle-menu").forEach(menu => {
         menu.classList.add("hidden");
@@ -113,12 +112,13 @@ document.querySelectorAll(".edit-option").forEach(btn => {
     console.error("❌ Error loading properties:", error);
   }
 
-  const currentPage = window.location.pathname.split("/").pop();
-document.querySelectorAll(".footer-link").forEach(link => {
-  if (link.getAttribute("href") === currentPage) {
-    link.classList.add("active");
-  }
-});
+  const currentPage = window.location.pathname.split('/').pop();
+  document.querySelectorAll('.nav-link').forEach(link => {
+    if (link.getAttribute('href') === currentPage) {
+      link.classList.add('active');
+    }
+  });
+
 document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
   e.preventDefault();
   localStorage.clear();

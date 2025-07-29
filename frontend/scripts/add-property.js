@@ -1,7 +1,7 @@
 document.getElementById('propertyForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    formData.append('owner_id', localStorage.getItem('user_id') || 1); // temporaire
+    formData.append('owner_id', localStorage.getItem('user_id') || 1); 
   
     try {
       console.log("📤 Sending form data:");
@@ -15,7 +15,7 @@ document.getElementById('propertyForm').addEventListener('submit', async (e) => 
   
       const data = await res.json();
       if (!res.ok) {
-        const text = await res.text(); // <= récupère l'erreur brute
+        const text = await res.text(); 
         console.error("❌ Server raw response:", text);
         alert("There was a problem adding the property.");
         return;
