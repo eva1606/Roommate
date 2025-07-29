@@ -30,28 +30,20 @@ header {
 footer {
   bottom: 0;
   height: 60px;
-  border-top: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
-
 main {
   position: fixed;
-  top: 60px; /* même que le header */
-  bottom: 60px; /* même que le footer */
+  top: 90px; 
+  bottom: 60px; 
   left: 0;
   right: 0;
   overflow-y: auto;
   padding: 1rem;
   background-color: white
-}
-body {
-    background-color: #F2F2F2;
-}
-
-#wrapper {
-    margin: 0px 125px;
 }
 a {
     text-decoration: none;
@@ -74,6 +66,8 @@ a {
     font-size: 32px;
     font-weight: 600;
     margin-top:10px;
+    color: #004AAD;
+    font-family: Roboto;
   }
   .hamburger {
     border: none;
@@ -152,7 +146,7 @@ a {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: #f8fbff;
+    background-color: white;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -166,7 +160,7 @@ a {
     flex-direction: column;
     align-items: center;
     color: #004aad;
-    font-family: Roboto, sans-serif;
+    font-family: Roboto;
     font-size: 20px;
     font-weight: 600;
     text-decoration: none;
@@ -350,6 +344,15 @@ a {
 .hidden-card {
   display: none !important;
 }
+.nav-item.active {
+  color: #007bff; /* Couleur du texte */
+  font-weight: bold;
+}
+
+.nav-item.active img {
+  filter: brightness(0) saturate(100%) invert(32%) sepia(96%) saturate(1818%) hue-rotate(203deg) brightness(92%) contrast(101%);
+}
+
 
   .property-card {
    display: flex;
