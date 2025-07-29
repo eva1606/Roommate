@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!title || !due) return alert("All fields required.");
 
     try {
-      await fetch("http://127.0.0.1:5050/api/tasks", {
+      await fetch("https://roommate-1.onrender.com/api/tasks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
