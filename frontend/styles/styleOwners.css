@@ -148,26 +148,36 @@
 
 @media screen and (max-width: 600px) {
   .top-navbar {
-    gap: 10px;
-    margin-right: 5px;
+    gap: 12px;
+    margin-right: 10px;
+    align-items: center;
+    font-size: 0.7rem;
   }
 
   .nav-link {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
   }
 
   .logout-btn {
-    font-size: 0.9rem;
+    font-size: 0.7rem;
     padding: 1px 6px;
+    align-items: center;
+
   }
 
   .top-bar h1 {
     font-size: 1.2rem;
+    color: #004AAD;
+    margin-left: -20px;
+    align-items: center;
   }
 
   .logo {
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
+    margin-right: 0;
+    margin-left: -20px;
+    align-items: center;
   }
 }
 
