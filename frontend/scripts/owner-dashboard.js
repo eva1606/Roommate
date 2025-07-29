@@ -147,10 +147,21 @@ document.querySelectorAll(".edit-option").forEach(btn => {
     }
   });
 
-document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
-  e.preventDefault();
-  localStorage.clear();
-  window.location.href = "login.html";
-});
+  document.getElementById("logoutBtn")?.addEventListener("click", async (e) => {
+    e.preventDefault();
+    await Swal.fire({
+      title: 'Are you sure you want to logout?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Logout',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.clear();
+        window.location.href = "index.html";
+      }
+    });
+  });
+
 
 });

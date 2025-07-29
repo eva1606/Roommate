@@ -37,12 +37,22 @@ if (Array.isArray(property.photos)) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', loadPropertyDetails);
-document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
+document.getElementById("logoutBtn")?.addEventListener("click", async (e) => {
   e.preventDefault();
-  localStorage.clear();
-  window.location.href = "login.html";
+  await Swal.fire({
+    title: 'Are you sure you want to logout?',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Logout',
+    cancelButtonText: 'Cancel'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      localStorage.clear();
+      window.location.href = "index.html";
+    }
+  });
 });
+
 const currentPage = window.location.pathname.split('/').pop();
   document.querySelectorAll('.nav-link').forEach(link => {
     if (link.getAttribute('href') === currentPage) {

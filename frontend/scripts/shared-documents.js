@@ -115,3 +115,18 @@ document.addEventListener("DOMContentLoaded", () => {
       link.classList.add('active');
     }
   });
+  document.getElementById("logoutBtn")?.addEventListener("click", async (e) => {
+    e.preventDefault();
+    await Swal.fire({
+      title: 'Are you sure you want to logout?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Logout',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.clear();
+        window.location.href = "index.html";
+      }
+    });
+  });

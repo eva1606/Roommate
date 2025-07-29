@@ -10,7 +10,11 @@ if (savedDate) {
     const user = JSON.parse(localStorage.getItem('user'));
     const ownerId = localStorage.getItem('user_id');
     if (!ownerId) {
-      alert("❌ Owner ID is missing. Please log in again.");
+      await Swal.fire({
+        icon: 'error',
+        title: '❌ Owner ID is missing',
+        text: 'Please log in again.',
+      });
       window.location.href = "login.html";
       return;
     }
@@ -154,10 +158,21 @@ if (savedDate) {
       span.textContent = selectedDate.toLocaleDateString('en-US', options);
     }
   }
-  document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
-  e.preventDefault();
-  localStorage.clear();
-  window.location.href = "login.html";
-});
+  document.getElementById("logoutBtn")?.addEventListener("click", async (e) => {
+    e.preventDefault();
+    await Swal.fire({
+      title: 'Are you sure you want to logout?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Logout',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.clear();
+        window.location.href = "index.html";
+      }
+    });
+  });
+
 
   
