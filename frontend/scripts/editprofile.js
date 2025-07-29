@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    const res = await fetch(`http://127.0.0.1:5050/api/profil_users/${userId}`);
+    const res = await fetch(`https://roommate-1.onrender.com/api/profil_users/${userId}`);
     if (!res.ok) throw new Error("Error loading profile");
 
     const data = await res.json();
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     try {
-      const updateRes = await fetch(`http://127.0.0.1:5050/api/profil_users/${userId}`, {
+      const updateRes = await fetch(`https://roommate-1.onrender.com/api/profil_users/${userId}`, {
         method: "PUT",
         body: formData
       });

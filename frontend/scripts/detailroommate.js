@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   try {
-    const res = await fetch(`http://127.0.0.1:5050/api/potential-roommates/profil/${roommateId}`);
+    const res = await fetch(`https://roommate-1.onrender.com/api/potential-roommates/profil/${roommateId}`);
     if (!res.ok) throw new Error("Profil introuvable");
 
     const user = await res.json();

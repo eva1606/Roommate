@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
   
   try {
-    const res = await fetch(`http://127.0.0.1:5050/api/properties/${id}`);
+    const res = await fetch(`https://roommate-1.onrender.com/api/properties/${id}`);
     if (!res.ok) throw new Error("Failed to fetch property");
     const data = await res.json();
 
@@ -79,7 +79,7 @@ const body = {
 };
 
     try {
-      const updateRes = await fetch(`http://127.0.0.1:5050/api/properties/${id}`, {
+      const updateRes = await fetch(`https://roommate-1.onrender.com/api/properties/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json"

@@ -8,7 +8,7 @@ document.getElementById('propertyForm').addEventListener('submit', async (e) => 
      for (let [key, val] of formData.entries()) {
      console.log(`${key}:`, val);
      }
-      const res = await fetch('http://127.0.0.1:5050/api/properties/add', {
+      const res = await fetch('https://roommate-1.onrender.com/api/properties/add', {
         method: 'POST',
         body: formData
       });

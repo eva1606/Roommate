@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let userHasProperty = true;
   async function fetchExpensesForUser() {
     try {
-      const res = await fetch(`http://localhost:5050/api/expenses/property/${userId}`);
+      const res = await fetch(`https://roommate-1.onrender.com/api/expenses/property/${userId}`);
   
       if (!res.ok) {
         throw new Error(`HTTP error ${res.status}`);
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const res = await fetch("http://localhost:5050/api/expenses", {
+      const res = await fetch("https://roommate-1.onrender.com/api/expenses", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

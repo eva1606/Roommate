@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const container = document.getElementById("roommatesContainer");
   
     try {
-      const res = await fetch(`http://localhost:5050/api/properties/roommates/${propertyId}`);
+      const res = await fetch(`https://roommate-1.onrender.com/api/properties/roommates/${propertyId}`);
       const roommates = await res.json();
   
       roommates.forEach(r => {
