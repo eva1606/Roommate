@@ -79,7 +79,7 @@ async function fetchMyRoommateProperty(userId) {
       const div = document.createElement("div");
       div.classList.add("roommate-card");
       div.innerHTML = `
-        <img src="${coloc.photo_url || 'default-avatar.jpg'}" class="roommate-photo" />
+      <img src="${coloc.photo_url}" class="roommate-photo" />
         <h4>${coloc.first_name} ${coloc.last_name}</h4>
         <p>${coloc.email}</p>
       `;
