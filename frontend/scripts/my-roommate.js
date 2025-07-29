@@ -2,14 +2,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   const userId = localStorage.getItem("user_id");
 
   if (!userId) {
-    alert("Accès non autorisé. Veuillez vous reconnecter.");
+    alert("Unauthorized access. Please log in again.");
     window.location.href = "login.html";
     return;
   }
 
   await fetchMyRoommateProperty(userId);
 
-  // Gestion du formulaire d'upload
+
   const uploadForm = document.getElementById("upload-form");
   if (uploadForm) {
     uploadForm.addEventListener("submit", async (e) => {
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const status = document.getElementById("upload-status");
 
       if (!file) {
-        if (status) status.textContent = "❌ Veuillez sélectionner un fichier.";
+        if (status) status.textContent = " Please select a file.";
         return;
       }
 
@@ -34,16 +34,15 @@ document.addEventListener("DOMContentLoaded", async () => {
           body: formData,
         });
 
-        if (!res.ok) throw new Error("Échec de l'envoi");
+        if (!res.ok) throw new Error("Sending failed");
 
-        if (status) status.textContent = "✅ Document envoyé avec succès !";
+        if (status) status.textContent = " Document sent successfully!";
         fileInput.value = "";
 
-        // Recharge les documents après envoi
         await fetchMyRoommateProperty(userId);
       } catch (err) {
         console.error("❌ Upload error:", err);
-        if (status) status.textContent = "❌ Erreur lors de l'envoi du document.";
+        if (status) status.textContent = " Error sending the document.";
       }
     });
   }
@@ -56,7 +55,7 @@ async function fetchMyRoommateProperty(userId) {
 
   try {
     const res = await fetch(`http://127.0.0.1:5050/api/roommate-property/${userId}`);
-    if (!res.ok) throw new Error("Erreur lors de la récupération de la propriété");
+    if (!res.ok) throw new Error("Error retrieving property");
 
     const data = await res.json();
     const property = data.property;
@@ -66,15 +65,15 @@ async function fetchMyRoommateProperty(userId) {
     if (property) {
       propertyContainer.innerHTML = `
         <h2>${property.address}</h2>
-        <p><strong>Prix:</strong> ${property.price} ₪</p>
-        <p><strong>Pièces:</strong> ${property.rooms}</p>
+        <p><strong>Price:</strong> ${property.price} ₪</p>
+        <p><strong>Rooms:</strong> ${property.rooms}</p>
         <img src="${property.photo}" alt="Photo" class="property-photo" />
       `;
     } else {
-      propertyContainer.innerHTML = `<p>Vous n'avez pas encore de propriété louée.</p>`;
+      propertyContainer.innerHTML = `<p>You don't have a rented property yet.</p>`;
     }
 
-    // 👥 Colocataires
+  
     roommatesContainer.innerHTML = "";
     roommates.forEach((coloc) => {
       const div = document.createElement("div");
@@ -87,14 +86,14 @@ async function fetchMyRoommateProperty(userId) {
       roommatesContainer.appendChild(div);
     });
 
-    // 📄 Documents
+  
     docsContainer.innerHTML = "";
     if (data.documents && data.documents.length > 0) {
       data.documents.forEach((doc) => {
         const docLink = document.createElement("a");
         docLink.href = doc.file_url;
         docLink.target = "_blank";
-        docLink.textContent = `📄 ${doc.file_name}`;
+        docLink.textContent = ` ${doc.file_name}`;
         docLink.classList.add("doc-link");
         docsContainer.appendChild(docLink);
       });
@@ -103,7 +102,7 @@ async function fetchMyRoommateProperty(userId) {
     }
 
   } catch (err) {
-    console.error("❌ Erreur chargement propriété/colocataires:", err);
-    if (propertyContainer) propertyContainer.innerHTML = `<p>Erreur lors du chargement des données.</p>`;
+    console.error(" Error loading property/roommates:", err);
+    if (propertyContainer) propertyContainer.innerHTML = `<p>Error loading data.</p>`;
   }
 }
