@@ -6,7 +6,7 @@
 }
 
 body {
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Roboto';
   background-color: #f4f6f8;
   color: #333;
   line-height: 1.6;
@@ -26,6 +26,7 @@ body {
 .header-bar h2 {
   font-size: 1.6rem;
   font-weight: bold;
+  margin-left: 170px;
 }
 
 .btn-back {
@@ -90,7 +91,7 @@ main {
   width: 100%;
   padding: 0.9rem;
   font-size: 1.1rem;
-  background-color: #007bff;
+  background-color:orange;
   color: white;
   border: none;
   border-radius: 8px;
@@ -101,36 +102,6 @@ main {
 
 .save-btn:hover {
   background-color: #0056b3;
-}
-
-.footer-nav {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: #f8fbff;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px 0;
-  z-index: 99;
-  height: 78px;
-}
-
-.footer-nav .nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #004aad;
-  font-family: Roboto, sans-serif;
-  font-size: 20px;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.footer-nav .nav-item img {
-  width: 24px;
-  height: 24px;
-  margin-bottom: 4px;
 }
 
 /* Responsive */
