@@ -1,63 +1,29 @@
-/* ========== RESET & BASE ========== */
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
-
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
 body, h1, h2, h3, p, ul {
-  font-family: 'Roboto';
+  font-family: "Roboto",sans-serif;
 }
-
-body {
-  color: #333;
-  line-height: 1.6;
-}
-
 a {
   text-decoration: none;
-  color: inherit;
 }
-
 main {
   padding: 2rem 1rem;
   max-width: 1200px;
   margin: auto;
 }
-
-/* ========== GLOBAL LAYOUT CONTAINER ========== */
-.container {
-  padding: 0 16px;
-  max-width: 1200px;
-  margin: 0 auto;
-  box-sizing: border-box;
-}
-
-@media (min-width: 768px) {
-  .container {
-    padding: 0 32px;
-  }
-}
-
-@media (min-width: 1200px) {
-  .container {
-    padding: 0 40px;
-  }
-}
-
-/* ========== HEADINGS ========== */
-h1 {
-  font-size: 2rem;
-  color: #004AAD;
-  font-weight: 700;
-  margin: 32px 0 24px;
-}
-
-h2, h3 {
-  font-weight: 600;
-  color: #004AAD;
-}
-
 header {
   top: 0;
   height: 100px;
@@ -80,12 +46,11 @@ header {
 #logo span {
   padding-left: 70px; 
   color: #004AAD;
-  font-family: Roboto;
   font-size: 32px;
   font-weight: 600;
   margin-top:10px;
   color: #004AAD;
-  font-family: Roboto;
+  font-family: "Roboto",sans-serif;
 }
 .hamburger {
   border: none;
@@ -160,6 +125,14 @@ header {
   color: #004AAD;
   margin-top: 390px;
 }
+footer {
+  bottom: 0;
+  height: 60px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
 .footer-nav {
   position: fixed;
   bottom: 0;
@@ -178,7 +151,7 @@ header {
   flex-direction: column;
   align-items: center;
   color: #004aad;
-  font-family: Roboto;
+  font-family: "Roboto",sans-serif;
   font-size: 20px;
   font-weight: 600;
   text-decoration: none;
@@ -188,6 +161,37 @@ header {
   width: 24px;
   height: 24px;
   margin-bottom: 4px;
+}
+/* ========== GLOBAL LAYOUT CONTAINER ========== */
+.container {
+  padding: 0 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 32px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    padding: 0 40px;
+  }
+}
+
+/* ========== HEADINGS ========== */
+h1 {
+  font-size: 2rem;
+  color: #004AAD;
+  font-weight: 700;
+  margin: 32px 0 24px;
+}
+
+h2, h3 {
+  font-weight: 600;
+  color: #004AAD;
 }
 /* ========== FILTER BUTTONS ========== */
 .filter-buttons {
