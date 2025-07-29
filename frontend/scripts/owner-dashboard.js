@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       throw new Error("userId invalide in localStorage");
     }
         
-    const res = await fetch(`http://localhost:5050/api/properties/available/${user_id}`);
+    const res = await fetch(`https://roommate-1.onrender.com/api/properties/available/${user_id}`);
 
     if (!res.ok) {
       const errorText = await res.text();
@@ -89,7 +89,7 @@ document.querySelectorAll(".delete-option").forEach(btn => {
 
     if (result.isConfirmed) {
       try {
-        const res = await fetch(`http://localhost:5050/api/properties/${id}`, {
+        const res = await fetch(`https://roommate-1.onrender.com/api/properties/${id}`, {
           method: 'DELETE'
         });
 
