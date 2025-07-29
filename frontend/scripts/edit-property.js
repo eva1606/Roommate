@@ -6,8 +6,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   const id = params.get("id");
   console.log("📦 Editing property ID:", id);
 
-  if (!id) return alert("No property ID provided");
-
+  if (!id) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Missing property ID',
+      text: 'Please try again from the dashboard.',
+    });
+    return;
+  }
+  
   try {
     const res = await fetch(`http://127.0.0.1:5050/api/properties/${id}`);
     if (!res.ok) throw new Error("Failed to fetch property");
@@ -30,8 +37,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     form.querySelector('input[name="furnished"]').checked = data.furnished || false;
     form.querySelector('textarea[name="description"]').value = data.description || "";
   } catch (err) {
-    console.error("❌ Error loading property:", err);
-    alert("Failed to load property details.");
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Failed to load property details.',
+    });    
   }
 
   statusSelect.addEventListener("change", () => {
@@ -78,20 +88,32 @@ const body = {
       });
 
       if (updateRes.ok) {
-        alert("Property updated successfully!");
-        if (formData.get("status") === "rented") {
-          window.location.href = "my-properties.html";
-        } else {
-          window.location.href = "owner-dashboard.html";
-        }        
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Property updated successfully.',
+          confirmButtonColor: '#004AAD'
+        }).then(() => {
+          if (formData.get("status") === "rented") {
+            window.location.href = "my-properties.html";
+          } else {
+            window.location.href = "owner-dashboard.html";
+          }
+        });
+               
       } else {
-        const errorText = await updateRes.text();
-        console.error("❌ Server error:", errorText);
-        alert("Error updating property.");
+        Swal.fire({
+          icon: 'error',
+          title: 'Update failed',
+          text: 'Server returned an error. Please check console.',
+        });
       }
     } catch (err) {
-      console.error("❌ Network error:", err);
-      alert("Network error during update.");
+      Swal.fire({
+        icon: 'error',
+        title: 'Network error',
+        text: 'Please check your connection or try again later.',
+      });      
     }
   });
 });
