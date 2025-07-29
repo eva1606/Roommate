@@ -4,24 +4,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const paymentList = document.querySelector(".payment-list");
   const addBtn = document.querySelector(".add-btn");
-
-  // 🎯 Récupère et affiche les dépenses
+  let userHasProperty = true;
   async function fetchExpensesForUser() {
     try {
       const res = await fetch(`http://localhost:5050/api/expenses/property/${userId}`);
-      const expenses = await res.json();
-
-      if (!Array.isArray(expenses)) throw new Error("Invalid response");
-
+  
+      if (!res.ok) {
+        throw new Error(`HTTP error ${res.status}`);
+      }
+  
+      const data = await res.json();
+  
+      if (data.hasProperty === false || (Array.isArray(data) && data.length === 0)) {
+        userHasProperty = false;
+        paymentList.innerHTML = "<p style='text-align: center;'>Vous n'avez pas de propriété pour afficher les dépenses.</p>";
+        return;
+      }
+  
+      const expenses = Array.isArray(data) ? data : data.expenses;
+  
+      if (!Array.isArray(expenses)) {
+        throw new Error("Invalid response");
+      }
+  
       renderPayments(expenses);
     } catch (err) {
       console.error("❌ Failed to fetch expenses:", err);
-      paymentList.innerHTML = "<p>Error loading expenses.</p>";
+      paymentList.innerHTML = "<p style='text-align: center; color: red;'>Erreur lors du chargement des dépenses.</p>";
     }
   }
-
+  
   // ➕ Ajouter une nouvelle dépense
   addBtn?.addEventListener("click", async () => {
+    if (!userHasProperty) {
+      return alert("❌ Vous n'avez pas de propriété. Impossible d'ajouter une dépense.");
+    }
     const label = prompt("Enter expense label:");
     const amount = prompt("Enter amount (₪):");
 

@@ -3,12 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const role = localStorage.getItem("role");
 
   if (!userId || role !== "roommate") {
-    alert("Accès non autorisé. Veuillez vous reconnecter.");
+    alert("Unauthorized access. Please log in again.");
     window.location.href = "login.html";
     return;
   }
 
-  // Menu burger
+  
   document.getElementById("hamburgerBtn")?.addEventListener("click", () => {
     document.getElementById("menuOverlay").classList.remove("hidden");
   });
@@ -16,14 +16,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("menuOverlay").classList.add("hidden");
   });
 
-  // Logout
+
   document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
     e.preventDefault();
     localStorage.clear();
     window.location.href = "login.html";
   });
 
-  // Filtrage
+
   const filterButtons = document.querySelectorAll(".filter-btn");
   filterButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Affichage par défaut
+  
   handleFilter("all", userId);
 });
 
@@ -43,15 +43,15 @@ function handleFilter(filter, userId) {
   const propertyContainer = document.getElementById("property-container");
   const roommateContainer = document.getElementById("roommate-container");
 
-  // Réinitialise les contenus
+
   propertyContainer.innerHTML = "";
   roommateContainer.innerHTML = "";
 
-  // Affiche/masque les sections
+
   propertyContainer.style.display = (filter === "all" || filter === "apartment") ? "grid" : "none";
   roommateContainer.style.display = (filter === "all" || filter === "roommate") ? "flex" : "none";
 
-  // Appelle les bons fetch
+  
   if (filter === "all") {
     fetchFavorites(userId);
     fetchFavoriteRoommates(userId);
@@ -70,7 +70,7 @@ async function fetchFavorites(userId) {
     const favorites = await res.json();
 
     if (!Array.isArray(favorites) || favorites.length === 0) {
-      container.innerHTML = "<p>Aucun appartement favori trouvé.</p>";
+      container.innerHTML = "<p>No favorite apartments found.</p>";
       return;
     }
 
@@ -100,7 +100,7 @@ async function fetchFavoriteRoommates(userId) {
     const res = await fetch(`http://127.0.0.1:5050/api/potential-roommates/favorites/${userId}`);
     const roommates = await res.json();
 
-    // Filtrer les doublons par profil_user_id
+    
     const unique = [];
     const seen = new Set();
 
@@ -112,7 +112,7 @@ async function fetchFavoriteRoommates(userId) {
     });
 
     if (!Array.isArray(unique) || unique.length === 0) {
-      container.innerHTML = "<p>Aucun colocataire favori trouvé.</p>";
+      container.innerHTML = "<p>No favorite roommates found.</p>";
       return;
     }
 
@@ -124,16 +124,24 @@ async function fetchFavoriteRoommates(userId) {
           <img src="${roommate.photo_url || 'default-avatar.jpg'}" class="roommate-photo" />
           <div class="roommate-info">
             <h3>${roommate.first_name} ${roommate.last_name}</h3>
-            <p>📍 ${roommate.location}</p>
-            <p>💰 ${roommate.budget} ₪/mois</p>
+            <p>
+            <img src="icons/location.svg" alt="Location icon" class="icon" />
+            ${roommate.location}
+          </p>
+          
+          <p>
+            <img src="icons/money.svg" alt="Budget icon" class="icon" />
+            ${roommate.budget} ₪/Month
+          </p>
+          
           </div>
         </div>
       `;
       container.appendChild(card);
     });
   } catch (err) {
-    console.error("❌ Erreur chargement colocataires favoris :", err);
-    container.innerHTML = "<p>Erreur lors du chargement.</p>";
+    console.error(" Error loading favorite roommates :", err);
+    container.innerHTML = "<p>Error loading.</p>";
   }
 }
 

@@ -11,7 +11,7 @@ exports.getTasksByUser = async (req, res) => {
     );
 
     if (!propertyRows.length) {
-      return res.status(404).json({ message: "No property found." });
+      return res.status(200).json({ hasProperty: false, tasks: [] });
     }
 
     const propertyId = propertyRows[0].property_id;

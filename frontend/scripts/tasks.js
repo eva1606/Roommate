@@ -1,23 +1,42 @@
+// Navigation hamburger
+document.getElementById("hamburgerBtn")?.addEventListener("click", () => {
+  document.getElementById("menuOverlay").classList.remove("hidden");
+});
+document.getElementById("closeMenu")?.addEventListener("click", () => {
+  document.getElementById("menuOverlay").classList.add("hidden");
+});
+
+document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
+  e.preventDefault();
+  localStorage.clear();
+  window.location.href = "login.html";
+});
 document.addEventListener("DOMContentLoaded", () => {
   const userId = localStorage.getItem("user_id");
   if (!userId) return (window.location.href = "login.html");
 
   const taskList = document.querySelector(".task-list");
   const addBtn = document.querySelector(".add-btn");
+  let userHasProperty = true;
 
-  // 🔁 Charger les tâches
   async function fetchTasks() {
     try {
       const res = await fetch(`http://127.0.0.1:5050/api/tasks/property/${userId}`);
-      const tasks = await res.json();
-      if (!Array.isArray(tasks)) throw new Error("Invalid task data");
+      const data = await res.json();
+  
+      if (data.hasProperty === false || (Array.isArray(data.tasks) && data.tasks.length === 0)) {
+        userHasProperty = false;
+        taskList.innerHTML = "<p style='text-align: center;'>Vous n'avez pas de propriété pour afficher les tâches.</p>";
+        return;
+      }
+  
+      const tasks = Array.isArray(data.tasks) ? data.tasks : data;
       renderTasks(tasks);
     } catch (err) {
       console.error("❌ Failed to fetch tasks:", err);
-      taskList.innerHTML = "<p>Error loading tasks.</p>";
+      taskList.innerHTML = "<p style='color:red; text-align:center;'>Erreur lors du chargement des tâches.</p>";
     }
   }
-
   // 🧾 Affichage des tâches
   function renderTasks(tasks) {
     taskList.innerHTML = "";

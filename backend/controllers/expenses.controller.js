@@ -1,23 +1,24 @@
 const pool = require("../db");
 
-// ✅ GET: Dépenses avec nom & prénom liées à la propriété d’un user
+// ✅ GET: Dépenses liées à la propriété d’un user
 exports.getExpensesForUserProperty = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    // 🔍 Récupérer la propriété liée à cet utilisateur
+    // 🔍 Vérifie si l'utilisateur est lié à une propriété
     const { rows: propertyRows } = await pool.query(
       `SELECT property_id FROM roommates_properties WHERE user_id = $1 LIMIT 1`,
       [userId]
     );
 
+    // ⚠️ Pas de propriété trouvée
     if (!propertyRows.length) {
-      return res.status(404).json({ message: "No property found for user." });
+      return res.status(200).json({ hasProperty: false, expenses: [] });
     }
 
     const propertyId = propertyRows[0].property_id;
 
-    // 📦 Récupérer les dépenses + info utilisateur
+    // 📦 Récupère les dépenses de cette propriété
     const { rows: expenses } = await pool.query(
       `SELECT 
          e.id, 
@@ -33,12 +34,13 @@ exports.getExpensesForUserProperty = async (req, res) => {
       [propertyId]
     );
 
-    res.json(expenses);
+    res.status(200).json({ hasProperty: true, expenses });
   } catch (err) {
     console.error("❌ Error fetching expenses:", err);
     res.status(500).json({ message: "Server error fetching expenses." });
   }
 };
+
 
 // ✅ POST: Ajouter une nouvelle dépense
 exports.addExpense = async (req, res) => {

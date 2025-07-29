@@ -27,7 +27,7 @@
       <ul>
         <li><a href="profil.html"><img src="icons/users.svg" class="icon" /> <span>Profile</span></a></li>
         <li><a href="favorite.html"><img src="icons/heart.svg" class="icon" /> <span>My Matches</span></a></li>
-        <li><a href="Setting.html"><img src="icons/settings.svg" class="icon" /> <span>Settings</span></a></li>
+        <li><a href="roomate.html"><img src="icons/home.svg" class="icon" /> <span>My Roommates</span></a></li>
       </ul>
     </nav>
     <a href="login.html" id="logoutBtn" class="signout">
@@ -37,6 +37,7 @@
 
   <!-- ✅ Contenu principal -->
   <main>
+    <div class="container">
     <h1>My Matches</h1>
 
     <!-- ✅ Filtres (Appart / Roommates) -->
@@ -55,30 +56,26 @@
 <div id="roommate-container" class="roommate-list">
   <!-- Les cartes de colocataires seront injectées ici -->
 </div>
-
+    </div>
   </main>
 
-  <!-- ✅ Navigation bas de page -->
   <footer class="footer-nav">
-    <a href="roomate-dashboard.html" class="nav-item">
-      <img src="icons/home.svg" alt="Accueil" />
+    <a href="roomate-dashboard.html" class="nav-item active">
+      <img src="icons/home.svg" alt="Home icon" />
       <span>Home</span>
     </a>
-    <a href="#" class="nav-item">
-      <img src="icons/messages.svg" alt="Messages" />
-      <span>Messages</span>
-    </a>
-    <a href="#" class="nav-item">
-      <img src="icons/tasks.svg" alt="Tâches" />
+
+    <a href="tasks.html" class="nav-item">
+      <img src="icons/task.svg" alt="Tasks icon" />
       <span>Tasks</span>
     </a>
-    <a href="#" class="nav-item">
-      <img src="icons/payments.svg" alt="Paiements" />
+    <a href="expenses.html" class="nav-item">
+      <img src="icons/payments.svg" alt="Payments icon" />
       <span>Payments</span>
     </a>
   </footer>
 
-  <!-- ✅ Script principal -->
+
   <script src="scripts/favorites.js"></script>
 </body>
 </html>

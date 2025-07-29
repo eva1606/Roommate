@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const role = localStorage.getItem("role");
 
   if (!userId || role !== "roommate") {
-    alert("Accès non autorisé. Veuillez vous reconnecter.");
+    alert("Unauthorized access. Please log in again.");
     window.location.href = "login.html";
     return;
   }
@@ -212,7 +212,7 @@ async function fetchProperties() {
     const properties = await res.json();
 
     if (!Array.isArray(properties) || properties.length === 0) {
-      container.innerHTML = "<p>Aucun appartement disponible trouvé.</p>";
+      container.innerHTML = "<p>No available apartments found.</p>";
       return;
     }
     
@@ -222,14 +222,14 @@ async function fetchProperties() {
       card.setAttribute("data-search", `${prop.address} ${prop.rooms} ${prop.price}`.toLowerCase());
       card.setAttribute("data-price", prop.price);
       card.setAttribute("data-date", prop.created_at || "2025-01-01");
-      card.setAttribute("data-location", prop.address || ""); // Ajoute ça
+      card.setAttribute("data-location", prop.address || ""); 
       card.setAttribute("data-rooms", prop.rooms || ""); 
-      card.setAttribute("data-budget", prop.price); // 🔥 AJOUT OBLIGATOIRE
-      // Ajoute ça
+      card.setAttribute("data-budget", prop.price); 
+     
 
 
       
-      const isNew = index === 0; // première = la plus récente
+      const isNew = index === 0; 
       const isFavorited = prop.is_favorited;
 
       card.innerHTML = `
@@ -266,9 +266,9 @@ async function fetchProperties() {
       container.appendChild(card);
 
       card.querySelector(".svg-action-btn").addEventListener("click", async (e) => {
-        e.stopPropagation(); // Empêche d’ouvrir la page de détails
+        e.stopPropagation(); 
         const svgPath = e.currentTarget.querySelector("path");
-        const isFavorited = svgPath.getAttribute("fill") === "#2e86de"; // bleu
+        const isFavorited = svgPath.getAttribute("fill") === "#2e86de"; 
         const propertyId = prop.id;
       
         try {
@@ -279,9 +279,9 @@ async function fetchProperties() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ user_id: userId, property_id: propertyId }),
             });
-            svgPath.setAttribute("fill", "#B7B7B7"); // gris
+            svgPath.setAttribute("fill", "#B7B7B7"); 
           } else {
-            // ✅ Ajouter aux favoris
+            
             await fetch(`http://127.0.0.1:5050/api/properties-available/favorites`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -290,7 +290,7 @@ async function fetchProperties() {
             svgPath.setAttribute("fill", "#2e86de"); // bleu
           }
         } catch (err) {
-          console.error("❌ Erreur lors du changement de favoris :", err);
+          console.error("Error changing favorites:", err);
         }
       }); 
       card.querySelector(".trash-btn").addEventListener("click", async (e) => {
@@ -306,15 +306,15 @@ async function fetchProperties() {
 
           card.remove(); // supprime du DOM
         } catch (err) {
-          console.error("❌ Erreur suppression propriété :", err);
+          console.error("Error deleting property:", err);
         }
       });
     });
 
   }    
      catch (err) {
-    console.error("❌ Erreur lors du chargement des propriétés :", err);
-    container.innerHTML = "<p>Erreur lors du chargement des appartements.</p>";
+    console.error(" Error loading properties :", err);
+    container.innerHTML = "<p>Error loading apartments.</p>";
   } 
 }
   async function fetchRoommates() {
@@ -340,7 +340,7 @@ async function fetchProperties() {
         const card = document.createElement("div");
         card.classList.add("roommate-card");
   
-        // Ajout de l'attribut data-search avec les infos utiles
+
         card.setAttribute(
           "data-search",
           `${roommate.first_name} ${roommate.last_name} ${roommate.location} ${roommate.budget}`.toLowerCase()
@@ -399,7 +399,7 @@ async function fetchProperties() {
               svg.setAttribute("fill", "#0021F5");
             }
           } catch (err) {
-            console.error("❌ Erreur favori :", err);
+            console.error("Favorite error:", err);
           }
         });
   
@@ -410,8 +410,8 @@ async function fetchProperties() {
         container.appendChild(card);
       });
     } catch (err) {
-      console.error("❌ Erreur récupération roommates :", err);
-      container.innerHTML = "<p>Erreur lors du chargement des colocataires.</p>";
+      console.error(" Roommates recovery error:", err);
+      container.innerHTML = "<p>error loading roommates.</p>";
     }
   }  
 

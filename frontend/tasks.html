@@ -7,38 +7,44 @@
   <link rel="stylesheet" href="styles/tasks.css" />
 </head>
 <body>
-
-  <!-- Header -->
   <header>
     <a href="roomate-dashboard.html" id="logo">
-      <img src="images/logo.png" alt="Roommate Logo" class="logo-img"/>
       <span>Roommate</span>
     </a>
-    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">
-      <img src="icons/Menu-3.svg" alt="Menu" />
+
+    <!-- BOUTON HAMBURGER -->
+    <button id="hamburgerBtn" class="hamburger" aria-label="Open menu">
+      <img src="icons/Menu-3.svg" alt="Menu icon" />
     </button>
   </header>
 
-  <!-- Side Menu -->
-  <aside id="menuOverlay" class="menu-overlay">
-    <button id="closeMenu" class="close-btn" aria-label="Close">
-      <img src="icons/close.svg" alt="Close" />
+  <!-- OVERLAY MENU -->
+  <section id="menuOverlay" class="menu-overlay hidden">
+    
+    <!-- BOUTON FERMETURE + ICÔNE -->
+    <button id="closeMenu" class="close-btn" aria-label="Close menu">
+      <img src="icons/close.svg" alt="Close icon"/>
     </button>
 
     <nav class="menu-list">
-      <ul>
-        <li><a href="profil.html"><img src="icons/users.svg" class="icon" /> Profile</a></li>
-        <li><a href="favorite.html"><img src="icons/heart.svg" class="icon" /> Matches</a></li>
-        <li><a href="Setting.html"><img src="icons/settings.svg" class="icon" /> Settings</a></li>
-      </ul>
-    </nav>
+        <ul>
+          <li>
+            <a href="profil.html"><img src="icons/users.svg" class="icon" /> <span>Profile</span></a>
+          </li>
+          <li>
+            <a href="favorite.html"><img src="icons/heart.svg" class="icon" /> <span>My Matches</span></a>
+          </li>
+          <li>
+            <a href="roomate.html"><img src="icons/home.svg" class="icon" /> <span>Roommates</span></a>
+          </li>
+        </ul>
+      </nav>
+      
 
-    <a href="#" id="logoutBtn" class="signout">
-      <img src="icons/logout.svg" class="icon" /> Logout
+      <a href="#" id="logoutBtn" class="signout">
+      <img src="icons/logout.svg" class="menu-icon" /><span>Sign Out</span>
     </a>
-  </aside>
-
-  <!-- Main -->
+  </section>  
   <main class="main-container">
     <section class="add-section">
       <h2 class="page-title">Shared Tasks</h2>
@@ -46,22 +52,23 @@
     </section>
 
     <section class="task-list">
-      <!-- Tasks will be dynamically inserted here -->
+    <h2 class="visually-hidden">Task List</h2>
+     
     </section>
   </main>
 
-  <!-- Footer -->
   <footer class="footer-nav">
     <a href="roomate-dashboard.html" class="nav-item">
-      <img src="icons/home.svg" alt="Home" />
+      <img src="icons/home.svg" alt="Home icon" />
       <span>Home</span>
     </a>
+
     <a href="tasks.html" class="nav-item active">
-      <img src="icons/tasks.svg" alt="Tasks" />
+      <img src="icons/tasks.svg" alt="Tasks icon" />
       <span>Tasks</span>
     </a>
-    <a href="paymentroomate.html" class="nav-item">
-      <img src="icons/payments.svg" alt="Payments" />
+    <a href="expenses.html" class="nav-item">
+      <img src="icons/payments.svg" alt="Payments icon" />
       <span>Payments</span>
     </a>
   </footer>
