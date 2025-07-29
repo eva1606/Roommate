@@ -35,6 +35,13 @@ exports.getMyRoommateProperty = async (req, res) => {
   WHERE rp.property_id = $1  
     `, [property.id]);
 
+    const defaultAvatar = "https://res.cloudinary.com/demo/image/upload/v1699985585/default-avatar.jpg"; // remplace par ton lien réel
+
+    const roommates = roomies.rows.map((r) => ({
+      ...r,
+      photo_url: r.photo_url || defaultAvatar,
+    }));
+    
     // Récupérer les documents liés à cette propriété
     const docs = await db.query(`
       SELECT file_name, file_url
@@ -44,7 +51,7 @@ exports.getMyRoommateProperty = async (req, res) => {
 
     res.json({
       property,
-      roommates: roomies.rows,
+      roommates,
       documents: docs.rows,
     });
   } catch (err) {
@@ -81,7 +88,7 @@ exports.uploadDocument = async (req, res) => {
     
 
 
-    res.status(201).json({ message: "📄 Document enregistré avec succès." });
+    res.status(201).json({ message: " Document enregistré avec succès." });
   } catch (err) {
     console.error("❌ Upload document error:", err);
     res.status(500).json({ error: "Erreur lors de l'enregistrement du document." });
