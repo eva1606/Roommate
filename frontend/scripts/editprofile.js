@@ -5,13 +5,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   const photoInput = document.getElementById("photo-input");
 
   if (!userId) {
-    alert("Vous devez être connecté.");
+    alert("You must be logged in.");
     return;
   }
 
   try {
     const res = await fetch(`http://127.0.0.1:5050/api/profil_users/${userId}`);
-    if (!res.ok) throw new Error("Erreur chargement du profil");
+    if (!res.ok) throw new Error("Error loading profile");
 
     const data = await res.json();
 
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     form.querySelector('input[name="last_name"]').value = data.last_name || "";
     form.querySelector('input[name="email"]').value = data.email || "";
     form.querySelector('input[name="profession"]').value = data.profession || "";
-    form.querySelector('input[name="location"]').value = data.location || ""; // ✅ Chargement location
+    form.querySelector('input[name="location"]').value = data.location || ""; 
     form.querySelector('input[name="age"]').value = data.age || "";
     form.querySelector('input[name="budget"]').value = data.budget || "";
     form.querySelector('select[name="gender"]').value = data.gender || "";
@@ -33,8 +33,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
   } catch (err) {
-    console.error("❌ Erreur chargement profil:", err);
-    alert("Impossible de charger le profil.");
+    console.error(" Error loading profile:", err);
+    alert("Unable to load profile.");
   }
 
   photoInput.addEventListener("change", (e) => {
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     e.preventDefault();
 
     const formData = new FormData(form);
-    // ✅ Location est incluse automatiquement via le champ "name=location"
+
 
     try {
       const updateRes = await fetch(`http://127.0.0.1:5050/api/profil_users/${userId}`, {
@@ -58,16 +58,16 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
 
       if (updateRes.ok) {
-        alert("✅ Profil mis à jour !");
+        alert("✅ Profile updated!");
         window.location.href = "profil.html";
       } else {
         const errorText = await updateRes.text();
-        console.error("❌ Erreur serveur:", errorText);
-        alert("Erreur lors de la mise à jour du profil.");
+        console.error(" Server error:", errorText);
+        alert("Error updating profile.");
       }
     } catch (err) {
-      console.error("❌ Erreur réseau:", err);
-      alert("Erreur réseau pendant la mise à jour.");
+      console.error(" Network error:", err);
+      alert("Network error during update.");
     }
   });
 });
