@@ -5,23 +5,36 @@
   <title>My Roommate Dashboard</title>
   <link rel="stylesheet" href="styles/my-roommate.css" />
 </head>
-  <body>
-    <h1>My property</h1>
+<body>
+
+  <header>
+    <h1>My Property</h1>
     <a href="roomate-dashboard.html" class="back-button">Back</a>
-    <section id="property-details"></section>
-  
-    <h3>Roommates</h3>
+  </header>
+
+  <!-- Section avec heading ajouté -->
+  <section id="property-details-section">
+    <h2>Property Details</h2>
+    <div id="property-details"></div>
+  </section>
+
+  <section class="roommates-section">
+    <h2>Roommates</h2>
     <div id="roommates-list" class="roommates-container"></div>
-    
-    <div class="documents-section">
-      <h3>Documents</h3>
-      <div id="documents-list"></div>
-    </div>
+  </section>
+
+  <section class="documents-section">
+    <h2>Documents</h2>
+    <div id="documents-list"></div>
+
     <form id="upload-form" enctype="multipart/form-data">
-      <input type="file" name="file" accept=".pdf,.jpg,.png,.docx" />
+      <label for="file-upload" class="visually-hidden">Upload a file</label>
+      <input id="file-upload" type="file" name="file" accept=".pdf,.jpg,.png,.docx" />
       <button type="submit">Upload Documents</button>
     </form>
     <p id="upload-status"></p>
+  </section>
+
   <script src="scripts/my-roommate.js"></script>
 </body>
 </html>

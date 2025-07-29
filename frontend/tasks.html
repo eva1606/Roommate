@@ -20,6 +20,8 @@
 
   <!-- OVERLAY MENU -->
   <section id="menuOverlay" class="menu-overlay hidden">
+    <h2 class="visually-hidden">Navigation menu</h2>
+
     
     <!-- BOUTON FERMETURE + ICÔNE -->
     <button id="closeMenu" class="close-btn" aria-label="Close menu">
@@ -27,33 +29,42 @@
     </button>
 
     <nav class="menu-list">
-        <ul>
-          <li>
-            <a href="profil.html"><img src="icons/users.svg" class="icon" /> <span>Profile</span></a>
-          </li>
-          <li>
-            <a href="favorite.html"><img src="icons/heart.svg" class="icon" /> <span>My Matches</span></a>
-          </li>
-          <li>
-            <a href="roomate.html"><img src="icons/home.svg" class="icon" /> <span>Roommates</span></a>
-          </li>
-        </ul>
-      </nav>
+      <ul>
+        <li>
+          <a href="profil.html">
+            <img src="icons/users.svg" class="icon" alt="Profile icon" />
+            <span>Profile</span>
+          </a>
+        </li>
+        <li>
+          <a href="favorite.html">
+            <img src="icons/heart.svg" class="icon" alt="Favorites icon" />
+            <span>My Matches</span>
+          </a>
+        </li>
+        <li>
+          <a href="roomate.html">
+            <img src="icons/home.svg" class="icon" alt="Roommates icon" />
+            <span>Roommates</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
       
-
-      <a href="#" id="logoutBtn" class="signout">
-      <img src="icons/logout.svg" class="menu-icon" /><span>Sign Out</span>
+    <a href="#" id="logoutBtn" class="signout">
+      <img src="icons/logout.svg" class="menu-icon" alt="Logout icon" />
+      <span>Sign Out</span>
     </a>
   </section>  
+
   <main class="main-container">
     <section class="add-section">
       <h2 class="page-title">Shared Tasks</h2>
-      <button class="add-btn">+ Add Task</button>
+      <button class="add-btn"> Add Task</button>
     </section>
 
     <section class="task-list">
-    <h2 class="visually-hidden">Task List</h2>
-     
+      <h2 class="visually-hidden">Task List</h2>
     </section>
   </main>
 
@@ -64,9 +75,10 @@
     </a>
 
     <a href="tasks.html" class="nav-item active">
-      <img src="icons/tasks.svg" alt="Tasks icon" />
+      <img src="icons/task.svg" alt="Tasks icon" />
       <span>Tasks</span>
     </a>
+
     <a href="expenses.html" class="nav-item">
       <img src="icons/payments.svg" alt="Payments icon" />
       <span>Payments</span>
