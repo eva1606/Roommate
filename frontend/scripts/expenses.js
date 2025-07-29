@@ -10,6 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const res = await fetch(`http://localhost:5050/api/expenses/property/${userId}`);
       const expenses = await res.json();
+      const data = await res.json();
+
+     
+      if (data.hasProperty === false) {
+        paymentList.innerHTML = "<p style='text-align: center;'>Vous n'avez pas de propriété pour afficher les dépenses.</p>";
+        return;
+      }
 
       if (!Array.isArray(expenses)) throw new Error("Invalid response");
 
