@@ -1,3 +1,16 @@
+// Navigation hamburger
+document.getElementById("hamburgerBtn")?.addEventListener("click", () => {
+  document.getElementById("menuOverlay").classList.remove("hidden");
+});
+document.getElementById("closeMenu")?.addEventListener("click", () => {
+  document.getElementById("menuOverlay").classList.add("hidden");
+});
+
+document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
+  e.preventDefault();
+  localStorage.clear();
+  window.location.href = "login.html";
+});
 document.addEventListener("DOMContentLoaded", () => {
   const userId = localStorage.getItem("user_id");
   if (!userId) return (window.location.href = "login.html");
