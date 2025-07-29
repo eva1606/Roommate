@@ -15,30 +15,31 @@ document.getElementById('propertyForm').addEventListener('submit', async (e) => 
   
       const data = await res.json();
       if (!res.ok) {
-        const text = await res.text(); 
-        console.error("❌ Server raw response:", text);
-        alert("There was a problem adding the property.");
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: data.message || 'There was a problem adding the property.'
+        });
         return;
       }      
-      if (!res.ok) {
-        alert("There was a problem adding the property.");
-        console.error("Server response:", data);
-        return;
-      }
-      if (!res.ok) {
-        const errorText = await res.text();
-        console.error("❌ Server responded with:", errorText);
-        alert("There was a problem adding the property.");
-        return;
-      }
       
+      Swal.fire({
+        icon: 'success',
+        title: 'Property Added!',
+        text: 'Your property has been successfully added.',
+        confirmButtonText: 'Go to Dashboard'
+      }).then(() => {
+        window.location.href = "owner-dashboard.html";
+      });
   
-      alert("Property added successfully!");
-      window.location.href = "owner-dashboard.html";
-  
+     
     } catch (error) {
       console.error("Error:", error);
-      alert("There was a problem adding the property.");
+      Swal.fire({
+        icon: 'error',
+        title: 'Unexpected Error',
+        text: 'Something went wrong while adding the property.'
+      });
     }
   });
   
