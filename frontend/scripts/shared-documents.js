@@ -3,9 +3,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const userId = localStorage.getItem("user_id");
     const userName = localStorage.getItem("first_name");
     if (!propertyId) {
-        alert("❌ Missing property_id in URL");
-        return;
-      }
+      Swal.fire({
+        icon: 'error',
+        title: 'Missing Property ID',
+        text: 'Please return to the dashboard and try again.'
+      });
+      return;
+    }
       
     const uploadBtn = document.getElementById("uploadBtn");
     const fileInput = document.getElementById("fileInput");
@@ -34,28 +38,49 @@ document.addEventListener("DOMContentLoaded", () => {
         if (res.ok) {
           const newDoc = await res.json();
           displayDocument(newDoc);
+          Swal.fire({
+            icon: 'success',
+            title: 'Upload Successful',
+            text: `${file.name} uploaded successfully.`,
+            confirmButtonColor: '#004AAD'
+          });
         } else {
-          alert("❌ Upload failed");
+          Swal.fire({
+            icon: 'error',
+            title: 'Upload Failed',
+            text: 'The server could not process your file. Please try again.'
+          });
         }
       } catch (err) {
-        console.error("❌ Upload error:", err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Network Error',
+          text: 'Could not connect to the server.'
+        });
       }
     });
-  
     async function fetchDocuments() {
         try {
           const res = await fetch(`http://localhost:5050/api/properties/documents/${propertyId}`);
           const docs = await res.json();
       
           if (!Array.isArray(docs)) {
-            console.error("❌ Invalid format received :", docs);
+            Swal.fire({
+              icon: 'error',
+              title: 'Invalid Response',
+              text: 'The server returned an unexpected format.'
+            });
             return;
           }
       
           documentsList.innerHTML = "";
           docs.forEach(displayDocument);
         } catch (err) {
-          console.error("❌ Fetch documents error:", err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Failed to Fetch Documents',
+            text: 'Please try again later.'
+          });
         }
       }
       
