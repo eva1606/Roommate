@@ -23,7 +23,6 @@ app.use('/api/potential-roommates', potentialRoommatesRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/properties', propertiesRoutes);
 app.use('/api/profil_users', profileRoutes);
-// 🔓 Pour permettre l'accès aux photos uploadées
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 const frontendPath = path.join(__dirname, '../frontend'); 
 app.use(express.static(frontendPath));
