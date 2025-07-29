@@ -12,7 +12,7 @@ exports.getExpensesForUserProperty = async (req, res) => {
     );
 
     if (!propertyRows.length) {
-      return res.status(404).json({ message: "No property found for user." });
+      return res.status(200).json({ message: "No property found for user." });
     }
 
     const propertyId = propertyRows[0].property_id;
