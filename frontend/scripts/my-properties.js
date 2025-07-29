@@ -45,24 +45,47 @@ const paymentText = allPaid ? `✅ Paid in full` : '❌ Unpaid';
         const deleteBtn = card.querySelector('.delete-btn');
         deleteBtn.addEventListener('click', async (e) => {
           e.stopPropagation();
-          const confirmDelete = confirm("Are you sure you want to delete this property?");
-          if (confirmDelete) {
+          const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: "This will permanently delete the property.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#004AAD',
+            cancelButtonColor: '#aaa',
+            confirmButtonText: 'Yes, delete it!'
+          });
+  
+          if (result.isConfirmed) {
             const res = await fetch(`http://localhost:5050/api/properties/${prop.id}`, {
                 method: 'DELETE'
               });
-            if (res.ok) {
-              alert("Property deleted.");
-              card.remove();
-            } else {
-              alert("Error deleting property.");
+              if (res.ok) {
+                card.remove();
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Deleted!',
+                  text: 'The property has been deleted.',
+                  confirmButtonColor: '#004AAD'
+                });
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: 'Failed to delete the property.',
+                });
+              }
             }
-          }
-        });
+          });
         container.appendChild(card);
       });
     } catch (err) {
       console.error("Failed to load properties:", err);
       container.innerHTML = "Error loading properties.";
+      Swal.fire({
+        icon: 'error',
+        title: 'Error loading',
+        text: 'Something went wrong while loading your properties.',
+      });
     }
   }
   document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
