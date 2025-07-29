@@ -10,61 +10,61 @@
 
   <header class="profile-header-bar">
     <button id="closeBtn" class="close-btn" aria-label="Close">
-      <img src="icons/close.svg" alt="Close icon" />
+      <img src="icons/close.svg" alt="Close icon">
     </button>
   </header>
 
   <main>
     <div class="container">
-    <h2 class="title">My Profile</h2>
+      <h2 class="title">My Profile</h2>
 
-    <section class="profile-card">
-      <div class="profile-photo-container">
-        <img id="profile-photo" class="profile-photo" src="" alt="Profile Photo" />
-      </div>
-      <div class="profile-basic-info">
-        <h3 id="profile-name"></h3>
-        <p id="profile-gender-age"></p>
-      </div>
-    </section>
+      <section class="profile-card">
+        <div class="profile-photo-container">
+          <img id="profile-photo" class="profile-photo" src="images/default-photo.jpg" alt="Profile Photo">
+        </div>
+        <div class="profile-basic-info">
+          <h3 id="profile-name" aria-live="polite">Loading...</h3>
+          <p id="profile-gender-age"></p>
+        </div>
+      </section>
 
-    <section class="profile-buttons">
+      <section class="profile-buttons">
+        <h2 class="visually-hidden">Profile Actions</h2>
+        <a href="editprofil.html" class="profile-btn" id="edit-btn">
+          <img src="icons/edit.svg" class="icon" alt="Edit icon"> Edit profile
+        </a>
+      </section>
+      
+      <section class="profile-infos">
+        <h2 class="visually-hidden">Profile Details</h2>
+        <div class="info-row">
+          <span class="label">Budget</span>
+          <span id="profile-budget"></span>
+        </div>
+        <div class="info-row">
+          <span class="label">Location</span>
+          <span id="profile-location"></span>
+        </div>
+      </section>
+    </div>
 
-    
-      <a href="editprofil.html" class="profile-btn" id="edit-btn">
-        <img src="icons/edit.svg" class="icon" /> Edit profil
-      </a>
-
-    </section>
-    
-    <section class="profile-infos">
-      <div class="info-row">
-        <span class="label">Budget</span>
-        <span id="profile-budget"></span>
-      </div>
-      <div class="info-row">
-        <span class="label">Location</span>
-        <span id="profile-location"></span>
-      </div>
-    </section>
-  </div>
     <footer class="footer-nav">
       <a href="roomate-dashboard.html" class="nav-item active">
-        <img src="icons/home.svg" alt="Home icon" />
+        <img src="icons/home.svg" alt="Home icon">
         <span>Home</span>
       </a>
-  
+
       <a href="tasks.html" class="nav-item">
-        <img src="icons/task.svg" alt="Tasks icon" />
+        <img src="icons/task.svg" alt="Tasks icon">
         <span>Tasks</span>
       </a>
       <a href="expenses.html" class="nav-item">
-        <img src="icons/payments.svg" alt="Payments icon" />
+        <img src="icons/payments.svg" alt="Payments icon">
         <span>Payments</span>
       </a>
     </footer>
-
   </main>
+
   <script src="scripts/profil.js"></script>
 </body>
 </html>

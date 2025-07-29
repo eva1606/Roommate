@@ -23,9 +23,10 @@
 
   <main>
     <section id="property-details">
-      <h2 class="property-header" id="property-address"></h2>
+      <h2 class="property-header visually-hidden" id="property-address">Property address placeholder</h2>
 
-      <img id="main-photo" class="main-photo" src="" alt="Main photo" />
+      <img id="main-photo" class="main-photo" src="images/default-photo.jpg" alt="Main photo" />
+
 
       <div class="details" id="property-description">
         <!-- Injected from JS -->
@@ -44,29 +45,25 @@
       <div id="map" style="height: 300px; border-radius: 10px; margin-bottom: 20px;"></div>
       <button id="mapBtn">View map</button>
 
-      <button id="contactOwnerBtn">📞 Contact the owner</button>
+      <button id="contactOwnerBtn"> Contact the owner</button>
       <div id="ownerContactInfo" class="hidden"></div>
     </section>
   </main>
 
   <footer class="footer-nav">
-    <a href="#" class="nav-item">
+    <a href="roomate-dashboard.html" class="nav-item active">
       <img src="icons/home.svg" alt="Home icon" />
       <span>Home</span>
     </a>
-    <a href="#" class="nav-item">
-      <img src="icons/messages.svg" alt="Messages icon" />
-      <span>Messages</span>
-    </a>
-    <a href="#" class="nav-item">
-      <img src="icons/tasks.svg" alt="Tasks icon" />
+
+    <a href="tasks.html" class="nav-item">
+      <img src="icons/task.svg" alt="Tasks icon" />
       <span>Tasks</span>
     </a>
-    <a href="#" class="nav-item">
+    <a href="expenses.html" class="nav-item">
       <img src="icons/payments.svg" alt="Payments icon" />
       <span>Payments</span>
     </a>
-  </footer>
   </footer>
 
   <!-- Leaflet JS -->

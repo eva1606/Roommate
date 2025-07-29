@@ -19,8 +19,8 @@
     </button>
   </header>
 
-  <!-- OVERLAY MENU -->
   <section id="menuOverlay" class="menu-overlay hidden">
+    <h2 class="visually-hidden">Navigation menu</h2>
     
     <!-- BOUTON FERMETURE + ICÔNE -->
     <button id="closeMenu" class="close-btn" aria-label="Close menu">
@@ -28,39 +28,51 @@
     </button>
 
     <nav class="menu-list">
-        <ul>
-          <li>
-            <a href="profil.html"><img src="icons/users.svg" class="icon" /> <span>Profile</span></a>
-          </li>
-          <li>
-            <a href="favorite.html"><img src="icons/heart.svg" class="icon" /> <span>My Matches</span></a>
-          </li>
-          <li>
-            <a href="roomate.html"><img src="icons/home.svg" class="icon" /> <span>Roommates</span></a>
-          </li>
-        </ul>
-      </nav>
-      
-
-      <a href="#" id="logoutBtn" class="signout">
-      <img src="icons/logout.svg" class="menu-icon" /><span>Sign Out</span>
+      <ul>
+        <li>
+          <a href="profil.html">
+            <img src="icons/users.svg" class="icon" alt="Profile icon" />
+            <span>Profile</span>
+          </a>
+        </li>
+        <li>
+          <a href="favorite.html">
+            <img src="icons/heart.svg" class="icon" alt="Favorites icon" />
+            <span>My Matches</span>
+          </a>
+        </li>
+        <li>
+          <a href="roomate.html">
+            <img src="icons/home.svg" class="icon" alt="Roommates icon" />
+            <span>Roommates</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <a href="#" id="logoutBtn" class="signout">
+      <img src="icons/logout.svg" class="menu-icon" alt="Logout icon" />
+      <span>Sign Out</span>
     </a>
   </section>  
   <main>
     <section class="search-section">
+      <h2 class="visually-hidden">Search</h2>
       <input type="text" class="search-input" placeholder="Search for apartments or roommates..." />
     </section>
-<!-- Onglets -->
+
 <section class="tabs">
-    <button id="tab-apartments" class="tab-button active" data-target="apartments-section">
-      Available Apartments
-    </button>
-    <button id="tab-roommates" class="tab-button" data-target="roommates-section">
-      Potential Roommates
-    </button>
-  </section>
-  <section class="action-buttons">
-    <section class="sort-container">
+  <h2 class="visually-hidden">Tab Navigation</h2>
+  <button id="tab-apartments" class="tab-button active" data-target="apartments-section">
+    Available Apartments
+  </button>
+  <button id="tab-roommates" class="tab-button" data-target="roommates-section">
+    Potential Roommates
+  </button>
+</section>
+<section class="action-buttons">
+  <h2 class="visually-hidden">Sorting and Filters</h2>
+  <section class="sort-container">
+    <h3 class="visually-hidden">Sort Options</h3>
       <button id="sortBtn" class="sort-toggle">
         <img src="icons/sort.svg" alt="Sort Icon" class="btn-icon" />
         Sort By
@@ -83,7 +95,6 @@
     </button>
   
     <div class="filter-content hidden" id="filterOverlay">
-      <!-- FILTERS FOR APARTMENTS -->
       <div id="filters-apartments" class="filter-group">
         <h3>Filter Apartments</h3>
         <div class="filter-item">
@@ -105,7 +116,6 @@
         <button id="applyFilterApt">Apply Filters</button>
       </div>
   
-      <!-- FILTERS FOR ROOMMATES -->
       <div id="filters-roommates" class="filter-group hidden">
         <h3>Filter Roommates</h3>
         <div class="filter-item">
@@ -129,14 +139,15 @@
     </div>
   </section>
     
-  <!-- Contenu des onglets -->
   <section id="apartments-section" class="tab-content active">
+    <h2 class="visually-hidden">Available Apartments</h2>
     <div id="apartment-available" class="property-list"></div>
   </section>
   
   <section id="roommates-section" class="tab-content">
+    <h2 class="visually-hidden">Potential Roommates</h2>
     <div id="roommate-properties" class="property-list"></div>
-  </section>  
+  </section>
   </main>
   <footer class="footer-nav">
     <a href="roomate-dashboard.html" class="nav-item active">

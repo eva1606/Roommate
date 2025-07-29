@@ -1,132 +1,202 @@
-/* === Reset === */
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
-
-/* === Body === */
 body, html {
-  font-family: 'Segoe UI', sans-serif;
-  height: 100%;
-  background-color: #F5F8FA;
-  color: #333;
+  margin: 0;
+  padding: 0;
+  height: auto; /* ou simplement supprime height: 100% */
+  overflow: auto;
+  background-color: white;
+  font-family: "Roboto",sans-serif;
+  }
+
+header, footer {
+position: fixed;
+width: 100%;
+z-index: 10;
+background-color: white;
+}
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+header {
+top: 0;
+height: 100px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+display: flex;
+justify-content: space-between; /* Place logo à gauche, hamburger à droite */
+align-items: center;
+padding: 0 1rem;
 }
 
-/* === Header === */
-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 80px;
-  background-color: #ffffff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 1.2rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  z-index: 100;
+footer {
+bottom: 0;
+height: 60px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+display: flex;
+justify-content: space-around;
+align-items: center;
+}
+a {
+  text-decoration: none;
 }
 
 #logo {
+  background-image: url("../images/logo.png");
+  background-repeat: no-repeat;
+  background-size: contain;
   display: flex;
   align-items: center;
-  width: 120px;
-  height: 60px;
-  background: url("../images/logo.png") no-repeat left center;
-  background-size: contain;
+  width: 97px;
+  height: 97px;
+  flex-shrink: 0;
 }
-
 #logo span {
-  padding-left: 65px;
-  font-size: 1.6rem;
-  font-weight: 600;
+  padding-left: 70px; 
   color: #004AAD;
+  font-family: "Roboto",sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  margin-top:10px;
+  color: #004AAD;
+  font-family: "Roboto", sans-serif;
 }
-
-/* === Hamburger === */
 .hamburger {
-  background: none;
   border: none;
+  padding: 50px;
   cursor: pointer;
-  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  background: none;
 }
-
-.hamburger img {
-  width: 28px;
-  height: 28px;
-}
-
-/* === Menu Overlay === */
 .menu-overlay {
   position: fixed;
   top: 0;
   left: 0;
+  width: 100%;         /* Ajustable : 80% ou 100% */
   height: 100vh;
-  width: 100%;
-  background: #fff;
+  background-color: white;
   z-index: 999;
+  padding: 40px 24px;
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+  align-items: flex-start;
+  gap: 32px;
+  transition: transform 0.3s ease;
 }
 
 .menu-overlay.hidden {
   display: none;
 }
 
-.close-btn {
-  position: absolute;
-  top: 1.2rem;
-  right: 1.5rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
 .menu-list ul {
   list-style: none;
-  margin-top: 100px;
+  padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 74px; /* Espace entre les items */
+  margin-top: 100px;
 }
 
 .menu-list li a {
   display: flex;
   align-items: center;
-  font-size: 1.3rem;
-  font-weight: 600;
+  gap: 12px;
+  text-decoration: none;
+  font-size: 24px;
   color: #004AAD;
-  gap: 0.75rem;
+  font-weight: 600;
 }
-
 .icon {
   width: 24px;
   height: 24px;
+}  
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 60px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 33px;
+  height: 60px;
 }
-
 .signout {
-  margin-top: auto;
-  font-size: 1.3rem;
   display: flex;
   align-items: center;
-  color: #004AAD;
+  gap: 12px;
+  text-decoration: none;
+  font-size: 24px;
   font-weight: 600;
-  gap: 10px;
+  color: #004AAD;
+  margin-top: 390px;
+}
+.footer-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+  z-index: 99;
+  height: 78px;
 }
 
+.footer-nav .nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #004aad;
+  font-family: "Roboto",sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer-nav .nav-item img {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px;
+}
+footer {
+  bottom: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+  background-color: white;
+}
+.nav-item.active {
+  color: #007bff; /* Couleur du texte */
+  font-weight: bold;
+}
+
+.nav-item.active img {
+  filter: brightness(0) saturate(100%) invert(32%) sepia(96%) saturate(1818%) hue-rotate(203deg) brightness(92%) contrast(101%);
+}
 /* === Main Section === */
 main.main-container {
-  position: fixed;
-  top: 80px;
-  bottom: 78px;
-  left: 0;
-  right: 0;
-  overflow-y: auto;
-  padding: 1.5rem 1rem;
+  padding: 150px 1rem 100px;
+  max-width: 900px;
+  margin: auto;
 }
-
 /* === Add Section === */
 .add-section {
   display: flex;
@@ -201,41 +271,6 @@ main.main-container {
 .payment-date {
   font-size: 0.85rem;
   color: #888;
-}
-
-
-/* === Footer Nav === */
-.footer-nav {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 78px;
-  background-color: #f1f6fd;
-  border-top: 1px solid #ddd;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  z-index: 50;
-}
-
-.footer-nav .nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #004aad;
-  text-decoration: none;
-}
-
-.footer-nav .nav-item img {
-  width: 24px;
-  height: 24px;
-  margin-bottom: 4px;
-}
-
-.nav-item.active {
-  color: #0021f5;
 }
 
 @media (max-width: 600px) {

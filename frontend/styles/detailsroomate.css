@@ -1,41 +1,104 @@
-/* styles/detailsroomate.css */
-
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f4f7fa;
-  color: #333;
-  line-height: 1.6;
-  padding-bottom: 80px;
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: white;
+  font-family: "Roboto",sans-serif;
 }
-
 header .top-bar {
-  background-color: #4a90e2;
+  background-color:white;
   padding: 1rem;
   text-align: left;
+  top: 0;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
 }
-
+header, footer {
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+  background-color: white;
+}
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
 .btn-back {
+  color: blue;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #004aad;
   color: #fff;
   text-decoration: none;
   font-size: 1.1rem;
   font-weight: 500;
+  padding: 10px 16px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+footer {
+  bottom: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+  background-color: white;
+}
+.footer-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+  z-index: 99;
+  height: 78px;
 }
 
+.footer-nav .nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #004aad;
+  font-family: "Roboto",sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer-nav .nav-item img {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px;
+}
 main {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  padding: 150px 1rem 100px;
+  max-width: 900px;
+  margin: auto;
 }
-
 .property-header {
   font-size: 1.8rem;
   margin-bottom: 1rem;
@@ -64,7 +127,6 @@ main {
 }
 
 .features span {
-  background-color: #eef2f7;
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 0.9rem;
@@ -88,6 +150,7 @@ main {
   margin-top: 1rem;
   margin-bottom: 1.5rem;
   border: 1px solid #ddd;
+  z-index: 0;
 }
 
 #mapBtn,
@@ -99,7 +162,7 @@ main {
   margin: 0.8rem 0;
   font-size: 1rem;
   font-weight: 500;
-  background-color: #4a90e2;
+  background-color: orange;
   color: white;
   border: none;
   border-radius: 8px;
@@ -124,36 +187,6 @@ main {
 .hidden {
   display: none;
 }
-.footer-nav {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: #f8fbff;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px 0;
-  z-index: 99;
-  height: 78px;
-}
-
-.footer-nav .nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #004aad;
-  font-family: Roboto, sans-serif;
-  font-size: 20px;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.footer-nav .nav-item img {
-  width: 24px;
-  height: 24px;
-  margin-bottom: 4px;
-}
-
 /* Responsive */
 @media (max-width: 600px) {
   main {

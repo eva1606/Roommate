@@ -7,52 +7,63 @@
   <link rel="stylesheet" href="styles/expenses.css" />
 </head>
 <body>
-    <header>
-        <a href="roomate-dashboard.html" id="logo">
-          <span>Roommate</span>
-        </a>
+  <header>
+    <a href="roomate-dashboard.html" id="logo">
+      <span>Roommate</span>
+    </a>
+
+    <!-- BOUTON HAMBURGER -->
+    <button id="hamburgerBtn" class="hamburger" aria-label="Open menu">
+      <img src="icons/Menu-3.svg" alt="Menu icon" />
+    </button>
+  </header>
+
+  <section id="menuOverlay" class="menu-overlay hidden">
+    <h2 class="visually-hidden">Navigation menu</h2>
     
-        <!-- BOUTON HAMBURGER -->
-        <button id="hamburgerBtn" class="hamburger" aria-label="Open menu">
-          <img src="icons/Menu-3.svg" alt="Menu icon" />
-        </button>
-      </header>
-    
-      <!-- OVERLAY MENU -->
-      <section id="menuOverlay" class="menu-overlay hidden">
-        
-        <!-- BOUTON FERMETURE + ICÔNE -->
-        <button id="closeMenu" class="close-btn" aria-label="Close menu">
-          <img src="icons/close.svg" alt="Close icon"/>
-        </button>
-    
-        <nav class="menu-list">
-            <ul>
-              <li>
-                <a href="profil.html"><img src="icons/users.svg" class="icon" /> <span>Profile</span></a>
-              </li>
-              <li>
-                <a href="favorite.html"><img src="icons/heart.svg" class="icon" /> <span>My Matches</span></a>
-              </li>
-              <li>
-                <a href="Setting.html"><img src="icons/settings.svg" class="icon" /> <span>Settings</span></a>
-              </li>
-            </ul>
-          </nav>
-          
-    
-          <a href="#" id="logoutBtn" class="signout">
-          <img src="icons/logout.svg" class="menu-icon" /><span>Sign Out</span>
-        </a>
-      </section>  
-     
+    <!-- BOUTON FERMETURE -->
+    <button id="closeMenu" class="close-btn" aria-label="Close menu">
+      <img src="icons/close.svg" alt="Close icon"/>
+    </button>
+
+    <nav class="menu-list">
+      <ul>
+        <li>
+          <a href="profil.html">
+            <img src="icons/users.svg" class="icon" alt="Profile icon" />
+            <span>Profile</span>
+          </a>
+        </li>
+        <li>
+          <a href="favorite.html">
+            <img src="icons/heart.svg" class="icon" alt="Favorites icon" />
+            <span>My Matches</span>
+          </a>
+        </li>
+        <li>
+          <a href="roomate.html">
+            <img src="icons/home.svg" class="icon" alt="Roommates icon" />
+            <span>Roommates</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <a href="#" id="logoutBtn" class="signout">
+      <img src="icons/logout.svg" class="menu-icon" alt="Logout icon" />
+      <span>Sign Out</span>
+    </a>
+  </section> 
+
   <!-- Main content -->
   <main class="main-container">
     <section class="add-section">
-      <button class="add-btn">➕ Add Payment</button>
+      <h2 class="visually-hidden">Add Payment</h2>
+      <button class="add-btn">Add Payment</button>
     </section>
 
     <section class="payment-list">
+      <h2 class="visually-hidden">Payment List</h2>
       <!-- JS will populate payments here -->
     </section>
   </main>
@@ -62,18 +73,17 @@
       <img src="icons/home.svg" alt="Home icon" />
       <span>Home</span>
     </a>
-
     <a href="tasks.html" class="nav-item">
-      <img src="icons/tasks.svg" alt="Tasks icon" />
+      <img src="icons/task.svg" alt="Tasks icon" />
       <span>Tasks</span>
     </a>
-    <a href="paymentroomate.html" class="nav-item">
+    <a href="expenses.html" class="nav-item active">
       <img src="icons/payments.svg" alt="Payments icon" />
       <span>Payments</span>
     </a>
   </footer>
 
-  <!-- Script for fetching and rendering payments -->
+  <!-- Script -->
   <script src="scripts/expenses.js"></script>
 </body>
 </html>
