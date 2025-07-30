@@ -268,7 +268,7 @@ main.main-container {
 /* Style des cartes horizontales */
 .payment-item {
   flex: 0 0 auto;
-  width: 280px;
+  width: clamp(280px, 70vw, 400px); /* 👈 large sur grands écrans, reste scrollable sur petits */
   min-height: 160px;
   padding: 1rem;
   background-color: #ffffff;
@@ -281,6 +281,7 @@ main.main-container {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   border-left: 5px solid #004AAD;
 }
+
 
 
 .payment-item:hover {

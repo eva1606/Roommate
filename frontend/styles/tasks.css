@@ -7,15 +7,18 @@ body, html {
   height: 100%;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
 }
 
 body {
   font-family: 'Roboto', sans-serif;
   background-color: #fff;
   color: #1a1a1a;
-  display: flex;
-  flex-direction: column;
   min-height: 100vh;
+  overflow-y: auto;
+  scroll-padding-top: 100px; 
 }
 
 .visually-hidden {
@@ -46,12 +49,14 @@ header {
 }
 
 footer {
+  position: fixed;          
 bottom: 0;
 height: 60px;
 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 display: flex;
 justify-content: space-around;
 align-items: center;
+width: 100%;               
 }
 
 .nav-item.active {
@@ -224,18 +229,20 @@ a {
 
 /* ---------- CONTAINER PRINCIPAL ---------- */
 .main-container {
-  padding-top: 100px;
-  padding-bottom: 90px;
   flex: 1;
   overflow-y: auto;
+  padding-top: 100px;     /* Header fixe : 80px + 20px de marge */
+  padding-bottom: 98px;   /* Footer fixe : 78px + 20px de marge */
+  box-sizing: border-box;
 }
+
 
 
 
 /* ---------- TITRE DE PAGE ---------- */
 .page-title {
   font-size: 1.8rem;
-  color: var(--primary);
+  color: #004AAD;
   margin-top: -40px;
   padding-left: 20px;
   font-weight: 700;
@@ -259,11 +266,6 @@ a {
   margin-bottom: 30px;
 }
 
-.page-title {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #004AAD;
-}
 
 .button-container {
   display: flex;
