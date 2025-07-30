@@ -268,9 +268,10 @@ main.main-container {
 
 /* Style des cartes horizontales */
 .payment-item {
+  margin-top: 70px;
   flex: 0 0 auto;
-  width: 280px;
-  min-height: 160px;
+  margin-bottom: 70px;
+  min-height: 140px;
   padding: 1rem;
   background-color: #ffffff;
   border-radius: 16px;
