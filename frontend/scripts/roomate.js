@@ -250,16 +250,10 @@ async function fetchProperties() {
           </svg>
           </button>
           <button class="svg-action-btn trash-btn" data-id="${prop.id}" title="Delete">
-          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g clip-path="url(#clip0_2063_4)">
-          <path d="M12 38C12 40.2 13.8 42 16 42H32C34.2 42 36 40.2 36 38V14H12V38ZM38 8H31L29 6H19L17 8H10V12H38V8Z" fill="#004AAD"/>
-          </g>
-          <defs>
-          <clipPath id="clip0_2063_4">
-          <rect width="48" height="48" fill="white"/>
-          </clipPath>
-          </defs>
-          </svg>          
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
+            <path d="M9 0L7.5 1.2H0V3.6H4.5H19.5H24V1.2H16.5L15 0H9ZM1.5 6V21.6C1.5 22.92 2.85 24 4.5 24H19.5C21.15 24 22.5 22.92 22.5 21.6V6H1.5Z"
+              fill="#0021F5"/>
+          </svg>
         </button>
         </div>
         </div>
