@@ -15,12 +15,13 @@ body {
 
 /* Header */
 .header-bar {
-  background-color: #0056b3;
+  background-color: #004AAD;
   color: white;
   padding: 1.2rem 1.5rem;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  justify-content: center; /* ✅ Centre tout horizontalement */
+  position: relative; /* utile pour placer le bouton */
 }
 
 .header-bar h2 {
@@ -30,9 +31,11 @@ body {
 }
 
 .btn-back {
+  position: absolute;
+  left: 1.5rem;
   color: white;
   text-decoration: none;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
 }
 
 /* Form */
@@ -83,7 +86,7 @@ main {
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #007bff;
+  border: 3px solid #facc15;
 }
 
 /* Save button */
@@ -134,5 +137,20 @@ main {
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #007bff;
+  border: 3px solid #facc15;
+}
+/* Responsive - mobile */
+@media (max-width: 480px) {
+  .header-bar {
+    padding: 0.8rem 1rem;
+  }
+
+  .header-bar h2 {
+    font-size: 0.7rem;
+    margin: 0;
+  }
+
+  .btn-back {
+    font-size: 0.95rem;
+  }
 }

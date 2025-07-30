@@ -4,13 +4,20 @@
 }
 
 body, html {
-margin: 0;
-padding: 0;
-height: auto; /* ou simplement supprime height: 100% */
-overflow: auto;
-background-color: white;
-font-family: "Roboto",sans-serif;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #fff;
+  color: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -21,21 +28,21 @@ font-family: "Roboto",sans-serif;
   clip: rect(0 0 0 0);
   border: 0;
 }
-header, footer {
-position: fixed;
-width: 100%;
-z-index: 10;
-background-color: white;
-}
+
 
 header {
-top: 0;
-height: 100px;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-display: flex;
-justify-content: space-between; /* Place logo à gauche, hamburger à droite */
-align-items: center;
-padding: 0 1rem;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
 
 footer {
@@ -46,6 +53,7 @@ display: flex;
 justify-content: space-around;
 align-items: center;
 }
+
 .nav-item.active {
   color: #007bff
 }
@@ -60,40 +68,62 @@ a {
   text-decoration: none;
 }
 
-#logo {
+.logo-img {
   background-image: url("../images/logo.png");
   background-repeat: no-repeat;
   background-size: contain;
-  display: flex;
-  align-items: center;
   width: 97px;
   height: 97px;
-  flex-shrink: 0;
+  margin-right: 0;
+  margin-left: -20px;
+  align-items: center;
 }
-#logo span {
-  padding-left: 70px; 
-  color: #004AAD;
-  font-family: "Roboto",sans-serif;
-  font-size: 32px;
-  font-weight: 600;
-  margin-top:10px;
-  color: #004AAD;
-}
-.hamburger {
-  border: none;
-  padding: 50px;
-  cursor: pointer;
+
+.logo-link {
   display: flex;
   align-items: center;
-  justify-content: center;
-  z-index: 10;
-  background: none;
+  text-decoration: none;
 }
+
+.top-bar {
+  display: flex;
+  align-items: normal;
+  width: 100%;
+  justify-content: space-between;
+}
+
+
+.logo-link h1 {
+  font-size: 1.2rem;
+  color: #004AAD;
+  align-items: center;
+  margin-left: -20px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  height: 8px;
+}
+
+  .hamburger {
+    background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 1px 40px;
+  justify-content: space-between;
+  }
+
+  .hamburger img {
+    cursor: pointer;
+    padding: 1px 12px;;
+    width: 40px;
+    height: 40px;
+    filter: brightness(0) saturate(100%) invert(22%) sepia(79%) saturate(1962%) hue-rotate(201deg) brightness(92%) contrast(97%);
+  }
+
 .menu-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;         /* Ajustable : 80% ou 100% */
+  width: 100%;         
   height: 100vh;
   background-color: white;
   z-index: 999;
@@ -190,88 +220,197 @@ a {
   filter: brightness(0) saturate(100%) invert(32%) sepia(96%) saturate(1818%) hue-rotate(203deg) brightness(92%) contrast(101%);
 }
 
+
+/* ---------- CONTAINER PRINCIPAL ---------- */
 .main-container {
-  padding: 150px 1rem 100px;
-  max-width: 900px;
-  margin: auto;
+  padding-top: 100px;
+  padding-bottom: 90px;
+  flex: 1;
+  overflow-y: auto;
 }
 
-/* === TITRE DE PAGE === */
+
+
+/* ---------- TITRE DE PAGE ---------- */
 .page-title {
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: #004aad;
-  margin-bottom: 1.5rem;
-  text-align: center;
+  font-size: 1.8rem;
+  color: var(--primary);
+  margin-bottom: 20px;
+  padding-left: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
-/* === SECTION AJOUT === */
 .add-section {
+  width: 100%;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5px 0;
+  padding-top: 1px;
+}
+
+.title-container {
+  width: 100%;
+  text-align: left;
+  padding-left: 20px;
+  margin-bottom: 30px;
+}
+
+.page-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #004AAD;
+}
+
+.button-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  width: 100%;
 }
 
-/* === BOUTON AJOUT TÂCHE === */
 .add-btn {
-  background-color: #ffaa00;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  transition: background 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  max-width: 340px;
+  margin: 50px auto;
+  padding: 32px 26px;
+  background-color: #fffbea;
+  border: 2.5px dashed var(--accent);
+  border-radius: 22px;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  text-decoration: none;
+  color: var(--primary);
+  font-size: 1.15rem;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
   cursor: pointer;
-  margin-left: 350px;
-}
-.add-btn:hover {
-  background-color: #e69a00;
+  transition: all 0.3s ease-in-out;
+  position: relative;
 }
 
-/* === LISTE DE TÂCHES === */
+.add-btn:hover {
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+  transform: translateY(-3px);
+  background-color: #fff3c4;
+}
+
+.add-btn::before {
+  content: "+";
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 10px;
+  color: #ffaa00;
+  font-weight: bold;
+}
+
+/* Optionnel : Animation douce comme dans l'autre bouton */
+@keyframes pulseGlow {
+  0% {
+    text-shadow: 0 0 0px var(--accent);
+  }
+  50% {
+    text-shadow: 0 0 8px var(--accent);
+  }
+  100% {
+    text-shadow: 0 0 0px var(--accent);
+  }
+}
+
+
+/* ---------- LISTE DE TÂCHES ---------- */
 .task-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.2rem;
+  padding: 0 16px;
 }
 
-/* === ÉLÉMENT DE TÂCHE === */
+/* ---------- ÉLÉMENT DE TÂCHE ---------- */
 .task-item {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+  transition: box-shadow 0.3s ease;
 }
 
 .task-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #004aad;
-  margin-bottom: 0.5rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #004AAD;
+  margin-bottom: 0.8rem;
 }
 
 .task-meta {
-  font-size: 1.0rem;
+  font-size: 1rem;
   color: #555;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.4rem;
 }
 
-/* === BOUTON MARQUER COMME TERMINÉ === */
+/* ---------- BOUTON TERMINÉ ---------- */
 .task-btn {
   background-color: #28a745;
   color: white;
-  padding: 12px 22px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  margin-top: 0.5rem;
-  font-weight: 500;
+  margin-top: 0.8rem;
+  font-weight: 600;
   transition: background 0.3s ease;
 }
+
 .task-btn:hover {
   background-color: #218838;
 }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 1.5rem;
+    padding-left: 12px;
+  }
+
+  .add-btn {
+    font-size: 1rem;
+    padding: 12px 22px;
+  }
+
+  .task-title {
+    font-size: 1.2rem;
+  }
+
+  .task-meta {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 1.3rem;
+    text-align: center;
+    padding: 0;
+  }
+
+  .add-btn {
+    font-size: 0.95rem;
+    padding: 10px 18px;
+  }
+
+  .task-title {
+    font-size: 1.1rem;
+  }
+
+  .task-meta {
+    font-size: 0.9rem;
+  }
+}
+
 
 /* === MESSAGES VIDES === */
 .task-list p {
