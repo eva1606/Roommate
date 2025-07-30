@@ -236,7 +236,7 @@ a {
 .page-title {
   font-size: 1.8rem;
   color: var(--primary);
-  margin-top: -50px;
+  margin-top: -40px;
   padding-left: 20px;
   font-weight: 700;
   letter-spacing: 0.5px;
@@ -338,7 +338,6 @@ a {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   padding: 24px;
   transition: box-shadow 0.3s ease;
-  margin-bottom: 80px;
 }
 
 .task-title {
