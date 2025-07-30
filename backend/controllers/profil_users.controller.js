@@ -20,12 +20,10 @@ const updateUserProfile = async (req, res) => {
   try {
     let photo_url = null;
 
-    // Si une nouvelle photo est uploadée, on la récupère depuis Cloudinary
     if (req.file) {
       photo_url = req.file.path;
     }
 
-    // Mise à jour du profil
     const result = await pool.query(
       `UPDATE profil_users
        SET first_name = $1,
@@ -60,13 +58,13 @@ const updateUserProfile = async (req, res) => {
     );
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Profil non trouvé.' });
+      return res.status(404).json({ error: 'Profile not found..' });
     }
 
     res.status(200).json(result.rows[0]);
   } catch (err) {
-    console.error('❌ Erreur mise à jour profil:', err.message);
-    res.status(500).json({ error: 'Erreur serveur lors de la mise à jour du profil.' });
+    console.error('❌ Error updating profile:', err.message);
+    res.status(500).json({ error: 'Server error while updating profile.' });
   }
 };
 

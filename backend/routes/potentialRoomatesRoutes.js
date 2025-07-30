@@ -6,12 +6,10 @@ const {
   removeFavoriteRoommate,
   getUserFavoriteRoommates,
   getRoommateDetail
-} = require("../controllers/potentialRoomatesController"); // ✅ Vérifie le nom
+} = require("../controllers/potentialRoomatesController"); 
 
-// Route existante
 router.get("/:userId", getPotentialRoommates);
 
-// Nouvelles routes pour favoris
 router.post("/add-favorite", addFavoriteRoommate);
 router.delete("/remove-favorite", removeFavoriteRoommate);
 router.get("/favorites/:userId", getUserFavoriteRoommates);

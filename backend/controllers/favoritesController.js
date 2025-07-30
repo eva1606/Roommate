@@ -1,6 +1,5 @@
 const pool = require('../db');
 
-// controllers/favoritesController.js
 exports.getUserFavorites = async (req, res) => {
     const userId = req.params.userId;
     try {
@@ -12,8 +11,8 @@ exports.getUserFavorites = async (req, res) => {
       `, [userId]);
       res.json(result.rows);
     } catch (error) {
-      console.error('❌ Erreur récupération favoris :', error);
-      res.status(500).json({ error: "Erreur serveur" });
+      console.error('❌ Error retrieving favorites:', error);
+      res.status(500).json({ error: "Server error." });
     }
   };
   

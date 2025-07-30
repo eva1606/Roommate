@@ -1,6 +1,5 @@
-const pool = require('../db'); // Connexion à ta base PostgreSQL
+const pool = require('../db'); 
 
-// ✅ Récupérer le profil par user_id
 const getUserProfile = async (req, res) => {
   const userId = req.params.id;
 
@@ -11,13 +10,13 @@ const getUserProfile = async (req, res) => {
     );
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ message: 'Profil non trouvé.' });
+      return res.status(404).json({ message: 'Profile not found.' });
     }
 
     res.json(result.rows[0]);
   } catch (err) {
-    console.error('Erreur récupération profil:', err.message);
-    res.status(500).json({ message: 'Erreur serveur.' });
+    console.error('Error retrieving profile:', err.message);
+    res.status(500).json({ message: 'Server error.' });
   }
 };
 
@@ -56,8 +55,8 @@ const updateUserProfile = async (req, res) => {
 
     res.json(result.rows[0]);
   } catch (err) {
-    console.error('Erreur mise à jour profil:', err.message);
-    res.status(500).json({ message: 'Erreur lors de la mise à jour.' });
+    console.error('Error updating profile:', err.message);
+    res.status(500).json({ message: 'Error while updating.' });
   }
 };
 

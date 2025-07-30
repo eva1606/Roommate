@@ -6,7 +6,6 @@ exports.getMyRoommateProperty = async (req, res) => {
   const userId = req.params.userId;
 
   try {
-    // Trouver la propriété liée à l'utilisateur
     const propResult = await db.query(`
       SELECT p.*
       FROM properties p
@@ -21,7 +20,6 @@ exports.getMyRoommateProperty = async (req, res) => {
       return res.json({ property: null, roommates: [], documents: [] });
     }
 
-    // Récupérer les colocataires liés à cette propriété
     const roomies = await db.query(`
     SELECT 
     u.id, 
@@ -42,7 +40,6 @@ exports.getMyRoommateProperty = async (req, res) => {
       photo_url: r.photo_url || defaultAvatar,
     }));
     
-    // Récupérer les documents liés à cette propriété
     const docs = await db.query(`
       SELECT file_name, file_url
       FROM documents
@@ -56,7 +53,7 @@ exports.getMyRoommateProperty = async (req, res) => {
     });
   } catch (err) {
     console.error("❌ getMyRoommateProperty error:", err);
-    res.status(500).json({ error: "Erreur serveur" });
+    res.status(500).json({ error: "Server error." });
   }
 };
 exports.uploadDocument = async (req, res) => {
@@ -64,18 +61,17 @@ exports.uploadDocument = async (req, res) => {
   const file = req.file;
 
   if (!file || !file.path) {
-    return res.status(400).json({ error: "Aucun fichier reçu" });
+    return res.status(400).json({ error: "No file received." });
   }
 
   try {
-    // Récupérer la propriété liée à cet utilisateur
     const result = await db.query(
       `SELECT property_id FROM roommates_properties WHERE user_id = $1 LIMIT 1`,
       [user_id]
     );
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Aucune propriété trouvée." });
+      return res.status(404).json({ error: "No property found." });
     }
 
     const receiverPropertyId = result.rows[0].property_id;
@@ -88,9 +84,9 @@ exports.uploadDocument = async (req, res) => {
     
 
 
-    res.status(201).json({ message: " Document enregistré avec succès." });
+    res.status(201).json({ message: " Document successfully saved." });
   } catch (err) {
     console.error("❌ Upload document error:", err);
-    res.status(500).json({ error: "Erreur lors de l'enregistrement du document." });
+    res.status(500).json({ error: "Error while saving the document." });
   }
 };

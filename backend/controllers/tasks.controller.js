@@ -4,7 +4,6 @@ exports.getTasksByUser = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    // 🔍 Récupérer la propriété de l'utilisateur
     const { rows: propertyRows } = await pool.query(
       `SELECT property_id FROM roommates_properties WHERE user_id = $1 LIMIT 1`,
       [userId]
@@ -16,7 +15,6 @@ exports.getTasksByUser = async (req, res) => {
 
     const propertyId = propertyRows[0].property_id;
 
-    // 📦 Récupérer les tâches avec les infos créateur & compléteur
     const { rows: tasks } = await pool.query(
       `SELECT 
          t.id,
@@ -53,7 +51,6 @@ exports.getTasksByUser = async (req, res) => {
 
 
 
-// ✅ POST: Ajouter une tâche et retourner infos + nom/prénom du créateur
 exports.addTask = async (req, res) => {
   const { title, due_date, created_by } = req.body;
 
@@ -62,7 +59,6 @@ exports.addTask = async (req, res) => {
   }
 
   try {
-    // 🔍 Trouver la propriété liée à l'utilisateur
     const { rows: propertyRows } = await pool.query(
       `SELECT property_id FROM roommates_properties WHERE user_id = $1 LIMIT 1`,
       [created_by]
@@ -74,7 +70,6 @@ exports.addTask = async (req, res) => {
 
     const propertyId = propertyRows[0].property_id;
 
-    // ➕ Insérer la tâche
     const { rows } = await pool.query(
       `INSERT INTO tasks (property_id, title, due_date, created_by)
        VALUES ($1, $2, $3, $4)
@@ -84,7 +79,6 @@ exports.addTask = async (req, res) => {
 
     const task = rows[0];
 
-    // 👤 Récupérer le nom du créateur
     const { rows: userRows } = await pool.query(
       `SELECT first_name, last_name FROM users WHERE id = $1`,
       [created_by]
@@ -111,7 +105,6 @@ exports.addTask = async (req, res) => {
 };
 
 
-// ✅ PATCH: Marquer une tâche comme faite + enregistrer par qui
 exports.markTaskAsDone = async (req, res) => {
   const { taskId } = req.params;
   const { userId } = req.body;
@@ -121,7 +114,6 @@ exports.markTaskAsDone = async (req, res) => {
   }
 
   try {
-    // ✅ Marquer comme complétée + enregistrer qui l'a fait
     const updateResult = await pool.query(
       `UPDATE tasks
        SET status = 'completed',
@@ -137,7 +129,6 @@ exports.markTaskAsDone = async (req, res) => {
 
     const updatedTask = updateResult.rows[0];
 
-    // 🔁 Récupérer noms des utilisateurs (créateur + validateur)
     const userIds = [updatedTask.created_by, updatedTask.completed_by];
 
     const usersResult = await pool.query(

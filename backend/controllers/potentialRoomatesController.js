@@ -4,20 +4,18 @@ exports.getPotentialRoommates = async (req, res) => {
   const userId = req.params.userId;
 
   try {
-    // 🔹 Récupère le profil du user connecté
     const userProfile = await db.query(
       `SELECT location, budget FROM profil_users WHERE user_id = $1`,
       [userId]
     );
 
     if (userProfile.rows.length === 0) {
-      return res.status(404).json({ error: "Profil introuvable." });
+      return res.status(404).json({ error: "Profile not found.." });
     }
 
     const { location, budget } = userProfile.rows[0];
     const numericBudget = Number(budget);
 
-    // 🔹 Récupère les profils compatibles AVEC info de favoris
     const result = await db.query(
       `SELECT 
           p.id, 
@@ -38,8 +36,8 @@ exports.getPotentialRoommates = async (req, res) => {
 
     res.json(result.rows);
   } catch (err) {
-    console.error("❌ Erreur récupération roommates :", err);
-    res.status(500).json({ error: "Erreur serveur" });
+    console.error("❌ Error retrieving roommates:", err);
+    res.status(500).json({ error: "Server error." });
   }
 };
 exports.addFavoriteRoommate = async (req, res) => {
@@ -51,10 +49,10 @@ exports.addFavoriteRoommate = async (req, res) => {
        VALUES ($1, $2) ON CONFLICT DO NOTHING`,
       [userId, profilUserId]
     );
-    res.status(200).json({ message: "Ajouté aux favoris" });
+    res.status(200).json({ message: "Added to favorites." });
   } catch (err) {
-    console.error("Erreur ajout favori :", err);
-    res.status(500).json({ error: "Erreur serveur" });
+    console.error("Error adding to favorites:", err);
+    res.status(500).json({ error: "Server error." });
   }
 };
 exports.removeFavoriteRoommate = async (req, res) => {
@@ -65,10 +63,10 @@ exports.removeFavoriteRoommate = async (req, res) => {
       `DELETE FROM favorite_roommate WHERE user_id = $1 AND profil_user_id = $2`,
       [userId, profilUserId]
     );
-    res.status(200).json({ message: "Supprimé des favoris" });
+    res.status(200).json({ message: "Removed from favorites." });
   } catch (err) {
-    console.error("Erreur suppression favori :", err);
-    res.status(500).json({ error: "Erreur serveur" });
+    console.error("Error removing from favorites:", err);
+    res.status(500).json({ error: "Server error." });
   }
 };
 exports.getUserFavoriteRoommates = async (req, res) => {
@@ -85,8 +83,8 @@ exports.getUserFavoriteRoommates = async (req, res) => {
 
     res.json(result.rows);
   } catch (err) {
-    console.error("Erreur récupération favoris colocataires :", err);
-    res.status(500).json({ error: "Erreur serveur" });
+    console.error("Error retrieving roommate favorites:", err);
+    res.status(500).json({ error: "Server error." });
   }
 };
 exports.getRoommateDetail = async (req, res) => {

@@ -1,4 +1,4 @@
-const db = require('../db'); // ✅ Garde db si c'est ce que tu utilises partout ailleurs
+const db = require('../db'); 
 
 exports.getFilteredApartments = async (req, res) => {
   const userId = req.params.userId;
@@ -29,34 +29,34 @@ ORDER BY p.created_at DESC;
 
     return res.json(result.rows);
   } catch (err) {
-    console.error('❌ Erreur lors du filtrage des propriétés :', err);
-    res.status(500).json({ error: 'Erreur serveur' });
+    console.error('❌ Error while filtering properties:', err);
+    res.status(500).json({ error: 'Server error.'})
   }
 };
 exports.addToFavorites = async (req, res) => {
   const { user_id, property_id } = req.body;
 
   try {
-    // Vérifie si le favori existe déjà
+   
     const existing = await db.query(
       'SELECT * FROM favorite_apartments WHERE user_id = $1 AND property_id = $2',
       [user_id, property_id]
     );
 
     if (existing.rows.length > 0) {
-      return res.status(200).json({ message: 'Déjà dans les favoris' });
+      return res.status(200).json({ message: 'Already in favorites.' });
     }
 
-    // Ajoute à la table
+    
     await db.query(
       'INSERT INTO favorite_apartments (user_id, property_id) VALUES ($1, $2)',
       [user_id, property_id]
     );
 
-    res.status(201).json({ message: 'Ajouté aux favoris' });
+    res.status(201).json({ message: 'Added to favorites.' });
   } catch (err) {
-    console.error("❌ Erreur ajout favoris :", err);
-    res.status(500).json({ error: 'Erreur serveur' });
+    console.error("❌ Error adding to favorites:", err);
+    res.status(500).json({ error: 'Server error.' });
   }
 };
 exports.getFavoriteApartments = async (req, res) => {
@@ -76,8 +76,8 @@ exports.getFavoriteApartments = async (req, res) => {
 
     res.status(200).json(result.rows);
   } catch (err) {
-    console.error("❌ Erreur récupération favoris :", err);
-    res.status(500).json({ error: "Erreur serveur" });
+    console.error("❌ Error retrieving favorites:", err);
+    res.status(500).json({ error: "Server error" });
   }
 };
 exports.removeFromFavorites = async (req, res) => {
@@ -89,10 +89,10 @@ exports.removeFromFavorites = async (req, res) => {
       [user_id, property_id]
     );
 
-    res.status(200).json({ message: 'Retiré des favoris' });
+    res.status(200).json({ message: 'Removed from favorites.' });
   } catch (err) {
-    console.error("❌ Erreur suppression favori :", err);
-    res.status(500).json({ error: 'Erreur serveur' });
+    console.error("❌ Error removing favorite:", err);
+    res.status(500).json({ error: 'Server error.' });
   }
 };
 exports.hideApartment = async (req, res) => {
@@ -103,9 +103,9 @@ exports.hideApartment = async (req, res) => {
       'INSERT INTO hidden_apartments (user_id, property_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
       [user_id, property_id]
     );
-    res.status(201).json({ message: "Appartement masqué" });
+    res.status(201).json({ message: "Apartment hidden" });
   } catch (err) {
-    console.error("❌ Erreur hideApartment:", err);
-    res.status(500).json({ error: "Erreur serveur" });
+    console.error("❌ Error in hideApartment:", err);
+    res.status(500).json({ error: "Server errorr" });
   }
 };
