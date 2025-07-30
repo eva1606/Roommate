@@ -220,8 +220,8 @@ footer {
   filter: brightness(0) saturate(100%) invert(32%) sepia(96%) saturate(1818%) hue-rotate(203deg) brightness(92%) contrast(101%);
 }
 main.main-container {
-  padding: 140px 1rem 100px;
-  max-width: 900px;
+  padding: 120px 1rem 100px; /* 100px (header ~80px) + 20px d'espacement */
+  max-width: 100%;
   margin: auto;
 }
 
@@ -229,10 +229,13 @@ main.main-container {
   display: flex;
   justify-content: center;
   margin-bottom: 2rem;
+  margin-top: -300px;
+  align-items: center;
+
 }
 
 .add-btn {
-  padding: 1rem 2rem;
+  padding: 1.2rem 2rem;
   background-color: #004AAD;
   color: white;
   border: none;
@@ -241,8 +244,11 @@ main.main-container {
   font-weight: 600;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  width: clamp(180px, 40%, 300px); /* 👈 s’adapte automatiquement */
+  width: clamp(200px, 50%, 280px);
   text-align: center;
+  margin-top: 40px;
+  white-space: nowrap;
+
 }
 
 .add-btn:hover {
@@ -250,26 +256,33 @@ main.main-container {
   transform: scale(1.03);
 }
 
-/* === Liste des paiements === */
+/* Liste horizontale scrollable */
 .payment-list {
   display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* === Carte de paiement === */
+/* Style des cartes horizontales */
 .payment-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.2rem 1.5rem;
+  flex: 0 0 auto;
+  width: 280px;
+  min-height: 160px;
+  padding: 1rem;
   background-color: #ffffff;
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-  flex-wrap: wrap;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  scroll-snap-align: start;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   border-left: 5px solid #004AAD;
 }
+
 
 .payment-item:hover {
   transform: translateY(-3px);
@@ -417,5 +430,36 @@ main.main-container {
 @media (max-width: 768px) {
   .footer-nav .nav-item {
     font-size: 16px;
+  }
+}
+@media (max-width: 600px) {
+  main.main-container {
+    padding: 100px 1rem 80px; /* un peu plus serré mais garde l'espacement */
+  }
+
+  .add-section {
+    margin-top: -250px;
+    margin-bottom: 1.5rem;
+  }
+
+  .add-btn {
+    font-size: 1.1rem;
+    padding: 0.9rem 1.5rem;
+    width: clamp(160px, 80%, 260px);
+  }
+}
+
+@media (max-width: 360px) {
+  main.main-container {
+    padding: 90px 0.8rem 70px;
+  }
+
+  .add-btn {
+    font-size: 1rem;
+    padding: 0.8rem 1.2rem;
+    width: clamp(140px, 90%, 240px);
+  }
+  add-section {
+    margin-top: -200px;
   }
 }
