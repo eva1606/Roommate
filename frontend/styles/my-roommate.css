@@ -1,4 +1,3 @@
-/* ========== ROOT VARIABLES ========== */
 :root {
   --primary-color: #0056cc;
   --accent-color: #ff6600;
@@ -8,6 +7,7 @@
   --shadow: rgba(0, 0, 0, 0.1);
   --border-radius: 12px;
 }
+
 .visually-hidden {
   position: absolute !important;
   width: 1px;
@@ -19,7 +19,7 @@
   white-space: nowrap;
   border: 0;
 }
-/* ========== BASE STYLES ========== */
+
 body {
   font-family: 'Roboto',sans-serif;
   margin: 0;
@@ -35,7 +35,6 @@ h1, h3 {
   margin-top: 20px;
 }
 
-/* ========== CONTAINER SECTIONS ========== */
 section,
 .documents-section,
 #roommates-list {
@@ -48,7 +47,6 @@ section,
   max-width: 800px;
 }
 
-/* ========== PROPERTY IMAGE ========== */
 .property-photo {
   width: 100%;
   object-fit: cover;
@@ -56,7 +54,6 @@ section,
   margin-top: 10px;
 }
 
-/* ========== ROOMMATE LIST ========== */
 .roommates-container {
   display: flex;
   flex-wrap: wrap;
@@ -82,7 +79,6 @@ section,
   margin-bottom: 10px;
 }
 
-/* ========== DOCUMENT LINKS ========== */
 .doc-link {
   display: block;
   background-color: var(--accent-color);
@@ -99,7 +95,6 @@ section,
   background-color: #e05500;
 }
 
-/* ========== FILE UPLOAD FORM ========== */
 #upload-form {
   display: flex;
   flex-direction: column;
@@ -137,7 +132,6 @@ section,
   margin-top: 10px;
 }
 
-/* ========== BACK BUTTON ========== */
 .back-button {
   display: inline-block;
   margin: 20px auto 0;
@@ -160,7 +154,6 @@ section,
   background-color: #0041a8;
 }
 
-/* ========== RESPONSIVE ========== */
 @media (max-width: 600px) {
   .roommates-container {
     flex-direction: column;

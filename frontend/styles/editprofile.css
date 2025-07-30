@@ -1,4 +1,3 @@
-/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -10,18 +9,17 @@ body {
   background-color: #f4f6f8;
   color: #333;
   line-height: 1.6;
-  padding-bottom: 80px; /* Footer space */
+  padding-bottom: 80px; 
 }
 
-/* Header */
 .header-bar {
   background-color: #004AAD;
   color: white;
   padding: 1.2rem 1.5rem;
   display: flex;
   align-items: center;
-  justify-content: center; /* ✅ Centre tout horizontalement */
-  position: relative; /* utile pour placer le bouton */
+  justify-content: center; 
+  position: relative; 
 }
 
 .header-bar h2 {
@@ -38,7 +36,6 @@ body {
   font-size: 0.9rem;
 }
 
-/* Form */
 main {
   padding: 2rem 1rem;
 }
@@ -78,7 +75,6 @@ main {
   outline: none;
 }
 
-/* Profile Photo Preview */
 #photo-preview {
   display: block;
   margin: 1rem auto 1.5rem auto;
@@ -89,7 +85,6 @@ main {
   border: 3px solid #facc15;
 }
 
-/* Save button */
 .save-btn {
   width: 100%;
   padding: 0.9rem;
@@ -107,7 +102,6 @@ main {
   background-color: #0056b3;
 }
 
-/* Responsive */
 @media (max-width: 600px) {
   .edit-form {
     padding: 1.5rem;
@@ -139,7 +133,7 @@ main {
   object-fit: cover;
   border: 3px solid #facc15;
 }
-/* Responsive - mobile */
+
 @media (max-width: 480px) {
   .header-bar {
     padding: 0.8rem 1rem;

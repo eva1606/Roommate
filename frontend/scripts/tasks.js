@@ -1,4 +1,3 @@
-// Navigation hamburger
 document.getElementById("hamburgerBtn")?.addEventListener("click", () => {
   document.getElementById("menuOverlay").classList.remove("hidden");
 });
@@ -26,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
       if (data.hasProperty === false || (Array.isArray(data.tasks) && data.tasks.length === 0)) {
         userHasProperty = false;
-        taskList.innerHTML = "<p style='text-align: center;'>Vous n'avez pas de propriété pour afficher les tâches.</p>";
+        taskList.innerHTML = "<p style='text-align: center;'>You don't have any property to display tasks.</p>";
         return;
       }
   
@@ -34,10 +33,10 @@ document.addEventListener("DOMContentLoaded", () => {
       renderTasks(tasks);
     } catch (err) {
       console.error("❌ Failed to fetch tasks:", err);
-      taskList.innerHTML = "<p style='color:red; text-align:center;'>Erreur lors du chargement des tâches.</p>";
+      taskList.innerHTML = "<p style='color:red; text-align:center;'>Error while loading tasks.</p>";
     }
   }
-  // 🧾 Affichage des tâches
+
   function renderTasks(tasks) {
     taskList.innerHTML = "";
     if (tasks.length === 0) {
@@ -75,7 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       `;
 
-      // Marquer comme fait
       if (task.status !== "completed") {
         const btn = div.querySelector(".task-btn");
         btn.addEventListener("click", async () => {
@@ -85,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ userId }),
             });
-            fetchTasks(); // Recharger
+            fetchTasks(); 
           } catch (err) {
             alert("Error marking task as done.");
           }
@@ -96,7 +94,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ➕ Ajouter une tâche
   addBtn?.addEventListener("click", async () => {
     const title = prompt("Enter task title:");
     const due = prompt("Enter due date (YYYY-MM-DD):");

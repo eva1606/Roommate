@@ -6,7 +6,6 @@ body {
   color: #111;
 }
 
-/* ----- Container Profil Joyeux ----- */
 .profile-detail {
   width: 100%;
   max-width: 900px;
@@ -20,7 +19,6 @@ body {
   position: relative;
 }
 
-/* ----- Bouton fermeture ----- */
 #closeBtn {
   position: absolute;
   top: 20px;
@@ -32,7 +30,6 @@ body {
   cursor: pointer;
 }
 
-/* ----- Photo avec contour doré ----- */
 .profile-photo {
   width: 130px;
   height: 130px;
@@ -43,7 +40,6 @@ body {
   margin-bottom: 20px;
 }
 
-/* ----- Nom stylisé ----- */
 #roommate-name {
   color: #004AAD;
   font-size: 24px;
@@ -53,7 +49,6 @@ body {
   letter-spacing: 1px;
 }
 
-/* ----- Liste d'informations ----- */
 .info-list {
   list-style: none;
   padding: 0;
@@ -75,14 +70,12 @@ body {
   box-shadow: 0 2px 6px rgba(0,0,0,0.03);
 }
 
-/* Icône colorée */
 .info-list li .icon {
   width: 22px;
   height: 22px;
   filter: brightness(0) saturate(100%) invert(23%) sepia(81%) saturate(1438%) hue-rotate(199deg) brightness(96%) contrast(98%);
 }
 
-/* ----- Description douce ----- */
 #roommate-description {
   background: #fff8e1;
   color: #444;
@@ -95,7 +88,6 @@ body {
   line-height: 1.6;
 }
 
-/* ----- Boutons de contact ----- */
 .contact-wrapper {
   display: flex;
   justify-content: center;

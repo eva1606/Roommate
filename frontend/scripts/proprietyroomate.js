@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const property = await res.json();
 
-    // 🏠 Affichage des informations principales
     document.getElementById("property-address").textContent = property.address;
     document.getElementById("main-photo").src = property.photo;
 
@@ -30,7 +29,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       <p>Furnished: ${property.furnished ? '✅' : '❌'}</p>
     `;
 
-    // 🖼️ Galerie
     const gallery = document.getElementById("photo-gallery");
     if (Array.isArray(property.photos) && property.photos.length) {
       property.photos.forEach(url => {
@@ -41,7 +39,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     }
 
-    // 📍 Géolocalisation et affichage carte
     const coords = await geocodeAddress(property.address);
     const map = L.map("map").setView([coords.lat, coords.lon], 16);
 
@@ -58,7 +55,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       window.open(`https://www.google.com/maps?q=${coords.lat},${coords.lon}`, "_blank");
     });
 
-    // 📞 Contact owner logic
     const contactBtn = document.getElementById("contactOwnerBtn");
     const contactDiv = document.getElementById("ownerContactInfo");
 
@@ -75,7 +71,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           `;
           contactDiv.classList.remove("hidden");
 
-          // 📞 Appelle directement le propriétaire
           window.location.href = `tel:${ownerData.phone}`;
         } catch (e) {
           contactDiv.innerHTML = "<p>❌ Could not load owner phone number.</p>";
@@ -86,16 +81,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   } catch (err) {
     console.error("❌ Failed to load property:", err);
-    document.getElementById("map").innerHTML = "<p>📍 Localisation non disponible</p>";
+    document.getElementById("map").innerHTML = "<p>📍 Location not available</p>";
     alert("Failed to load property.");
   }
-}); // 👈 fermeture manquante ajoutée ici
+}); 
 
-// 🔍 Fonction de géocodage sans API key (OpenStreetMap via Nominatim)
 async function geocodeAddress(address) {
   const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`);
   const data = await res.json();
-  if (!data || !data.length) throw new Error("Adresse non localisée");
+  if (!data || !data.length) throw new Error("Address not found");
   return {
     lat: parseFloat(data[0].lat),
     lon: parseFloat(data[0].lon),

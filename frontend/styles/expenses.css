@@ -110,7 +110,7 @@ justify-content: space-between;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;         /* Ajustable : 80% ou 100% */
+  width: 100%;         
   height: 100vh;
   background-color: white;
   z-index: 999;
@@ -132,7 +132,7 @@ justify-content: space-between;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 74px; /* Espace entre les items */
+  gap: 74px;
   margin-top: 100px;
 }
 
@@ -212,7 +212,7 @@ footer {
   background-color: white;
 }
 .nav-item.active {
-  color: #007bff; /* Couleur du texte */
+  color: #007bff; 
   font-weight: bold;
 }
 
@@ -220,7 +220,7 @@ footer {
   filter: brightness(0) saturate(100%) invert(32%) sepia(96%) saturate(1818%) hue-rotate(203deg) brightness(92%) contrast(101%);
 }
 main.main-container {
-  padding: 120px 1rem 100px; /* 100px (header ~80px) + 20px d'espacement */
+  padding: 120px 1rem 100px; 
   max-width: 100%;
   margin: auto;
 }
@@ -255,7 +255,7 @@ main.main-container {
   transform: scale(1.03);
 }
 
-/* Liste horizontale scrollable */
+
 .payment-list {
   display: flex;
   gap: 1rem;
@@ -265,7 +265,6 @@ main.main-container {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Style des cartes horizontales */
 .payment-item {
   flex: 0 0 auto;
   width: clamp(370px, 100vw, 700px); 
@@ -277,8 +276,6 @@ main.main-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  scroll-snap-align: start;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
   border-left: 5px solid #004AAD;
 }
 
@@ -289,7 +286,6 @@ main.main-container {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 }
 
-/* === Infos à gauche === */
 .payment-info {
   display: flex;
   flex-direction: column;
@@ -309,7 +305,6 @@ main.main-container {
   margin-top: 6px;
 }
 
-/* === Infos à droite === */
 .payment-meta {
   display: flex;
   flex-direction: column;
@@ -330,7 +325,6 @@ main.main-container {
   color: #999;
 }
 
-/* === Responsive mobile === */
 @media (max-width: 600px) {
   .payment-item {
     flex-direction: column;
@@ -434,7 +428,7 @@ main.main-container {
 }
 @media (max-width: 600px) {
   main.main-container {
-    padding: 100px 1rem 80px; /* un peu plus serré mais garde l'espacement */
+    padding: 100px 1rem 80px; 
   }
 
   .add-section {

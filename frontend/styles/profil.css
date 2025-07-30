@@ -34,7 +34,6 @@ body {
   margin-left: 10px;
 }
 
-/* PROFILE CARD */
 .profile-card {
   background: #f9f9f9;
   border-radius: 12px;
@@ -64,7 +63,6 @@ body {
   margin-top: 4px;
 }
 
-/* BUTTONS */
 .profile-buttons {
   background: #fff;
   border-radius: 10px;
@@ -95,7 +93,6 @@ body {
   margin-right: 10px;
 }
 
-/* INFOS */
 .profile-infos {
   background: #fff;
   padding: 1rem;

@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const sortMenuRoommates = document.getElementById("sortMenuRoommates");
   const filterBtn = document.getElementById("filterBtn");
 
-  // Navigation hamburger
   document.getElementById("hamburgerBtn")?.addEventListener("click", () => {
     document.getElementById("menuOverlay").classList.remove("hidden");
   });
@@ -34,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "login.html";
   });
 
-  // Recherche
   const searchInput = document.querySelector(".search-input");
   searchInput?.addEventListener("input", () => {
     const query = searchInput.value.toLowerCase().trim();
@@ -45,7 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Tabs
   tabApartments?.addEventListener("click", () => {
     tabApartments.classList.add("active");
     tabRoommates.classList.remove("active");
@@ -67,7 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (filterTitle) filterTitle.textContent = "Filter Roommates";
   });
 
-  // Toggle filtre
   filterBtn?.addEventListener("click", () => {
     filterOverlay.classList.toggle("hidden");
     sortMenuApartments?.classList.add("hidden");
@@ -82,19 +78,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const isApartmentsTab = tabApartments.classList.contains("active");
   
     if (isApartmentsTab) {
-      // Toggle Apartments menu
       const isVisible = !sortMenuApartments.classList.contains("hidden");
       sortMenuApartments.classList.toggle("hidden", isVisible);
       sortMenuRoommates.classList.add("hidden");
     } else {
-      // Toggle Roommates menu
       const isVisible = !sortMenuRoommates.classList.contains("hidden");
       sortMenuRoommates.classList.toggle("hidden", isVisible);
       sortMenuApartments.classList.add("hidden");
     }
   });
 
-  // Tri Apartments
   sortMenuApartments?.querySelectorAll("li").forEach((item) => {
     item.addEventListener("click", () => {
       const sortType = item.dataset.sort;
@@ -119,7 +112,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Tri Roommates
   sortMenuRoommates?.querySelectorAll("li").forEach((item) => {
     item.addEventListener("click", () => {
       const criterion = item.textContent.trim();
@@ -139,7 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Filtre Apartments
   document.getElementById("applyFilterApt")?.addEventListener("click", () => {
     const loc = document.getElementById("aptLocation").value.toLowerCase();
     const budget = parseInt(document.getElementById("aptBudget").value);
@@ -159,7 +150,6 @@ document.addEventListener("DOMContentLoaded", () => {
     filterOverlay.classList.add("hidden");
   });
 
-  // Filtre Roommates
   document.getElementById("applyFilterRoommates")?.addEventListener("click", () => {
     const loc = document.getElementById("rmLocation").value.toLowerCase();
     const budget = parseInt(document.getElementById("rmBudget").value);
@@ -179,7 +169,6 @@ document.addEventListener("DOMContentLoaded", () => {
     filterOverlay.classList.add("hidden");
   });
 
-  // Fermer si clic extérieur
   document.addEventListener("click", (event) => {
     if (!sortBtn.contains(event.target)) {
       sortMenuApartments?.classList.add("hidden");
@@ -193,7 +182,6 @@ document.addEventListener("DOMContentLoaded", () => {
   fetchProperties();
 });
 
-  // Logout
   document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
     e.preventDefault();
     localStorage.clear();
@@ -201,7 +189,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-// ✅ Affiche les propriétés filtrées pour l'utilisateur connecté
 async function fetchProperties() {
   const userId = localStorage.getItem("user_id");
   const container = document.getElementById("apartment-available");
@@ -250,10 +237,16 @@ async function fetchProperties() {
           </svg>
           </button>
           <button class="svg-action-btn trash-btn" data-id="${prop.id}" title="Delete">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
-            <path d="M9 0L7.5 1.2H0V3.6H4.5H19.5H24V1.2H16.5L15 0H9ZM1.5 6V21.6C1.5 22.92 2.85 24 4.5 24H19.5C21.15 24 22.5 22.92 22.5 21.6V6H1.5Z"
-              fill="#0021F5"/>
-          </svg>
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_2063_4)">
+          <path d="M12 38C12 40.2 13.8 42 16 42H32C34.2 42 36 40.2 36 38V14H12V38ZM38 8H31L29 6H19L17 8H10V12H38V8Z" fill="#004AAD"/>
+          </g>
+          <defs>
+          <clipPath id="clip0_2063_4">
+          <rect width="48" height="48" fill="white"/>
+          </clipPath>
+          </defs>
+          </svg>          
         </button>
         </div>
         </div>
@@ -273,7 +266,6 @@ async function fetchProperties() {
       
         try {
           if (isFavorited) {
-            // ❌ Retirer des favoris
             await fetch(`https://roommate-1.onrender.com/api/properties-available/favorites/remove`, {
               method: "DELETE",
               headers: { "Content-Type": "application/json" },
@@ -287,7 +279,7 @@ async function fetchProperties() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ user_id: userId, property_id: propertyId }),
             });
-            svgPath.setAttribute("fill", "#2e86de"); // bleu
+            svgPath.setAttribute("fill", "#2e86de"); 
           }
         } catch (err) {
           console.error("Error changing favorites:", err);
@@ -304,7 +296,7 @@ async function fetchProperties() {
           body: JSON.stringify({ user_id: userId, property_id: propertyId }),
 });
 
-          card.remove(); // supprime du DOM
+          card.remove(); 
         } catch (err) {
           console.error("Error deleting property:", err);
         }

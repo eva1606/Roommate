@@ -19,7 +19,6 @@
     min-height: 100vh;
   }
   
-  /* ---------- HEADER ---------- */
   header {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -80,9 +79,8 @@
   }
   
   .main, .page-container {
-    padding-top: 120px;   /* espace pour le header */
+    padding-top: 120px;   
   }
-  /* ----------- NAVBAR DANS LE HEADER ----------- */
 
 .top-navbar {
   font-family: 'Roboto', sans-serif;
@@ -112,7 +110,6 @@
   font-weight: bold;
 }
 
-/* ----------- RESPONSIVE ----------- */
 @media screen and (max-width: 768px) {
   .nav-link {
     font-size: 0.9rem;
@@ -184,7 +181,6 @@
 
   
   
-  /* ---------- MAIN ---------- */
 :root {
   --primary: #004AAD;        
   --primary-light: #0066cc;   
@@ -375,7 +371,6 @@ main {
   }
 }
 
-/* ---------- FORMULAIRE ADD PROPERTY ---------- */
 
 h1 {
   text-align: center;
@@ -523,7 +518,6 @@ form#propertyForm button[type="submit"]:hover {
   }
 }
 
-/* ---------- FORMULAIRE EDIT PROPERTY ---------- */
 
 form#editForm {
   background-color: var(--surface, #ffffff);
@@ -582,7 +576,6 @@ form#editForm button[type="submit"]:hover {
   transform: translateY(-3px);
 }
 
-/* ---------- ROOMMATES SECTION ---------- */
 
 #roommatesSection {
   background-color: var(--surface, #ffffff);
@@ -686,7 +679,6 @@ form#editForm button[type="submit"]:hover {
   background-color: #003a92;
 }
 
-/* ======== PROPERTY DETAILS PAGE  ======== */
 
 #property-details {
   background-color: var(--surface, #ffffff);
@@ -807,7 +799,6 @@ form#editForm button[type="submit"]:hover {
   }
 }
 
-/* ========= SHARED DOCUMENTS PAGE ========== */
 
 .upload-box {
   border: 2.5px dashed #cbd5e1; 
@@ -928,7 +919,6 @@ form#editForm button[type="submit"]:hover {
 }
 
 
-/*==== CONTACT ROOMMATES  ======*/
 
 .roommate-card {
   border-radius: 16px;
@@ -1057,7 +1047,6 @@ textarea:focus {
   }
 }
 
-/* === Payments Owner Section === */
 
 .property-info {
   background-color: #ffffff;
@@ -1537,8 +1526,8 @@ main h2::after {
     right: 10px;
   }
   .main, .page-container {
-    padding-top: 120px;   /* espace pour le header */
-    padding-bottom: 100px; /* espace pour le footer */
+    padding-top: 120px;   
+    padding-bottom: 100px; 
   }
   
 }
@@ -1609,8 +1598,8 @@ main h2::after {
       font-size: 2.5rem;
     }
     .main, .page-container {
-      padding-top: 120px;   /* espace pour le header */
-      padding-bottom: 100px; /* espace pour le footer */
+      padding-top: 120px;   
+      padding-bottom: 100px; 
     }
     
   }

@@ -123,8 +123,8 @@ a {
     position: fixed;
     top: 90px;
     left: 0;
-    width: 100%;         /* Ajustable : 80% ou 100% */
-    height: calc(100vh - 90px); /* Hauteur de l’écran - header */
+    width: 100%;        
+    height: calc(100vh - 90px); 
     background-color: white;
     z-index: 999;
     padding: 40px 24px;
@@ -133,7 +133,7 @@ a {
     align-items: flex-start;
     gap: 32px;
     transition: transform 0.3s ease;
-    justify-content: space-between; /* distribue l’espace */
+    justify-content: space-between; 
   }
 
   .menu-overlay.hidden {
@@ -146,7 +146,7 @@ a {
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 74px; /* Espace entre les items */
+    gap: 74px; 
     margin-top: 100px;
   }
   
@@ -270,7 +270,8 @@ a {
   .tab-content.active {
     display: block;
   }
-/* Action Buttons Container */
+
+
 .action-buttons {
   display: flex;
   align-items: center;
@@ -300,7 +301,7 @@ a {
   width: 18px;
 }
 
-/* Sort Menu */
+
 .sort-menu {
   position: absolute;
   margin-top: 6px;
@@ -324,7 +325,6 @@ a {
   background-color: #f3f4f6;
 }
 
-/* ========== Filter Panel ========== */
 .filter-content {
   position: absolute;
   right: 16px;
@@ -380,7 +380,7 @@ a {
   margin-top: 10px;
 }
 
-/* Utilitaires */
+
 .hidden {
   display: none;
 }
@@ -389,7 +389,7 @@ a {
   display: none !important;
 }
 .nav-item.active {
-  color: #007bff; /* Couleur du texte */
+  color: #007bff; 
   font-weight: bold;
 }
 
@@ -489,7 +489,7 @@ a {
   }
 
   .hidden-card {
-    display: none; /* Ou visibility: hidden si tu veux garder la place */
+    display: none; 
   }
   
 @media (max-width: 400px) {
@@ -624,7 +624,7 @@ a {
     border: none;
     cursor: pointer;
     min-width: 100px;
-    flex-shrink: 0; /* important pour garder la taille */
+    flex-shrink: 0; 
   }
 
   .sort-toggle img,
@@ -637,7 +637,7 @@ a {
     gap: 10px;
     justify-content: center;
     align-items: center;
-    flex-wrap: nowrap; /* empêche le retour à la ligne */
+    flex-wrap: nowrap; 
   }
   
   .filter-content {
@@ -744,7 +744,6 @@ a {
   transition: fill 0.3s ease;
 }
 
-/* Mobile Tablet <= 1024px */
 @media (max-width: 1024px) {
   .property-photo {
     width: 160px;
@@ -756,7 +755,6 @@ a {
 }
 
 
-/* Mobile Small <= 480px */
 @media (max-width: 480px) {
   .footer-nav .nav-item {
     font-size: 14px;
@@ -813,7 +811,7 @@ a {
     border: none;
     cursor: pointer;
     min-width: 100px;
-    flex-shrink: 0; /* important pour garder la taille */
+    flex-shrink: 0; 
   }
 
   .sort-toggle img,
@@ -826,7 +824,7 @@ a {
     gap: 10px;
     justify-content: center;
     align-items: center;
-    flex-wrap: nowrap; /* empêche le retour à la ligne */
+    flex-wrap: nowrap; 
   }
   
   .filter-content {
@@ -853,7 +851,6 @@ a {
   }
 }
 
-/* Ultra small devices <= 360px */
 @media (max-width: 360px) {
   .footer-nav .nav-item {
     font-size: 12px;
@@ -899,7 +896,6 @@ a {
   }
 }
 
-/* Ultra compact 320px */
 @media (max-width: 320px) {
   .footer-nav .nav-item {
     font-size: 12px;
@@ -943,7 +939,7 @@ a {
     height: 16px;
   }
 }
-/* Ajouté : pour 600px */
+
 @media (max-width: 600px) {
   .footer-nav .nav-item {
     font-size: 14px;
@@ -1005,7 +1001,7 @@ a {
   }
 
   .svg-action-btn:first-of-type {
-    right: 48px; /* cœur ou poubelle, selon l’ordre */
+    right: 48px; 
   }
 
   .svg-action-btn:last-of-type {
@@ -1031,7 +1027,7 @@ a {
     border: none;
     cursor: pointer;
     min-width: 100px;
-    flex-shrink: 0; /* important pour garder la taille */
+    flex-shrink: 0; 
   }
 
   .sort-toggle img,
@@ -1044,7 +1040,7 @@ a {
     gap: 10px;
     justify-content: center;
     align-items: center;
-    flex-wrap: nowrap; /* empêche le retour à la ligne */
+    flex-wrap: nowrap; 
   }
   
   .filter-content {
@@ -1071,7 +1067,6 @@ a {
   }
 }
 
-/* Correction globale pour TOUS les écrans <= 768px */
 @media (max-width: 768px) {
   .footer-nav .nav-item {
     font-size: 16px;
@@ -1140,7 +1135,7 @@ a {
     border: none;
     cursor: pointer;
     min-width: 100px;
-    flex-shrink: 0; /* important pour garder la taille */
+    flex-shrink: 0; 
   }
 
   .sort-toggle img,
@@ -1153,7 +1148,7 @@ a {
     gap: 10px;
     justify-content: center;
     align-items: center;
-    flex-wrap: nowrap; /* empêche le retour à la ligne */
+    flex-wrap: nowrap; 
   }
   
   .filter-content {

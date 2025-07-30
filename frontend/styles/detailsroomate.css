@@ -98,7 +98,7 @@ footer {
 }
 
   main {
-    padding: 100px 24px 150px; /* haut - côtés - bas */
+    padding: 100px 24px 150px; 
   }
 
 
@@ -213,7 +213,7 @@ footer {
 .hidden {
   display: none;
 }
-/* Responsive */
+
 @media (max-width: 600px) {
   main {
     margin: 1rem;
@@ -244,7 +244,6 @@ footer {
   }
 }
 
-/* Smartphones */
 @media (max-width: 480px) {
   main {
     padding: 80px 12px 90px;
@@ -261,7 +260,6 @@ footer {
   }
 }
 
-/* Ultra small screens */
 @media (max-width: 320px) {
   main {
     padding: 72px 10px 70px;

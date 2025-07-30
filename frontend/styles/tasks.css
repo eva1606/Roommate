@@ -150,7 +150,7 @@ a {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 74px; /* Espace entre les items */
+  gap: 74px; 
   margin-top: 100px;
 }
 
@@ -218,7 +218,7 @@ a {
   margin-bottom: 4px;
 }
 .nav-item.active {
-  color: #007bff; /* Couleur du texte */
+  color: #007bff; 
   font-weight: bold;
 }
 
@@ -227,19 +227,17 @@ a {
 }
 
 
-/* ---------- CONTAINER PRINCIPAL ---------- */
 .main-container {
   flex: 1;
   overflow-y: auto;
-  padding-top: 100px;     /* Header fixe : 80px + 20px de marge */
-  padding-bottom: 98px;   /* Footer fixe : 78px + 20px de marge */
+  padding-top: 100px;     
+  padding-bottom: 98px;   
   box-sizing: border-box;
 }
 
 
 
 
-/* ---------- TITRE DE PAGE ---------- */
 .page-title {
   font-size: 1.8rem;
   color: #004AAD;
@@ -311,7 +309,6 @@ a {
   font-weight: bold;
 }
 
-/* Optionnel : Animation douce comme dans l'autre bouton */
 @keyframes pulseGlow {
   0% {
     text-shadow: 0 0 0px var(--accent);
@@ -325,7 +322,6 @@ a {
 }
 
 
-/* ---------- LISTE DE TÂCHES ---------- */
 .task-list {
   margin-top: 30px;
   display: flex;
@@ -334,7 +330,6 @@ a {
   padding: 0 16px;
 }
 
-/* ---------- ÉLÉMENT DE TÂCHE ---------- */
 .task-item {
   background-color: #ffffff;
   border-radius: 18px;
@@ -356,7 +351,6 @@ a {
   margin-bottom: 0.4rem;
 }
 
-/* ---------- BOUTON TERMINÉ ---------- */
 .task-btn {
   background-color: #28a745;
   color: white;
@@ -373,7 +367,6 @@ a {
   background-color: #218838;
 }
 
-/* ---------- RESPONSIVE ---------- */
 @media (max-width: 768px) {
   .page-title {
     font-size: 1.5rem;
@@ -416,13 +409,12 @@ a {
 }
 
 
-/* === MESSAGES VIDES === */
 .task-list p {
   text-align: center;
   color: #999;
   font-style: italic;
 }
-/* === Responsive === */
+
 @media (max-width: 600px) {
   .task-meta {
     flex-direction: column;
