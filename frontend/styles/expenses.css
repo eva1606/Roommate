@@ -3,20 +3,20 @@
   padding: 0;
 }
 body, html {
+  height: 100%;
   margin: 0;
   padding: 0;
-  height: auto; /* ou simplement supprime height: 100% */
-  overflow: auto;
-  background-color: white;
-  font-family: "Roboto",sans-serif;
-  }
-
-header, footer {
-position: fixed;
-width: 100%;
-z-index: 10;
-background-color: white;
 }
+
+body {
+font-family: 'Roboto', sans-serif;
+background-color: #fff;
+color: #1a1a1a;
+display: flex;
+flex-direction: column;
+min-height: 100vh;
+}
+
 .visually-hidden {
   position: absolute !important;
   width: 1px;
@@ -29,56 +29,82 @@ background-color: white;
   border: 0;
 }
 header {
-top: 0;
-height: 100px;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-display: flex;
-justify-content: space-between; /* Place logo à gauche, hamburger à droite */
-align-items: center;
-padding: 0 1rem;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
 
 footer {
-bottom: 0;
-height: 60px;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-display: flex;
-justify-content: space-around;
-align-items: center;
+  bottom: 0;
+  height: 60px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
+
 a {
   text-decoration: none;
 }
 
-#logo {
+.logo-img {
   background-image: url("../images/logo.png");
   background-repeat: no-repeat;
   background-size: contain;
-  display: flex;
-  align-items: center;
   width: 97px;
   height: 97px;
-  flex-shrink: 0;
-}
-#logo span {
-  padding-left: 70px; 
-  color: #004AAD;
-  font-family: "Roboto",sans-serif;
-  font-size: 32px;
-  font-weight: 600;
-  margin-top:10px;
-  color: #004AAD;
-  font-family: "Roboto", sans-serif;
-}
-.hamburger {
-  border: none;
-  padding: 50px;
-  cursor: pointer;
-  display: flex;
+  margin-right: 0;
+  margin-left: -20px;
   align-items: center;
-  justify-content: center;
-  z-index: 10;
-  background: none;
+}
+
+.logo-link {
+display: flex;
+align-items: center;
+text-decoration: none;
+}
+
+.top-bar {
+display: flex;
+align-items: normal;
+width: 100%;
+justify-content: space-between;
+}
+
+
+.logo-link h1 {
+font-size: 1.2rem;
+color: #004AAD;
+align-items: center;
+margin-left: -20px;
+font-weight: 600;
+letter-spacing: 0.04em;
+height: 8px;
+}
+
+.hamburger {
+  background: transparent;
+border: none;
+cursor: pointer;
+padding: 1px 40px;
+justify-content: space-between;
+}
+
+.hamburger img {
+  cursor: pointer;
+  padding: 1px 12px;;
+  width: 40px;
+  height: 40px;
+  filter: brightness(0) saturate(100%) invert(22%) sepia(79%) saturate(1962%) hue-rotate(201deg) brightness(92%) contrast(97%);
 }
 .menu-overlay {
   position: fixed;
