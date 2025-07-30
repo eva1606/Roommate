@@ -62,7 +62,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       list.appendChild(card);
     });
 
-    // Toggle menu
 document.querySelectorAll(".toggle-btn").forEach(btn => {
   btn.addEventListener("click", (e) => {
     e.stopPropagation(); 
@@ -72,7 +71,6 @@ document.querySelectorAll(".toggle-btn").forEach(btn => {
   });
 });
 
-// Delete card
 document.querySelectorAll(".delete-option").forEach(btn => {
   btn.addEventListener("click", async (e) => {
     e.stopPropagation(); 
@@ -120,7 +118,6 @@ document.querySelectorAll(".delete-option").forEach(btn => {
 });
 
 
-// Edit card
 document.querySelectorAll(".edit-option").forEach(btn => {
   btn.addEventListener("click", (e) => {
     e.stopPropagation(); 

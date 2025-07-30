@@ -88,8 +88,8 @@ async function fetchFavorites(userId) {
       container.appendChild(card);
     });
   } catch (err) {
-    console.error("❌ Erreur chargement propriétés :", err);
-    container.innerHTML = "<p>Erreur lors du chargement.</p>";
+    console.error("❌ Error loading properties:", err);
+    container.innerHTML = "<p>Error while loading.</p>";
   }
 }
 

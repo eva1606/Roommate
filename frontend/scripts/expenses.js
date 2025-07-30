@@ -1,4 +1,3 @@
-// Navigation hamburger
 document.getElementById("hamburgerBtn")?.addEventListener("click", () => {
   document.getElementById("menuOverlay").classList.remove("hidden");
 });
@@ -30,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
       if (data.hasProperty === false || (Array.isArray(data) && data.length === 0)) {
         userHasProperty = false;
-        paymentList.innerHTML = "<p style='text-align: center;'>Vous n'avez pas de propriété pour afficher les dépenses.</p>";
+        paymentList.innerHTML = "<p style='text-align: center;'>You don't have any property to display expenses.</p>";
         return;
       }
   
@@ -43,14 +42,13 @@ document.addEventListener("DOMContentLoaded", () => {
       renderPayments(expenses);
     } catch (err) {
       console.error("❌ Failed to fetch expenses:", err);
-      paymentList.innerHTML = "<p style='text-align: center; color: red;'>Erreur lors du chargement des dépenses.</p>";
+      paymentList.innerHTML = "<p style='text-align: center; color: red;'>Error while loading expenses.</p>";
     }
   }
   
-  // ➕ Ajouter une nouvelle dépense
   addBtn?.addEventListener("click", async () => {
     if (!userHasProperty) {
-      return alert("❌ Vous n'avez pas de propriété. Impossible d'ajouter une dépense.");
+      return alert("❌ You don't have any property. Unable to add an expense.");
     }
     const label = prompt("Enter expense label:");
     const amount = prompt("Enter amount (₪):");
@@ -72,14 +70,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!res.ok) throw new Error("Failed to add expense");
 
-      await fetchExpensesForUser(); // refresh
+      await fetchExpensesForUser(); 
     } catch (err) {
       console.error("❌ Error adding expense:", err);
       alert("Error adding expense.");
     }
   });
 
-  // 🧾 Génère la liste des paiements
   function renderPayments(list) {
     paymentList.innerHTML = "";
 
@@ -106,6 +103,5 @@ document.addEventListener("DOMContentLoaded", () => {
     
   }
 
-  // 🔁 Initialisation
   fetchExpensesForUser();
 });

@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const res = await fetch(`https://roommate-1.onrender.com/api/profil_users/${userId}`);
 
     if (!res.ok) {
-      throw new Error('Profil introuvable');
+      throw new Error('Profile not found.');
     }
 
     const user = await res.json();
