@@ -268,7 +268,7 @@ main.main-container {
 /* Style des cartes horizontales */
 .payment-item {
   flex: 0 0 auto;
-  width: clamp(280px, 70vw, 400px); /* 👈 large sur grands écrans, reste scrollable sur petits */
+  width: clamp(370px, 100vw, 700px); 
   min-height: 160px;
   padding: 1rem;
   background-color: #ffffff;
