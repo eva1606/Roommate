@@ -9,21 +9,25 @@ body, html {
   background-color: white;
   font-family: "Roboto",sans-serif;
 }
-header .top-bar {
-  background-color:white;
-  padding: 1rem;
-  text-align: left;
+header {
+  position: fixed;
   top: 0;
-  height: 100px;
-  display: flex;
-  align-items: center;
-  padding: 0 1rem;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 1000;
+  padding: 12px 20px;
 }
+
 header, footer {
   position: fixed;
   width: 100%;
   z-index: 10;
   background-color: white;
+}
+.top-bar {
+  display: flex;
+  align-items: center;
 }
 .visually-hidden {
   position: absolute !important;
@@ -37,23 +41,21 @@ header, footer {
   border: 0;
 }
 .btn-back {
-  color: blue;
+  color: #004AAD;
   text-decoration: none;
-  font-size: 1.1rem;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background-color: #004aad;
-  color: #fff;
-  text-decoration: none;
-  font-size: 1.1rem;
-  font-weight: 500;
-  padding: 10px 16px;
+  font-weight: 600;
+  background-color: transparent;
+  border: 1px solid #004AAD;
+  padding: 6px 12px;
   border-radius: 8px;
-  transition: background-color 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background 0.2s ease;
 }
+
+.btn-back:hover {
+  background-color: #004AAD;
+  color: white;
+}
+
 footer {
   bottom: 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -94,62 +96,84 @@ footer {
   height: 24px;
   margin-bottom: 4px;
 }
-main {
-  padding: 150px 1rem 100px;
-  max-width: 900px;
-  margin: auto;
-}
-.property-header {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  color: #2c3e50;
-}
 
-.main-photo {
-  width: 100%;
-  max-height: 350px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 1.5rem;
-}
+  main {
+    padding: 100px 24px 150px; /* haut - côtés - bas */
+  }
 
-.details {
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
-  color: #555;
-}
 
-.features {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1rem;
-  margin-bottom: 2rem;
-}
+  .property-header {
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    margin-bottom: 1.2rem;
+    color: #2c3e50;
+    text-align: center;
+  }
 
-.features span {
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-}
+  .main-photo {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+  }
+  
+
+  #property-details {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 16px;
+    text-align: center;
+  }
+  .details {
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .features span {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    background-color: #f6f6f6;
+    border: 1px solid #ddd;
+    color: #004AAD;
+    font-weight: 500;
+  }
 
 .gallery {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  justify-content: center;
   margin-bottom: 2rem;
 }
 
 .gallery img {
   width: calc(33.33% - 10px);
+  max-width: 200px;
   height: 120px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
+
 #map {
-  margin-top: 1rem;
-  margin-bottom: 1.5rem;
+  height: 250px;
+  width: 100%;
   border: 1px solid #ddd;
+  border-radius: 12px;
+  margin: 1rem 0 1.5rem;
   z-index: 0;
 }
 
@@ -167,13 +191,14 @@ main {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 #mapBtn:hover,
 #contactOwnerBtn:hover,
 .find-roommate-btn:hover {
-  background-color: #357ac8;
+  background-color: #e67e22;
+  transform: scale(1.02);
 }
 
 #ownerContactInfo {
@@ -181,7 +206,8 @@ main {
   background-color: #eef6ff;
   border: 1px solid #cce4ff;
   border-radius: 8px;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
+  font-size: 0.95rem;
 }
 
 .hidden {
@@ -200,5 +226,48 @@ main {
 
   .property-header {
     font-size: 1.4rem;
+  }
+}
+@media (max-width: 768px) {
+  main {
+    padding: 88px 16px 100px;
+  }
+
+  .main-photo {
+    max-height: 300px;
+    border-radius: 16px;
+  }
+
+  .btn-back {
+    padding: 5px 10px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Smartphones */
+@media (max-width: 480px) {
+  main {
+    padding: 80px 12px 90px;
+  }
+
+  .main-photo {
+    max-height: 250px;
+    border-radius: 12px;
+  }
+
+  .btn-back {
+    font-size: 0.9rem;
+    padding: 5px 10px;
+  }
+}
+
+/* Ultra small screens */
+@media (max-width: 320px) {
+  main {
+    padding: 72px 10px 70px;
+  }
+
+  .main-photo {
+    max-height: 200px;
   }
 }
