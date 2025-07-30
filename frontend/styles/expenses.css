@@ -254,7 +254,7 @@ main.main-container {
 .payment-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.2rem;
 }
 
 /* === Carte de paiement === */
@@ -262,16 +262,18 @@ main.main-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.2rem;
+  padding: 1.2rem 1.5rem;
   background-color: #ffffff;
-  border-radius: 14px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
   flex-wrap: wrap;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-left: 5px solid #004AAD;
 }
 
 .payment-item:hover {
   transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 }
 
 /* === Infos à gauche === */
@@ -279,18 +281,19 @@ main.main-container {
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-width: 180px;
 }
 
 .payment-label {
-  font-weight: 600;
-  font-size: 1.1rem;
+  font-weight: 700;
+  font-size: 1.15rem;
   color: #1a1a1a;
 }
 
 .payment-user {
   font-size: 0.95rem;
-  color: #555;
-  margin-top: 4px;
+  color: #666;
+  margin-top: 6px;
 }
 
 /* === Infos à droite === */
@@ -298,20 +301,49 @@ main.main-container {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 4px;
-  min-width: 110px;
+  text-align: right;
+  gap: 6px;
+  min-width: 120px;
 }
 
 .payment-amount {
   font-weight: bold;
   color: #004AAD;
-  font-size: 1.15rem;
+  font-size: 1.25rem;
 }
 
 .payment-date {
   font-size: 0.85rem;
-  color: #888;
+  color: #999;
 }
+
+/* === Responsive mobile === */
+@media (max-width: 600px) {
+  .payment-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .payment-meta {
+    align-items: flex-start;
+    text-align: left;
+    margin-top: 10px;
+  }
+
+  .payment-label {
+    font-size: 1.05rem;
+  }
+
+  .payment-amount {
+    font-size: 1.1rem;
+  }
+
+  .payment-date, .payment-user {
+    font-size: 0.85rem;
+  }
+}
+
 
 
 @media (max-width: 600px) {
