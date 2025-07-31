@@ -5,7 +5,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   const photoInput = document.getElementById("photo-input");
 
   if (!userId) {
-    alert("You must be logged in.");
+    Swal.fire({
+      icon: "warning",
+      title: "Access Denied",
+      text: "You must be logged in to edit your profile.",
+      confirmButtonText: "OK"
+    });
     return;
   }
 
@@ -34,7 +39,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   } catch (err) {
     console.error(" Error loading profile:", err);
-    alert("Unable to load profile.");
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Unable to load profile.",
+      confirmButtonText: "OK"
+    });
   }
 
   photoInput.addEventListener("change", (e) => {
@@ -48,7 +58,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const formData = new FormData(form);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to save these changes to your profile?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, save it!"
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const formData = new FormData(form);
 
 
     try {
@@ -57,17 +77,35 @@ document.addEventListener("DOMContentLoaded", async () => {
         body: formData
       });
 
-      if (updateRes.ok) {
-        alert("✅ Profile updated!");
+      if (updateRes.ok) {    
+      Swal.fire({
+        icon: "success",
+        title: "Profile Updated!",
+        text: "Your profile information has been successfully saved.",
+        confirmButtonText: "OK"
+      }).then(() => {
         window.location.href = "profil.html";
+      });
       } else {
         const errorText = await updateRes.text();
         console.error(" Server error:", errorText);
-        alert("Error updating profile.");
+        Swal.fire({
+          icon: "error",
+          title: "Update Failed",
+          text: "An error occurred while updating your profile.",
+          confirmButtonText: "Try Again"
+        });
       }
     } catch (err) {
       console.error(" Network error:", err);
-      alert("Network error during update.");
+      Swal.fire({
+        icon: "error",
+        title: "Network Error",
+        text: "Unable to reach the server. Please check your connection.",
+        confirmButtonText: "OK"
+      });
     }
+  }
   });
+});
 });
