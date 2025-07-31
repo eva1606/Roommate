@@ -3,10 +3,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const role = localStorage.getItem("role");
 
   if (!userId || role !== "roommate") {
-    alert("Unauthorized access. Please log in again.");
-    window.location.href = "login.html";
+    Swal.fire({
+      icon: "error",
+      title: "Unauthorized Access",
+      text: "Please log in again to access this page.",
+      confirmButtonText: "OK"
+    }).then(() => {
+      window.location.href = "index.html";
+    });
     return;
   }
+  
 
   const tabApartments = document.getElementById("tab-apartments");
   const tabRoommates = document.getElementById("tab-roommates");
@@ -182,12 +189,32 @@ document.addEventListener("DOMContentLoaded", () => {
   fetchProperties();
 });
 
-  document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
-    e.preventDefault();
-    localStorage.clear();
-    window.location.href = "login.html";
-  });
+document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
+  e.preventDefault();
 
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You will be logged out of your account.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, log me out",
+    cancelButtonText: "Cancel"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      localStorage.clear();
+      Swal.fire({
+        icon: "success",
+        title: "Logged Out",
+        text: "You have been successfully logged out.",
+        confirmButtonText: "OK"
+      }).then(() => {
+        window.location.href = "index.html";
+      });
+    }
+  });
+});
 
 async function fetchProperties() {
   const userId = localStorage.getItem("user_id");
@@ -202,21 +229,17 @@ async function fetchProperties() {
       container.innerHTML = "<p>No available apartments found.</p>";
       return;
     }
-    
+
     properties.forEach((prop, index) => {
       const card = document.createElement("div");
       card.classList.add("property-card");
       card.setAttribute("data-search", `${prop.address} ${prop.rooms} ${prop.price}`.toLowerCase());
       card.setAttribute("data-price", prop.price);
       card.setAttribute("data-date", prop.created_at || "2025-01-01");
-      card.setAttribute("data-location", prop.address || ""); 
-      card.setAttribute("data-rooms", prop.rooms || ""); 
-      card.setAttribute("data-budget", prop.price); 
-     
+      card.setAttribute("data-location", prop.address || "");
+      card.setAttribute("data-rooms", prop.rooms || "");
+      card.setAttribute("data-budget", prop.price);
 
-
-      
-      const isNew = index === 0; 
       const isFavorited = prop.is_favorited;
 
       card.innerHTML = `
@@ -231,39 +254,40 @@ async function fetchProperties() {
             <p>${prop.rooms} Rooms</p>
           </div>
           <button class="svg-action-btn favorite-btn" data-id="${prop.id}" title="Add To favorites">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M18 17V14H15V12H18V9H20V12H23V14H20V17H18ZM11 21L7.825 18.15C6.625 17.0667 5.596 16.1 4.738 15.25C3.87933 14.4 3.171 13.6 2.613 12.85C2.05433 12.1 1.646 11.375 1.388 10.675C1.12933 9.975 1 9.24167 1 8.475C1 6.90833 1.525 5.604 2.575 4.562C3.625 3.52067 4.93333 3 6.5 3C7.36667 3 8.19167 3.179 8.975 3.537C9.75833 3.89567 10.4333 4.40833 11 5.075C11.5667 4.40833 12.2417 3.89567 13.025 3.537C13.8083 3.179 14.6333 3 15.5 3C16.9167 3 18.104 3.429 19.062 4.287C20.0207 5.14567 20.6167 6.15 20.85 7.3C20.55 7.18333 20.25 7.09567 19.95 7.037C19.65 6.979 19.3583 6.95 19.075 6.95C17.3917 6.95 15.9583 7.53733 14.775 8.712C13.5917 9.88733 13 11.3167 13 13C13 13.8667 13.175 14.6873 13.525 15.462C13.875 16.2373 14.3667 16.9 15 17.45C14.6833 17.7333 14.2707 18.096 13.762 18.538C13.254 18.9793 12.8167 19.3667 12.45 19.7L11 21Z" 
-            fill="${isFavorited ? "#2e86de" : "#B7B7B7"}"/>
-          </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M18 17V14H15V12H18V9H20V12H23V14H20V17H18ZM11 21L7.825 18.15C6.625 17.0667 5.596 16.1 4.738 15.25C3.87933 14.4 3.171 13.6 2.613 12.85C2.05433 12.1 1.646 11.375 1.388 10.675C1.12933 9.975 1 9.24167 1 8.475C1 6.90833 1.525 5.604 2.575 4.562C3.625 3.52067 4.93333 3 6.5 3C7.36667 3 8.19167 3.179 8.975 3.537C9.75833 3.89567 10.4333 4.40833 11 5.075C11.5667 4.40833 12.2417 3.89567 13.025 3.537C13.8083 3.179 14.6333 3 15.5 3C16.9167 3 18.104 3.429 19.062 4.287C20.0207 5.14567 20.6167 6.15 20.85 7.3C20.55 7.18333 20.25 7.09567 19.95 7.037C19.65 6.979 19.3583 6.95 19.075 6.95C17.3917 6.95 15.9583 7.53733 14.775 8.712C13.5917 9.88733 13 11.3167 13 13C13 13.8667 13.175 14.6873 13.525 15.462C13.875 16.2373 14.3667 16.9 15 17.45C14.6833 17.7333 14.2707 18.096 13.762 18.538C13.254 18.9793 12.8167 19.3667 12.45 19.7L11 21Z"
+                fill="${isFavorited ? "#2e86de" : "#B7B7B7"}"/>
+            </svg>
           </button>
           <button class="svg-action-btn trash-btn" data-id="${prop.id}" title="Delete">
-          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g clip-path="url(#clip0_2063_4)">
-          <path d="M12 38C12 40.2 13.8 42 16 42H32C34.2 42 36 40.2 36 38V14H12V38ZM38 8H31L29 6H19L17 8H10V12H38V8Z" fill="#004AAD"/>
-          </g>
-          <defs>
-          <clipPath id="clip0_2063_4">
-          <rect width="48" height="48" fill="white"/>
-          </clipPath>
-          </defs>
-          </svg>          
-        </button>
-        </div>
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_2063_4)">
+                <path d="M12 38C12 40.2 13.8 42 16 42H32C34.2 42 36 40.2 36 38V14H12V38ZM38 8H31L29 6H19L17 8H10V12H38V8Z" fill="#004AAD"/>
+              </g>
+              <defs>
+                <clipPath id="clip0_2063_4">
+                  <rect width="48" height="48" fill="white"/>
+                </clipPath>
+              </defs>
+            </svg>          
+          </button>
         </div>
       `;
-      
+
+      // ▶️ Ouvrir la fiche
       card.addEventListener("click", () => {
         window.location.href = `proprietyroomate.html?id=${prop.id}`;
       });
-    
+
       container.appendChild(card);
 
-      card.querySelector(".svg-action-btn").addEventListener("click", async (e) => {
-        e.stopPropagation(); 
+      // ⭐ Gestion favoris
+      card.querySelector(".favorite-btn").addEventListener("click", async (e) => {
+        e.stopPropagation();
         const svgPath = e.currentTarget.querySelector("path");
-        const isFavorited = svgPath.getAttribute("fill") === "#2e86de"; 
+        const isFavorited = svgPath.getAttribute("fill") === "#2e86de";
         const propertyId = prop.id;
-      
+
         try {
           if (isFavorited) {
             await fetch(`https://roommate-1.onrender.com/api/properties-available/favorites/remove`, {
@@ -271,43 +295,79 @@ async function fetchProperties() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ user_id: userId, property_id: propertyId }),
             });
-            svgPath.setAttribute("fill", "#B7B7B7"); 
+            svgPath.setAttribute("fill", "#B7B7B7");
           } else {
-            
             await fetch(`https://roommate-1.onrender.com/api/properties-available/favorites`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ user_id: userId, property_id: propertyId }),
             });
-            svgPath.setAttribute("fill", "#2e86de"); 
+            svgPath.setAttribute("fill", "#2e86de");
           }
         } catch (err) {
           console.error("Error changing favorites:", err);
         }
-      }); 
+      });
+
+      // 🗑️ Gestion suppression avec SweetAlert2
       card.querySelector(".trash-btn").addEventListener("click", async (e) => {
         e.stopPropagation();
         const propertyId = prop.id;
 
-        try {
-          await fetch(`https://roommate-1.onrender.com/api/properties-available/hidden`, {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ user_id: userId, property_id: propertyId }),
-});
+        Swal.fire({
+          title: "Are you sure?",
+          text: "This apartment will be removed from the list.",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it",
+          cancelButtonText: "Cancel"
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            try {
+              const response = await fetch(`https://roommate-1.onrender.com/api/properties-available/hidden`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ user_id: userId, property_id: propertyId }),
+              });
 
-          card.remove(); 
-        } catch (err) {
-          console.error("Error deleting property:", err);
-        }
+              if (response.ok) {
+                card.remove();
+                Swal.fire({
+                  icon: "success",
+                  title: "Deleted!",
+                  text: "The property has been successfully removed.",
+                  confirmButtonText: "OK"
+                });
+              } else {
+                const errorMsg = await response.text();
+                console.error("Server error:", errorMsg);
+                Swal.fire({
+                  icon: "error",
+                  title: "Error",
+                  text: "Unable to delete the property.",
+                  confirmButtonText: "OK"
+                });
+              }
+            } catch (err) {
+              console.error("Error deleting property:", err);
+              Swal.fire({
+                icon: "error",
+                title: "Network Error",
+                text: "Could not connect to the server. Please try again later.",
+                confirmButtonText: "OK"
+              });
+            }
+          }
+        });
       });
     });
 
-  }    
-     catch (err) {
-    console.error(" Error loading properties :", err);
+  } catch (err) {
+    console.error("Error loading properties:", err);
     container.innerHTML = "<p>Error loading apartments.</p>";
-  } 
+  }
 }
   async function fetchRoommates() {
     const userId = localStorage.getItem("user_id");
