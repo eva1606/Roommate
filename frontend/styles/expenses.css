@@ -220,18 +220,18 @@ footer {
   filter: brightness(0) saturate(100%) invert(32%) sepia(96%) saturate(1818%) hue-rotate(203deg) brightness(92%) contrast(101%);
 }
 main.main-container {
-  padding: 120px 1rem 100px; 
-  max-width: 100%;
+  padding: 120px 1rem 100px;
+  width: 100%;
+  max-width: 900px;
   margin: auto;
 }
 
 .add-section {
   display: flex;
   justify-content: center;
-  margin-bottom: 2rem;
-  margin-top: 20px; 
   align-items: center;
-
+  margin-top: 20px;
+  margin-bottom: 2rem;
 }
 
 .add-btn {
@@ -247,7 +247,6 @@ main.main-container {
   width: clamp(200px, 50%, 280px);
   text-align: center;
   white-space: nowrap;
-
 }
 
 .add-btn:hover {
@@ -255,17 +254,16 @@ main.main-container {
   transform: scale(1.03);
 }
 
-
 .payment-list {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 1rem;
-  overflow-x: auto;
-  flex-direction: column; 
   padding-bottom: 10px;
+  width: 100%;
 }
 
 .payment-item {
-  flex: 0 0 auto;
   width: 100%;
   max-width: 700px;
   min-height: 160px;
@@ -277,9 +275,8 @@ main.main-container {
   flex-direction: column;
   justify-content: space-between;
   border-left: 5px solid #004AAD;
+  transition: transform 0.2s ease;
 }
-
-
 
 .payment-item:hover {
   transform: translateY(-3px);
@@ -325,27 +322,15 @@ main.main-container {
   color: #999;
 }
 
-@media (max-width: 600px) {
-  .add-section {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 2rem;
-    margin-top: 100px; 
-    align-items: center;
-  
-  }
-  
-  
-  .payment-item {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 1rem;
+@media (max-width: 768px) {
+  .add-btn {
+    font-size: 1.1rem;
+    padding: 1rem 1.8rem;
+    width: clamp(180px, 70%, 260px);
   }
 
-  .payment-meta {
-    align-items: flex-start;
-    text-align: left;
-    margin-top: 10px;
+  .payment-item {
+    padding: 1rem;
   }
 
   .payment-label {
@@ -356,114 +341,42 @@ main.main-container {
     font-size: 1.1rem;
   }
 
-  .payment-date, .payment-user {
+  .payment-date,
+  .payment-user {
     font-size: 0.85rem;
   }
-}
 
-
-
-@media (max-width: 600px) {
-  .payment-item {
-    flex-direction: column;
+  .payment-meta {
     align-items: flex-start;
-    gap: 1rem;
-  }
-
-  .payment-amount,
-  .payment-user {
-    margin-left: 0;
-  }
-
-  .add-section {
-    justify-content: center;
+    text-align: left;
+    margin-top: 10px;
   }
 }
-@media (max-width: 320px) {
-  .footer-nav .nav-item {
-    font-size: 12px;
-  }
-
-  .footer-nav .nav-item img {
-    width: 18px;
-    height: 18px;
-    margin-bottom: 4px;
-  }
-}
-
-
-@media (max-width: 360px) {
-  .footer-nav .nav-item {
-    font-size: 12px;
-  }
-
-  .footer-nav .nav-item img {
-    width: 18px;
-    height: 18px;
-    margin-bottom: 4px;
-  }
-}
-
 
 @media (max-width: 480px) {
-  .footer-nav .nav-item {
-    font-size: 14px;
-  }
-
-  .footer-nav .nav-item img {
-    width: 20px;
-    height: 20px;
-    margin-bottom: 4px;
-  }
-}
-
-
-@media (max-width: 600px) {
-  .footer-nav .nav-item {
-    font-size: 14px;
-  }
-
-  .footer-nav .nav-item img {
-    width: 20px;
-    height: 20px;
-    margin-bottom: 4px;
-  }
-}
-
-
-@media (max-width: 768px) {
-  .footer-nav .nav-item {
-    font-size: 16px;
-  }
-}
-@media (max-width: 600px) {
   main.main-container {
-    padding: 100px 1rem 80px; 
+    padding: 110px 1rem 90px;
   }
 
   .add-section {
-    margin-top: -250px;
-    margin-bottom: 1.5rem;
-  }
-
-  .add-btn {
-    font-size: 1.1rem;
-    padding: 0.9rem 1.5rem;
-    width: clamp(160px, 80%, 260px);
-  }
-}
-
-@media (max-width: 360px) {
-  main.main-container {
-    padding: 90px 0.8rem 70px;
+    margin-top: 90px;
   }
 
   .add-btn {
     font-size: 1rem;
     padding: 0.8rem 1.2rem;
-    width: clamp(140px, 90%, 240px);
+    width: clamp(150px, 80%, 240px);
   }
-  add-section {
-    margin-top: -200px;
+
+  .payment-item {
+    padding: 0.9rem;
+  }
+
+  .payment-label {
+    font-size: 1rem;
+  }
+
+  .payment-amount {
+    font-size: 1rem;
   }
 }
