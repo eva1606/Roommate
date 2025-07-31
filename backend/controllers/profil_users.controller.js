@@ -14,7 +14,7 @@ const updateUserProfile = async (req, res) => {
     smoke,
     pets,
     budget,
-    location
+    location 
   } = req.body;
 
   try {
