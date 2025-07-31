@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const property = await res.json();
 
-  
+   
     document.getElementById("property-address").textContent = property.address;
     document.getElementById("main-photo").src = property.photo;
 
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       <p>Furnished: ${property.furnished ? '✅' : '❌'}</p>
     `;
 
-    
+   
     const gallery = document.getElementById("photo-gallery");
     if (Array.isArray(property.photos) && property.photos.length) {
       property.photos.forEach(url => {
@@ -46,14 +46,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     }
 
-    
+   
     const coords = await geocodeAddress(property.address);
     const map = L.map("map").setView([coords.lat, coords.lon], 16);
-    
+
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
-    
+
     L.marker([coords.lat, coords.lon])
       .addTo(map)
       .bindPopup(property.address)
@@ -80,32 +80,42 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("mapBtn").addEventListener("click", confirmOpenMaps);
     map.on("click", confirmOpenMaps);
 
-   
+    
     const contactBtn = document.getElementById("contactOwnerBtn");
     const contactDiv = document.getElementById("ownerContactInfo");
-    
+
     if (contactBtn && contactDiv) {
       contactBtn.addEventListener("click", async () => {
         try {
           const ownerRes = await fetch(`https://roommate-1.onrender.com/api/properties/${property.id}/owner-phone`);
           if (!ownerRes.ok) throw new Error("Owner phone not found");
-    
+
           const ownerData = await ownerRes.json();
-    
-          contactDiv.innerHTML = `
-            <p><strong>Phone:</strong> <a href="tel:${ownerData.phone}">${ownerData.phone}</a></p>
-          `;
-          contactDiv.classList.remove("hidden");
-    
+
           Swal.fire({
-            icon: "info",
-            title: "Contact Owner",
-            html: `You can call the owner at: <br><strong>${ownerData.phone}</strong>`,
-            confirmButtonText: "Call Now"
-          }).then(() => {
-            window.location.href = `tel:${ownerData.phone}`;
+            title: "Do you want to contact this person?",
+            text: "Click 'Yes' to view the phone number and start a call.",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+            cancelButtonText: "No"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              contactDiv.innerHTML = `
+                <p><strong>Phone:</strong> <a href="tel:${ownerData.phone}">${ownerData.phone}</a></p>
+              `;
+              contactDiv.classList.remove("hidden");
+
+              Swal.fire({
+                icon: "info",
+                title: "Contact Owner",
+                html: `You can call the owner at: <br><strong>${ownerData.phone}</strong>`,
+                confirmButtonText: "Call Now"
+              }).then(() => {
+                window.location.href = `tel:${ownerData.phone}`;
+              });
+            }
           });
-    
         } catch (e) {
           contactDiv.classList.remove("hidden");
           Swal.fire({
@@ -120,7 +130,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (err) {
     console.error("❌ Failed to load property:", err);
     document.getElementById("map").innerHTML = "<p>📍 Location not available</p>";
-  
+
     Swal.fire({
       icon: "error",
       title: "Property Load Failed",
