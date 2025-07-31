@@ -33,8 +33,19 @@ document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
 });
 document.addEventListener("DOMContentLoaded", () => {
   const userId = localStorage.getItem("user_id");
-  if (!userId) return (window.location.href = "login.html");
 
+  if (!userId) {
+    Swal.fire({
+      icon: "warning",
+      title: "Access Denied",
+      text: "You must be logged in to access this page.",
+      confirmButtonText: "Go to Login"
+    }).then(() => {
+      window.location.href = "login.html";
+    });
+    return;
+  }
+  
   const taskList = document.querySelector(".task-list");
   const addBtn = document.querySelector(".add-btn");
   let userHasProperty = true;
