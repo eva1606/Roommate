@@ -408,7 +408,7 @@ async function fetchProperties() {
             </div>
           </div>
           <div class="roommate-actions">
-            <button class="heart-btn" data-id="${roommate.id}" title="Ajouter aux favoris">
+            <button class="heart-btn" data-id="${roommate.id}" title="Add to favorites">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="${heartColor}" viewBox="0 0 24 24">
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
                          2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09
@@ -424,11 +424,12 @@ async function fetchProperties() {
         const svg = heartBtn.querySelector("svg");
   
         heartBtn.addEventListener("click", async () => {
+          e.stopPropagation();
           const profilUserId = roommate.id;
-          const isCurrentlyFavorite = svg.getAttribute("fill") === "#0021F5";
+          const is_favorited = svg.getAttribute("fill") === "#EB3223";
   
           try {
-            if (isCurrentlyFavorite) {
+            if (is_favorited) {
               await fetch("https://roommate-1.onrender.com/api/potential-roommates/remove-favorite", {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
