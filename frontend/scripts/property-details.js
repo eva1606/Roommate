@@ -36,7 +36,7 @@ if (Array.isArray(property.photos)) {
     console.error("❌ Failed to load property details:", err);
   }
 }
-
+document.addEventListener("DOMContentLoaded", loadPropertyDetails);
 document.getElementById("logoutBtn")?.addEventListener("click", async (e) => {
   e.preventDefault();
   await Swal.fire({
