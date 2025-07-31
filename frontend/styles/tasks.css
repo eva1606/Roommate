@@ -233,7 +233,7 @@ a {
 :root {
   --header-height: 100px;
   --footer-height: 78px;
-  --vertical-padding: 20px;
+  --vertical-padding: 40px;
 }
 .main-container {
   overflow-x: hidden;
