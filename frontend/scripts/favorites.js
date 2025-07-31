@@ -127,7 +127,7 @@ async function fetchFavoriteRoommates(userId) {
     const res = await fetch(`https://roommate-1.onrender.com/api/potential-roommates/favorites/${userId}`);
     const roommates = await res.json();
 
-    // ✅ Utiliser "id" car c'est ce que ton API renvoie
+    
     const unique = [];
     const seen = new Set();
 
