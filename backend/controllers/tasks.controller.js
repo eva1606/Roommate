@@ -86,7 +86,7 @@ exports.addTask = async (req, res) => {
 
     const user = userRows[0];
 
-    // ✅ Répondre avec tout
+   
     res.status(201).json({
       id: task.id,
       title: task.title,

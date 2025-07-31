@@ -33,13 +33,23 @@ document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
 });
 document.addEventListener("DOMContentLoaded", () => {
   const userId = localStorage.getItem("user_id");
-  if (!userId) return (window.location.href = "login.html");
 
+  if (!userId) {
+    Swal.fire({
+      icon: "warning",
+      title: "Access Denied",
+      text: "You must be logged in to access this page.",
+      confirmButtonText: "Go to Login"
+    }).then(() => {
+      window.location.href = "login.html";
+    });
+    return;
+  }
   const paymentList = document.querySelector(".payment-list");
   const addBtn = document.querySelector(".add-btn");
   let userHasProperty = true;
 
-  // 🔹 Fonction pour récupérer les dépenses
+  
   async function fetchExpensesForUser() {
     try {
       const res = await fetch(`https://roommate-1.onrender.com/api/expenses/property/${userId}`);
@@ -69,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
   
-  // 🔹 Ajout d'une dépense avec SweetAlert2
+
   addBtn?.addEventListener("click", async () => {
     if (!userHasProperty) {
       return Swal.fire({
@@ -80,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // ✅ Formulaire SweetAlert2
+    
     const { value: formValues } = await Swal.fire({
       title: "Add New Expense",
       html: `
@@ -136,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 🔹 Fonction d'affichage des paiements
+
   function renderPayments(list) {
     paymentList.innerHTML = "";
 

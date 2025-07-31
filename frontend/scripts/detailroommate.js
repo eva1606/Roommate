@@ -2,17 +2,36 @@ document.addEventListener('DOMContentLoaded', async () => {
   const params = new URLSearchParams(window.location.search);
   const roommateId = params.get('id');
 
+  
   if (!roommateId) {
-    document.body.innerHTML = "<p>❌ No roommates found.</p>";
+    Swal.fire({
+      icon: "warning",
+      title: "No Roommate Found",
+      text: "No roommate ID was provided. Returning to dashboard.",
+      confirmButtonText: "OK"
+    }).then(() => {
+      window.location.href = "roomate-dashboard.html";
+    });
     return;
   }
 
   try {
     const res = await fetch(`https://roommate-1.onrender.com/api/potential-roommates/profil/${roommateId}`);
-    if (!res.ok) throw new Error("Profile not found.");
+    if (!res.ok) {
+      Swal.fire({
+        icon: "error",
+        title: "Profile Not Found",
+        text: "The selected roommate profile could not be loaded.",
+        confirmButtonText: "Go Back"
+      }).then(() => {
+        window.location.href = "roomate-dashboard.html";
+      });
+      return;
+    }
 
     const user = await res.json();
 
+    
     document.getElementById('roommate-photo').src = user.photo_url || 'default-avatar.jpg';
     document.getElementById('roommate-name').textContent = `${user.first_name.toUpperCase()} ${user.last_name.toUpperCase()}`;
     document.getElementById('roommate-age').textContent = ` ${user.age} Years`;
@@ -22,25 +41,34 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('roommate-rooms').textContent = ` ${user.rooms || '?'} Rooms`;
     document.getElementById('roommate-smoke').textContent = user.smoke ? ' Smoker' : ' Non Smoker';
     document.getElementById('roommate-pets').textContent = user.pets ? ' Pets Allowed' : ' No Pets';
-    document.getElementById('roommate-food').textContent = user.diet|| ' Not specified.';
+    document.getElementById('roommate-food').textContent = user.diet || ' Not specified.';
     document.getElementById('roommate-description').textContent = user.bio || "No description provided.";
-    const callBtn = document.getElementById("call-btn");
 
-if (callBtn && user.phone) {
-  callBtn.href = `tel:${user.phone}`;
-} else if (callBtn) {
-  callBtn.href = "#";
-  callBtn.textContent = "Number not available.";
-  callBtn.classList.add("disabled"); 
-  callBtn.style.backgroundColor = "#ccc";
-  callBtn.style.cursor = "not-allowed";
-}
+    
+    const callBtn = document.getElementById("call-btn");
+    if (callBtn && user.phone) {
+      callBtn.href = `tel:${user.phone}`;
+    } else if (callBtn) {
+      callBtn.href = "#";
+      callBtn.textContent = "Number not available.";
+      callBtn.classList.add("disabled");
+      callBtn.style.backgroundColor = "#ccc";
+      callBtn.style.cursor = "not-allowed";
+    }
 
   } catch (err) {
     console.error("❌ Error loading roommate:", err);
-    document.body.innerHTML = "<p>❌ Error while loading profile.</p>";
+    Swal.fire({
+      icon: "error",
+      title: "Loading Error",
+      text: "An unexpected error occurred while loading this profile. Returning to dashboard.",
+      confirmButtonText: "OK"
+    }).then(() => {
+      window.location.href = "roomate-dashboard.html";
+    });
   }
 });
+
 
 document.getElementById('closeBtn').addEventListener('click', () => {
   window.location.href = 'roomate-dashboard.html'; 

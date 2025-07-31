@@ -1,4 +1,3 @@
-// controllers/myRoommateController.js
 const db = require("../db");
 
 
