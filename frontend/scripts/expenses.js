@@ -7,8 +7,29 @@ document.getElementById("closeMenu")?.addEventListener("click", () => {
 
 document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
   e.preventDefault();
-  localStorage.clear();
-  window.location.href = "login.html";
+
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You will be logged out of your account.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, log me out",
+    cancelButtonText: "Cancel"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      localStorage.clear();
+      Swal.fire({
+        icon: "success",
+        title: "Logged Out",
+        text: "You have been successfully logged out.",
+        confirmButtonText: "OK"
+      }).then(() => {
+        window.location.href = "index.html";
+      });
+    }
+  });
 });
 document.addEventListener("DOMContentLoaded", () => {
   const userId = localStorage.getItem("user_id");
@@ -17,6 +38,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const paymentList = document.querySelector(".payment-list");
   const addBtn = document.querySelector(".add-btn");
   let userHasProperty = true;
+
+  // 🔹 Fonction pour récupérer les dépenses
   async function fetchExpensesForUser() {
     try {
       const res = await fetch(`https://roommate-1.onrender.com/api/expenses/property/${userId}`);
@@ -46,37 +69,74 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
   
+  // 🔹 Ajout d'une dépense avec SweetAlert2
   addBtn?.addEventListener("click", async () => {
     if (!userHasProperty) {
-      return alert("❌ You don't have any property. Unable to add an expense.");
-    }
-    const label = prompt("Enter expense label:");
-    const amount = prompt("Enter amount (₪):");
-
-    if (!label || !amount || isNaN(parseFloat(amount))) {
-      return alert("Please enter valid information.");
-    }
-
-    try {
-      const res = await fetch("https://roommate-1.onrender.com/api/expenses", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          user_id: userId,
-          label,
-          amount: parseFloat(amount),
-        }),
+      return Swal.fire({
+        icon: "warning",
+        title: "No Property Found",
+        text: "You don't have any property. Unable to add an expense.",
+        confirmButtonText: "OK"
       });
+    }
 
-      if (!res.ok) throw new Error("Failed to add expense");
+    // ✅ Formulaire SweetAlert2
+    const { value: formValues } = await Swal.fire({
+      title: "Add New Expense",
+      html: `
+        <input id="expenseLabel" class="swal2-input" placeholder="Enter expense label">
+        <input id="expenseAmount" type="number" class="swal2-input" placeholder="Enter amount (₪)">
+      `,
+      focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: "Add Expense",
+      preConfirm: () => {
+        const label = document.getElementById("expenseLabel").value.trim();
+        const amount = parseFloat(document.getElementById("expenseAmount").value);
+        if (!label || isNaN(amount)) {
+          Swal.showValidationMessage("Please enter valid information.");
+          return false;
+        }
+        return { label, amount };
+      }
+    });
 
-      await fetchExpensesForUser(); 
-    } catch (err) {
-      console.error("❌ Error adding expense:", err);
-      alert("Error adding expense.");
+    if (formValues) {
+      try {
+        const res = await fetch("https://roommate-1.onrender.com/api/expenses", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id: userId,
+            label: formValues.label,
+            amount: formValues.amount,
+          }),
+        });
+
+        if (!res.ok) throw new Error("Failed to add expense");
+
+        Swal.fire({
+          icon: "success",
+          title: "Expense Added",
+          text: "The expense has been successfully recorded.",
+          confirmButtonText: "OK"
+        }).then(() => {
+          fetchExpensesForUser(); 
+        });
+
+      } catch (err) {
+        console.error("❌ Error adding expense:", err);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "An error occurred while adding the expense.",
+          confirmButtonText: "OK"
+        });
+      }
     }
   });
 
+  // 🔹 Fonction d'affichage des paiements
   function renderPayments(list) {
     paymentList.innerHTML = "";
 
@@ -100,7 +160,6 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
       paymentList.appendChild(div);
     });
-    
   }
 
   fetchExpensesForUser();
