@@ -7,8 +7,29 @@ document.getElementById("closeMenu")?.addEventListener("click", () => {
 
 document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
   e.preventDefault();
-  localStorage.clear();
-  window.location.href = "login.html";
+
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You will be logged out of your account.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, log me out",
+    cancelButtonText: "Cancel"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      localStorage.clear();
+      Swal.fire({
+        icon: "success",
+        title: "Logged Out",
+        text: "You have been successfully logged out.",
+        confirmButtonText: "OK"
+      }).then(() => {
+        window.location.href = "index.html";
+      });
+    }
+  });
 });
 document.addEventListener("DOMContentLoaded", () => {
   const userId = localStorage.getItem("user_id");
@@ -83,9 +104,19 @@ document.addEventListener("DOMContentLoaded", () => {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ userId }),
             });
-            fetchTasks(); 
+            Swal.fire({
+              icon: "success",
+              title: "Task Completed",
+              text: "This task has been marked as done!",
+              confirmButtonText: "OK"
+            }).then(() => fetchTasks());
           } catch (err) {
-            alert("Error marking task as done.");
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Error marking task as done.",
+              confirmButtonText: "OK"
+            });
           }
         });
       }
@@ -93,26 +124,51 @@ document.addEventListener("DOMContentLoaded", () => {
       taskList.appendChild(div);
     });
   }
-
   addBtn?.addEventListener("click", async () => {
-    const title = prompt("Enter task title:");
-    const due = prompt("Enter due date (YYYY-MM-DD):");
+    const { value: formValues } = await Swal.fire({
+      title: "Add New Task",
+      html:
+        `<input id="taskTitle" class="swal2-input" placeholder="Task title">` +
+        `<input id="taskDue" type="date" class="swal2-input">`,
+      focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: "Add Task",
+      preConfirm: () => {
+        const title = document.getElementById("taskTitle").value;
+        const due = document.getElementById("taskDue").value;
+        if (!title || !due) {
+          Swal.showValidationMessage("All fields are required");
+          return false;
+        }
+        return { title, due };
+      }
+    });
 
-    if (!title || !due) return alert("All fields required.");
-
-    try {
-      await fetch("https://roommate-1.onrender.com/api/tasks", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title,
-          due_date: due,
-          created_by: userId,
-        }),
-      });
-      fetchTasks();
-    } catch (err) {
-      alert("Error adding task.");
+    if (formValues) {
+      try {
+        await fetch("https://roommate-1.onrender.com/api/tasks", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title: formValues.title,
+            due_date: formValues.due,
+            created_by: userId,
+          }),
+        });
+        Swal.fire({
+          icon: "success",
+          title: "Task Added",
+          text: "Your task has been successfully added.",
+          confirmButtonText: "OK"
+        }).then(() => fetchTasks());
+      } catch (err) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Error adding task.",
+          confirmButtonText: "OK"
+        });
+      }
     }
   });
 
