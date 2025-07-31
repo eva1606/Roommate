@@ -12,14 +12,31 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
 
     if (!res.ok) {
       const err = await res.json();
-      alert("Registration failed: " + (err.error || "Please try again"));
+      Swal.fire({
+        icon: "error",
+        title: "Registration Failed",
+        text: err.error || "Please try again.",
+        confirmButtonText: "OK"
+      });
       return;
     }
 
-    alert("Account created! You can now log in.");
-    window.location.href = "login.html";
+    Swal.fire({
+      icon: "success",
+      title: "Account Created",
+      text: "Your account has been successfully created! You can now log in.",
+      confirmButtonText: "Go to Login"
+    }).then(() => {
+      window.location.href = "login.html";
+    });
+
   } catch (err) {
     console.error("Registration error:", err);
-    alert("A technical error occurred during registration.");
+    Swal.fire({
+      icon: "error",
+      title: "Technical Error",
+      text: "A problem occurred during registration. Please try again later.",
+      confirmButtonText: "OK"
+    });
   }
 });

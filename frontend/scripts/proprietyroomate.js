@@ -3,7 +3,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   const id = params.get("id");
 
   if (!id) {
-    alert("No property ID provided.");
+    Swal.fire({
+      icon: "error",
+      title: "Missing Property ID",
+      text: "No property ID provided. Please try again.",
+      confirmButtonText: "OK"
+    });
     return;
   }
 
@@ -13,6 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const property = await res.json();
 
+  
     document.getElementById("property-address").textContent = property.address;
     document.getElementById("main-photo").src = property.photo;
 
@@ -29,6 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       <p>Furnished: ${property.furnished ? '✅' : '❌'}</p>
     `;
 
+    
     const gallery = document.getElementById("photo-gallery");
     if (Array.isArray(property.photos) && property.photos.length) {
       property.photos.forEach(url => {
@@ -39,52 +46,89 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     }
 
+    
     const coords = await geocodeAddress(property.address);
     const map = L.map("map").setView([coords.lat, coords.lon], 16);
-
+    
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
-
+    
     L.marker([coords.lat, coords.lon])
       .addTo(map)
       .bindPopup(property.address)
       .openPopup();
 
-    document.getElementById("mapBtn").addEventListener("click", () => {
-      window.open(`https://www.google.com/maps?q=${coords.lat},${coords.lon}`, "_blank");
-    });
+    
+    function confirmOpenMaps() {
+      Swal.fire({
+        title: "Open Google Maps?",
+        text: "Do you want to view this location on Google Maps?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, open it",
+        cancelButtonText: "Cancel"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.open(`https://www.google.com/maps?q=${coords.lat},${coords.lon}`, "_blank");
+        }
+      });
+    }
 
+    document.getElementById("mapBtn").addEventListener("click", confirmOpenMaps);
+    map.on("click", confirmOpenMaps);
+
+   
     const contactBtn = document.getElementById("contactOwnerBtn");
     const contactDiv = document.getElementById("ownerContactInfo");
-
+    
     if (contactBtn && contactDiv) {
       contactBtn.addEventListener("click", async () => {
         try {
           const ownerRes = await fetch(`https://roommate-1.onrender.com/api/properties/${property.id}/owner-phone`);
           if (!ownerRes.ok) throw new Error("Owner phone not found");
-
+    
           const ownerData = await ownerRes.json();
-
+    
           contactDiv.innerHTML = `
             <p><strong>Phone:</strong> <a href="tel:${ownerData.phone}">${ownerData.phone}</a></p>
           `;
           contactDiv.classList.remove("hidden");
-
-          window.location.href = `tel:${ownerData.phone}`;
+    
+          Swal.fire({
+            icon: "info",
+            title: "Contact Owner",
+            html: `You can call the owner at: <br><strong>${ownerData.phone}</strong>`,
+            confirmButtonText: "Call Now"
+          }).then(() => {
+            window.location.href = `tel:${ownerData.phone}`;
+          });
+    
         } catch (e) {
-          contactDiv.innerHTML = "<p>❌ Could not load owner phone number.</p>";
           contactDiv.classList.remove("hidden");
+          Swal.fire({
+            icon: "error",
+            title: "Phone Number Unavailable",
+            text: "Could not load the owner's phone number. Please try again later.",
+            confirmButtonText: "OK"
+          });
         }
       });
     }
-
   } catch (err) {
     console.error("❌ Failed to load property:", err);
     document.getElementById("map").innerHTML = "<p>📍 Location not available</p>";
-    alert("Failed to load property.");
+  
+    Swal.fire({
+      icon: "error",
+      title: "Property Load Failed",
+      text: "We couldn't load this property. Please try again later.",
+      confirmButtonText: "OK"
+    });
   }
-}); 
+});
 
 async function geocodeAddress(address) {
   const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`);
