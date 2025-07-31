@@ -33,13 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("closeMenu")?.addEventListener("click", () => {
     document.getElementById("menuOverlay").classList.add("hidden");
   });
-
-  document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
-    e.preventDefault();
-    localStorage.clear();
-    window.location.href = "login.html";
-  });
-
   const searchInput = document.querySelector(".search-input");
   searchInput?.addEventListener("input", () => {
     const query = searchInput.value.toLowerCase().trim();
@@ -137,6 +130,33 @@ document.addEventListener("DOMContentLoaded", () => {
       sortMenuRoommates.classList.add("hidden");
     });
   });
+  
+  document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
+    e.preventDefault();
+  
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will be logged out of your account.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, log me out",
+      cancelButtonText: "Cancel"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.clear();
+        Swal.fire({
+          icon: "success",
+          title: "Logged Out",
+          text: "You have been successfully logged out.",
+          confirmButtonText: "OK"
+        }).then(() => {
+          window.location.href = "index.html";
+        });
+      }
+    });
+  });
 
   document.getElementById("applyFilterApt")?.addEventListener("click", () => {
     const loc = document.getElementById("aptLocation").value.toLowerCase();
@@ -187,33 +207,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   fetchProperties();
-});
-
-document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
-  e.preventDefault();
-
-  Swal.fire({
-    title: "Are you sure?",
-    text: "You will be logged out of your account.",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, log me out",
-    cancelButtonText: "Cancel"
-  }).then((result) => {
-    if (result.isConfirmed) {
-      localStorage.clear();
-      Swal.fire({
-        icon: "success",
-        title: "Logged Out",
-        text: "You have been successfully logged out.",
-        confirmButtonText: "OK"
-      }).then(() => {
-        window.location.href = "index.html";
-      });
-    }
-  });
 });
 
 async function fetchProperties() {
