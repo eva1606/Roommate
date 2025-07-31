@@ -372,7 +372,7 @@ async function fetchProperties() {
       const roommates = await res.json();
   
       if (!Array.isArray(roommates) || roommates.length === 0) {
-        container.innerHTML = "<p>Aucun colocataire potentiel trouvé.</p>";
+        container.innerHTML = "<p>No potential roommates found.</p>";
         return;
       }
   

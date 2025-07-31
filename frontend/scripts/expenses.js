@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
       text: "You must be logged in to access this page.",
       confirmButtonText: "Go to Login"
     }).then(() => {
-      window.location.href = "login.html";
+      window.location.href = "index.html";
     });
     return;
   }
