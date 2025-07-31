@@ -264,9 +264,9 @@ main.main-container {
 }
 
 .payment-item {
-  width: 90%;
+  width: 100%;
   max-width: 700px;
-  min-height: 160px;
+  margin: 0 20px;
   padding: 1rem;
   background-color: #ffffff;
   border-radius: 16px;
@@ -277,6 +277,7 @@ main.main-container {
   border-left: 5px solid #004AAD;
   transition: transform 0.2s ease;
   flex-wrap: wrap;
+  box-sizing: border-box;
 }
 
 .payment-item:hover {
