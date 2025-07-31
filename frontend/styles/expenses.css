@@ -264,7 +264,7 @@ main.main-container {
 }
 
 .payment-item {
-  width: 100%;
+  width: 90%;
   max-width: 700px;
   min-height: 160px;
   padding: 1rem;
@@ -272,10 +272,11 @@ main.main-container {
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
   border-left: 5px solid #004AAD;
   transition: transform 0.2s ease;
+  flex-wrap: wrap;
 }
 
 .payment-item:hover {
@@ -330,7 +331,9 @@ main.main-container {
   }
 
   .payment-item {
-    padding: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem 1rem 0.75rem;
   }
 
   .payment-label {
@@ -349,10 +352,27 @@ main.main-container {
   .payment-meta {
     align-items: flex-start;
     text-align: left;
-    margin-top: 10px;
+    margin-top: 0.75rem;
   }
 }
+@media (max-width: 600px) {
+  .payment-item {
+    padding: 0.9rem;
+  }
 
+  .payment-label {
+    font-size: 1.05rem;
+  }
+
+  .payment-user,
+  .payment-date {
+    font-size: 0.85rem;
+  }
+
+  .payment-amount {
+    font-size: 1.1rem;
+  }
+}
 @media (max-width: 480px) {
   main.main-container {
     padding: 110px 1rem 90px;
@@ -369,7 +389,7 @@ main.main-container {
   }
 
   .payment-item {
-    padding: 0.9rem;
+    padding: 0.8rem;
   }
 
   .payment-label {
@@ -378,5 +398,46 @@ main.main-container {
 
   .payment-amount {
     font-size: 1rem;
+  }
+  .payment-user,
+  .payment-date {
+    font-size: 0.8rem;
+  }
+}
+@media (max-width: 360px) {
+  .payment-item {
+    padding: 0.75rem;
+  }
+
+  .payment-label {
+    font-size: 0.95rem;
+  }
+
+  .payment-user,
+  .payment-date {
+    font-size: 0.75rem;
+  }
+
+  .payment-amount {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .payment-item {
+    padding: 0.6rem;
+  }
+
+  .payment-label {
+    font-size: 0.9rem;
+  }
+
+  .payment-user,
+  .payment-date {
+    font-size: 0.7rem;
+  }
+
+  .payment-amount {
+    font-size: 0.9rem;
   }
 }
