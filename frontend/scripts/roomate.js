@@ -362,109 +362,105 @@ async function fetchProperties() {
     container.innerHTML = "<p>Error loading apartments.</p>";
   }
 }
-  async function fetchRoommates() {
-    const userId = localStorage.getItem("user_id");
-    const container = document.getElementById("roommate-properties");
-    container.innerHTML = "";
-  
-    try {
-      const res = await fetch(`https://roommate-1.onrender.com/api/potential-roommates/${userId}`);
-      const roommates = await res.json();
-  
-      if (!Array.isArray(roommates) || roommates.length === 0) {
-        container.innerHTML = "<p>No potential roommates found.</p>";
-        return;
-      }
-  
-      const uniqueMap = new Map();
-      roommates.forEach((rm) => uniqueMap.set(rm.id, rm));
-  
-      uniqueMap.forEach((roommate) => {
-        const heartColor = roommate.is_favorited ? "#0021F5" : "#F5F5F5";
-  
-        const card = document.createElement("div");
-        card.classList.add("roommate-card");
-  
+async function fetchRoommates() {
+  const userId = localStorage.getItem("user_id");
+  const container = document.getElementById("roommate-properties");
+  container.innerHTML = "";
 
-        card.setAttribute(
-          "data-search",
-          `${roommate.first_name} ${roommate.last_name} ${roommate.location} ${roommate.budget}`.toLowerCase()
-        );
-        card.setAttribute("data-budget", roommate.budget || "0");
-        card.setAttribute("data-name", `${roommate.first_name} ${roommate.last_name}`);
-        card.setAttribute("data-location", roommate.location || "");
-  
-        card.innerHTML = `
-          <div class="roommate-left">
-            <img src="${roommate.photo_url || 'default-avatar.jpg'}" class="roommate-photo" />
-            <div class="roommate-info">
-              <h3>${roommate.first_name} ${roommate.last_name}</h3>
-              <p>   
-              <img src="icons/Location.svg" alt="Location" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" />
-              ${roommate.location}
-              </p>
-              <p> <img src="icons/money.svg" alt="Budget"width="16" height="16" style="vertical-align: middle; margin-right: 6px;"  />
-              ${roommate.budget} ₪/Months</p>
-            </div>
-          </div>
-          <div class="roommate-actions">
-            <button class="heart-btn" data-id="${roommate.id}" title="Add to favorites">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="${heartColor}" viewBox="0 0 24 24">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
-                         2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09
-                         C13.09 3.81 14.76 3 16.5 3
-                         19.58 3 22 5.42 22 8.5
-                         c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-              </svg>
-            </button>
-          </div>
-        `;
-  
-        const heartBtn = card.querySelector(".heart-btn");
-        const svg = heartBtn.querySelector("svg");
-        
-        heartBtn.addEventListener("click", async (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-        
-          const profilUserId = roommate.id;
-          const is_favorited = svg.getAttribute("fill") === "#EB3223";
-        
-          try {
-            if (is_favorited) {
-              const res = await fetch("https://roommate-1.onrender.com/api/potential-roommates/remove-favorite", {
-                method: "DELETE",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ userId, profilUserId }),
-              });
-              if (res.ok) {
-                svg.setAttribute("fill", "#F5F5F5"); // gris = pas favori
-              }
-            } else {
-              const res = await fetch("https://roommate-1.onrender.com/api/potential-roommates/add-favorite", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ userId, profilUserId }),
-              });
-              if (res.ok) {
-                svg.setAttribute("fill", "#EB3223"); // rouge = favori
-              }
-            }
-          } catch (err) {
-            console.error("Favorite error:", err);
-          }
-        });
-        
-        card.addEventListener("click", () => {
-          window.location.href = `detailsroomate.html?id=${roommate.id}`;
-        });
-        
-        container.appendChild(card);
-      });
-    } catch (err) {
-      console.error(" Roommates recovery error:", err);
-      container.innerHTML = "<p>error loading roommates.</p>";
+  try {
+    const res = await fetch(`https://roommate-1.onrender.com/api/potential-roommates/${userId}`);
+    const roommates = await res.json();
+
+    if (!Array.isArray(roommates) || roommates.length === 0) {
+      container.innerHTML = "<p>Aucun colocataire potentiel trouvé.</p>";
+      return;
     }
-  }  
+
+    const uniqueMap = new Map();
+    roommates.forEach((rm) => uniqueMap.set(rm.id, rm));
+
+    uniqueMap.forEach((roommate) => {
+      const heartColor = roommate.is_favorited ? "#0021F5" : "#F5F5F5";
+
+      const card = document.createElement("div");
+      card.classList.add("roommate-card");
+
+
+      card.setAttribute(
+        "data-search",
+        `${roommate.first_name} ${roommate.last_name} ${roommate.location} ${roommate.budget}`.toLowerCase()
+      );
+      card.setAttribute("data-budget", roommate.budget || "0");
+      card.setAttribute("data-name", `${roommate.first_name} ${roommate.last_name}`);
+      card.setAttribute("data-location", roommate.location || "");
+
+      card.innerHTML = `
+        <div class="roommate-left">
+          <img src="${roommate.photo_url || 'default-avatar.jpg'}" class="roommate-photo" />
+          <div class="roommate-info">
+            <h3>${roommate.first_name} ${roommate.last_name}</h3>
+            <p>   
+            <img src="icons/Location.svg" alt="Location" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" />
+            ${roommate.location}
+            </p>
+            <p> <img src="icons/money.svg" alt="Budget"width="16" height="16" style="vertical-align: middle; margin-right: 6px;"  />
+            ${roommate.budget} ₪/Months</p>
+          </div>
+        </div>
+        <div class="roommate-actions">
+          <button class="heart-btn" data-id="${roommate.id}" title="Ajouter aux favoris">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="${heartColor}" viewBox="0 0 24 24">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                       2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09
+                       C13.09 3.81 14.76 3 16.5 3
+                       19.58 3 22 5.42 22 8.5
+                       c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+          </button>
+        </div>
+      `;
+
+      const heartBtn = card.querySelector(".heart-btn");
+      const svg = heartBtn.querySelector("svg");
+
+      heartBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const profilUserId = roommate.id;
+        const isCurrentlyFavorite = svg.getAttribute("fill") === "#0021F5";
+
+        try {
+          if (isCurrentlyFavorite) {
+            await fetch("https://roommate-1.onrender.com/api/potential-roommates/remove-favorite", {
+              method: "DELETE",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ userId, profilUserId }),
+            });
+            svg.setAttribute("fill", "#F5F5F5");
+          } else {
+            await fetch("https://roommate-1.onrender.com/api/potential-roommates/add-favorite", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ userId, profilUserId }),
+            });
+            svg.setAttribute("fill", "#0021F5");
+          }
+        } catch (err) {
+          console.error("Favorite error:", err);
+        }
+      });
+
+      card.addEventListener("click", () => {
+        window.location.href = `detailsroomate.html?id=${roommate.id}`;
+      });
+
+      container.appendChild(card);
+    });
+  } catch (err) {
+    console.error(" Roommates recovery error:", err);
+    container.innerHTML = "<p>error loading roommates.</p>";
+  }
+}  
+
 
 
