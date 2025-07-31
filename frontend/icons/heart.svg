@@ -1,9 +1,10 @@
-<svg width="49" height="74" viewBox="0 0 49 74" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<rect width="49" height="74" fill="url(#pattern0_2063_7)"/>
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_2071_24)">
+<path d="M24 42.7L21.1 40.06C10.8 30.72 4 24.56 4 17C4 10.84 8.84 6 15 6C18.48 6 21.82 7.62 24 10.18C26.18 7.62 29.52 6 33 6C39.16 6 44 10.84 44 17C44 24.56 37.2 30.72 26.9 40.08L24 42.7Z" fill="#004AAD"/>
+</g>
 <defs>
-<pattern id="pattern0_2063_7" patternContentUnits="objectBoundingBox" width="1" height="1">
-<use xlink:href="#image0_2063_7" transform="matrix(0.0104167 0 0 0.00689752 0 0.168919)"/>
-</pattern>
-<image id="image0_2063_7" width="96" height="96" preserveAspectRatio="none" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAAAsTAAALEwEAmpwYAAAE60lEQVR4nO2dW4gcRRSGz3q/xODdB0FERcELiJcXH1xFd7fP6TFeVxR8EAKKKKiP4mV9EGMQBB+8ISJmH9Tuc2ayqwZdMNEHI0gegi9egrcQEZGIMWt2NZeWqlnN6G6MM13dVTVzPvhhXrb7/OfU1FZ1V9UAKIqiKIqiKIqiKIqiKIoLhrNlkDAB8lNA/BaQfA7IPwPJH0C8e+HzFiB5D5CfgbQ5Do3pkyuLJ8lOAcpvtfcy9zT3tjHwbhuT+YzyGZBMA8oqwCZaD3FRDNnAkTMgngeSoiuh7AHiD4Dy2+HSlw4vHY65hrkWyofta3cZD8kcoLwJJIn1FjSmBRN/2oPJ4gDF2AbID8HImmO7jsX8DfHDgPy9u3h4M1DzJggObJ4LxO87M0qLCvEdIN/8v+NJ5BYg3lpZPMQzMJqdA0FA+R1AsrM6s9LZAtdC+vYJB4xlNDsRkKdqiuVX27X57etlVS1m6R+t7xtoyCWLwsH8MkD5tvZ4UJ7w8L+hGALiF+pPvuxvfUl+zf7ky0ht38Kl9Xy9RfDS8uXfmoM0vwqIr+5ptFXJN6G+Pr8IRL8sqAhCqdxWw2jH61e9CFu8A5Lm2dUVoMqhJvWLeKbCSZZvcxKHUrmxilGPuxluvwt5s9tRkXmg5tsURaaUx9wVgDj3bogiE/LrbpK/Yu1xQYyzKTKh7ILG9DHlC6DdT9Gzkny0fAHsy5QAzFCUerJ8AdpvsnwbKaKUeXrroABfeDdCkcq83ixfANnu3QhFKuSfyhcA5XfvRihW8byLAuzyb0TiFPJvLgqwzbsRilW8tXwB9BlQUe6ZUPkC6DCUei7AlIsCTHg3QrGKH3FQAEn9G5FYlZQvgFmHY9dyejdTRCUzfL++dTw4ob2Q1b8pikm8DpyR8l3+DUlk4pXuCmCWjOuErOhqAmaWSTqF+GXvxigSIb8IzhnLLwDifd7NUQTC1kVQCSTveDdHwWsaKsNUFmVvACaLIGV24KRyYXUFsEWQSe9GKVi9ApXTyM7Q9aGyhHgHpNnpUAskD/o3LGEJ5V6ojfHsUEDe5N00hSL+xOakVpLsfJ2cidFcdcPOg4F8XwAJKDzrbvCHXTU9yC9sWuCd9uPqLQEko6hVKF+6e9xcFtMHksx6TwrVptnqJ1zdYnanD8IsGWWv9RokCd/jPUFUsRJ5AIIG+WnvSaLKtBrCx46MXgsgWYXzHS8TE4dAFNgzenimf5Iv6yFZdyRERTK5HJA39kHyP7LbtKLEHJpkTqqKOfnJ5HKImliLgLwx/uTHWgTsp+T/hTFkD+MLvtvZEG+ffzDMSCLsTd/TMJ4dDX2NeXER4hojlDUwvOEwGAzMZE1Wh5N8fjb8M0GrAPl+v4u9eB+gPA4DDfHKHk+0Ldvl7HG7gDZmUllR7/tlnrcHUCkdEF9Z0wF8OyHlaztvrXQuAK5yWyzKD0Cti/++n7IEY60zKzmfAuWrcM57Dp0bmicB8cfuks+bYERO9W0rLoazZYDyroOWv77/nuvUxXh2BJC8UaLlN2H41aN824icYmjhJ0e6Tf5z8bxCjAHix7rodh71HW5/Qnznf24ab8+ofa7VHACSfLT96xWLCjAL2Gz4Dm8wSORyIP6xI/nbgfIrfIc1WKR8ll0gi/I1jGXn+Q5nMLlu6jQrRVEURVEURVEURVEgDv4EZrhFSves71MAAAAASUVORK5CYII="/>
+<clipPath id="clip0_2071_24">
+<rect width="48" height="48" fill="white"/>
+</clipPath>
 </defs>
 </svg>
