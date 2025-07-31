@@ -119,6 +119,15 @@ a {
     height: 40px;
     filter: brightness(0) saturate(100%) invert(22%) sepia(79%) saturate(1962%) hue-rotate(201deg) brightness(92%) contrast(97%);
   }
+  .menu-overlay img {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    flex-shrink: 0;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
   .menu-overlay {
     position: fixed;
     top: 90px;

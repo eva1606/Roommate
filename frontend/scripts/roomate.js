@@ -441,7 +441,7 @@ async function fetchProperties() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ userId, profilUserId }),
               });
-              svg.setAttribute("fill", "#0021F5");
+              svg.setAttribute("fill", "#EB3223");
             }
           } catch (err) {
             console.error("Favorite error:", err);
