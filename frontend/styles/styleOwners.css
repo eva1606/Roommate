@@ -39,7 +39,11 @@
     align-items: normal;
     width: 100%;
   }
-  
+  .logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
   .logo {
     width: 97px;
     height: 97px;
