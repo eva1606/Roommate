@@ -257,18 +257,16 @@ main.main-container {
 }
 
 .payment-list {
-  padding-bottom: 10px;
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
-  padding: 0 16px;
   margin-top: 0;
 }
 
 .payment-item {
   width: 100%;
   max-width: 700px;
-  margin: 0 20px;
+  margin: 0 auto;
   padding: 1rem;
   background-color: #ffffff;
   border-radius: 16px;
@@ -360,6 +358,8 @@ main.main-container {
 }
 @media (max-width: 600px) {
   .payment-item {
+    flex-direction: column;
+    align-items: flex-start;
     padding: 0.9rem;
   }
 
@@ -390,8 +390,9 @@ main.main-container {
     padding: 0.8rem 1.2rem;
     width: clamp(150px, 80%, 240px);
   }
-
   .payment-item {
+    flex-direction: column;
+    align-items: flex-start;
     padding: 0.8rem;
   }
 
@@ -409,6 +410,8 @@ main.main-container {
 }
 @media (max-width: 360px) {
   .payment-item {
+    flex-direction: column;
+    align-items: flex-start;
     padding: 0.75rem;
   }
 
@@ -428,6 +431,8 @@ main.main-container {
 
 @media (max-width: 320px) {
   .payment-item {
+    flex-direction: column;
+    align-items: flex-start;
     padding: 0.6rem;
   }
 
