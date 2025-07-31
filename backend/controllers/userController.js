@@ -35,7 +35,7 @@ const registerUser = async (req, res) => {
     req.file?.secure_url || req.file?.path || req.file?.url || null;
 
   try {
-    // Vérifier si l'email existe déjà
+    
     const existing = await pool.query(
       'SELECT 1 FROM users WHERE LOWER(email) = LOWER($1)',
       [email]
@@ -45,7 +45,7 @@ const registerUser = async (req, res) => {
       return res.status(409).json({ error: "Email already in use" });
     }
 
-    // Création de l'utilisateur
+ 
     const result = await pool.query(
       `INSERT INTO users (first_name, last_name, email, password, phone, role, photo_url)
        VALUES ($1, $2, $3, $4, $5, $6, $7)
@@ -55,7 +55,7 @@ const registerUser = async (req, res) => {
 
     const newUser = result.rows[0];
 
-    // ✅ Insérer ou mettre à jour automatiquement le profil
+
     await pool.query(
       `INSERT INTO profil_users (user_id, first_name, last_name, email, photo_url)
        VALUES ($1, $2, $3, $4, $5)
