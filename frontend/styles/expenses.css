@@ -220,10 +220,12 @@ footer {
   filter: brightness(0) saturate(100%) invert(32%) sepia(96%) saturate(1818%) hue-rotate(203deg) brightness(92%) contrast(101%);
 }
 main.main-container {
-  padding: 120px 1rem 100px;
+  padding: 120px 20px 100px;
   width: 100%;
   max-width: 900px;
   margin: auto;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .add-section {
@@ -255,12 +257,12 @@ main.main-container {
 }
 
 .payment-list {
+  padding-bottom: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  padding-bottom: 10px;
-  width: 100%;
+  gap: 0.8rem;
+  padding: 0 16px;
+  margin-top: 0;
 }
 
 .payment-item {
