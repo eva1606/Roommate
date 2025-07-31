@@ -31,14 +31,13 @@ const loginUser = async (req, res) => {
 const registerUser = async (req, res) => {
   const { first_name, last_name, email, password, phone, role } = req.body;
 
-  // ✅ Récupération de l'URL de la photo uploadée
   const photo_url =
     req.file?.secure_url || req.file?.path || req.file?.url || null;
 
   try {
-    // 🔹 Vérifier si l'email existe déjà
+    // Vérifier si l'email existe déjà
     const existing = await pool.query(
-      'SELECT * FROM users WHERE LOWER(email) = LOWER($1)',
+      'SELECT 1 FROM users WHERE LOWER(email) = LOWER($1)',
       [email]
     );
 
@@ -46,7 +45,7 @@ const registerUser = async (req, res) => {
       return res.status(409).json({ error: "Email already in use" });
     }
 
-    // 🔹 Créer le nouvel utilisateur
+    // Création de l'utilisateur
     const result = await pool.query(
       `INSERT INTO users (first_name, last_name, email, password, phone, role, photo_url)
        VALUES ($1, $2, $3, $4, $5, $6, $7)
@@ -56,27 +55,31 @@ const registerUser = async (req, res) => {
 
     const newUser = result.rows[0];
 
-    // 🔹 Copier automatiquement les infos et la photo dans profil_users
+    // ✅ Insérer ou mettre à jour automatiquement le profil
     await pool.query(
       `INSERT INTO profil_users (user_id, first_name, last_name, email, photo_url)
-       SELECT u.id, u.first_name, u.last_name, u.email, u.photo_url
-       FROM users u
-       LEFT JOIN profil_users p ON p.user_id = u.id
-       WHERE u.id = $1 AND p.user_id IS NULL`,
-      [newUser.id]
+       VALUES ($1, $2, $3, $4, $5)
+       ON CONFLICT (user_id)
+       DO UPDATE SET 
+          first_name = EXCLUDED.first_name,
+          last_name = EXCLUDED.last_name,
+          email = EXCLUDED.email,
+          photo_url = EXCLUDED.photo_url`,
+      [newUser.id, newUser.first_name, newUser.last_name, newUser.email, newUser.photo_url]
     );
 
-    // ✅ Réponse envoyée
     res.status(201).json({
       id: newUser.id,
       first_name: newUser.first_name,
       role: newUser.role,
     });
+
   } catch (err) {
     console.error("❌ Register error:", err);
     res.status(500).json({ error: "Server error during registration" });
   }
 };
+
 module.exports = {
   loginUser,
   registerUser
