@@ -424,7 +424,8 @@ async function fetchProperties() {
         const svg = heartBtn.querySelector("svg");
         
         heartBtn.addEventListener("click", async (e) => {
-          e.stopPropagation(); // ✅ maintenant défini
+          e.preventDefault();
+          e.stopPropagation();
         
           const profilUserId = roommate.id;
           const is_favorited = svg.getAttribute("fill") === "#EB3223";
@@ -436,23 +437,28 @@ async function fetchProperties() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ userId, profilUserId }),
               });
-              if (res.ok) svg.setAttribute("fill", "#F5F5F5");
+              if (res.ok) {
+                svg.setAttribute("fill", "#F5F5F5"); // gris = pas favori
+              }
             } else {
               const res = await fetch("https://roommate-1.onrender.com/api/potential-roommates/add-favorite", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ userId, profilUserId }),
               });
-              if (res.ok) svg.setAttribute("fill", "#EB3223");
+              if (res.ok) {
+                svg.setAttribute("fill", "#EB3223"); // rouge = favori
+              }
             }
           } catch (err) {
             console.error("Favorite error:", err);
           }
         });
+        
         card.addEventListener("click", () => {
           window.location.href = `detailsroomate.html?id=${roommate.id}`;
         });
-  
+        
         container.appendChild(card);
       });
     } catch (err) {
