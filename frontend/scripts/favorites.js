@@ -152,7 +152,7 @@ async function fetchFavoriteRoommates(userId) {
           <div class="roommate-info">
             <h3>${roommate.first_name} ${roommate.last_name}</h3>
             <p>
-              <img src="icons/location.svg" alt="Location icon" class="icon" />
+              <img src="icons/Location.svg" alt="Location icon" class="icon" />
               ${roommate.location}
             </p>
             <p>
