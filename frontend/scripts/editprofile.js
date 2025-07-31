@@ -3,16 +3,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   const userId = localStorage.getItem("user_id");
   const photoPreview = document.getElementById("photo-preview");
   const photoInput = document.getElementById("photo-input");
-
-  if (!userId) {
-    Swal.fire({
-      icon: "warning",
-      title: "Access Denied",
-      text: "You must be logged in to edit your profile.",
-      confirmButtonText: "OK"
-    });
-    return;
-  }
+  
+    if (!userId) {
+      Swal.fire({
+        icon: "warning",
+        title: "Access Denied",
+        text: "You must be logged in to access this page.",
+        confirmButtonText: "Go to Login"
+      }).then(() => {
+        window.location.href = "login.html";
+      });
+      return;
+    }
+    
 
   try {
     const res = await fetch(`https://roommate-1.onrender.com/api/profil_users/${userId}`);

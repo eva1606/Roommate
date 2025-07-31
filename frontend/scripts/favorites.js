@@ -1,13 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
   const userId = localStorage.getItem("user_id");
   const role = localStorage.getItem("role");
-
+  
   if (!userId || role !== "roommate") {
-    alert("Unauthorized access. Please log in again.");
-    window.location.href = "login.html";
+    Swal.fire({
+      icon: "error",
+      title: "Unauthorized Access",
+      text: "Please log in again to access this page.",
+      confirmButtonText: "OK"
+    }).then(() => {
+      window.location.href = "index.html";
+    });
     return;
   }
-
   
   document.getElementById("hamburgerBtn")?.addEventListener("click", () => {
     document.getElementById("menuOverlay").classList.remove("hidden");
@@ -19,8 +24,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
     e.preventDefault();
-    localStorage.clear();
-    window.location.href = "login.html";
+  
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will be logged out of your account.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, log me out",
+      cancelButtonText: "Cancel"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.clear();
+        Swal.fire({
+          icon: "success",
+          title: "Logged Out",
+          text: "You have been successfully logged out.",
+          confirmButtonText: "OK"
+        }).then(() => {
+          window.location.href = "index.html";
+        });
+      }
+    });
   });
 
 

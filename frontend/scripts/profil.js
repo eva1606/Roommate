@@ -1,8 +1,15 @@
 document.addEventListener('DOMContentLoaded', async () => {
-  const userId = localStorage.getItem('user_id');
+  const userId = localStorage.getItem("user_id");
 
   if (!userId) {
-    window.location.href = 'login.html';
+    Swal.fire({
+      icon: "warning",
+      title: "Access Denied",
+      text: "You must be logged in to access this page.",
+      confirmButtonText: "Go to Login"
+    }).then(() => {
+      window.location.href = "login.html";
+    });
     return;
   }
 
@@ -10,8 +17,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     const res = await fetch(`https://roommate-1.onrender.com/api/profil_users/${userId}`);
 
     if (!res.ok) {
-      throw new Error('Profile not found.');
+      Swal.fire({
+        icon: "error",
+        title: "Profile Not Found",
+        text: "We couldn't load your profile. Please try again or contact support.",
+        confirmButtonText: "OK"
+      });
+      return;
     }
+    
 
     const user = await res.json();
 
@@ -42,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     const locationEl = document.getElementById('profile-location');
     if (locationEl) {
-      locationEl.textContent = user.location || 'Non spécifiée';
+      locationEl.textContent = user.location || 'Not demanding';
     }
 
     const viewBtn = document.getElementById('view-btn');

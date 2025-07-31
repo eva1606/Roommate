@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
       sortMenuRoommates.classList.add("hidden");
     });
   });
-  
+
   document.getElementById("logoutBtn")?.addEventListener("click", (e) => {
     e.preventDefault();
   
@@ -274,7 +274,7 @@ async function fetchProperties() {
 
       container.appendChild(card);
 
-      // ⭐ Gestion favoris
+    
       card.querySelector(".favorite-btn").addEventListener("click", async (e) => {
         e.stopPropagation();
         const svgPath = e.currentTarget.querySelector("path");
@@ -302,7 +302,7 @@ async function fetchProperties() {
         }
       });
 
-      // 🗑️ Gestion suppression avec SweetAlert2
+     
       card.querySelector(".trash-btn").addEventListener("click", async (e) => {
         e.stopPropagation();
         const propertyId = prop.id;
