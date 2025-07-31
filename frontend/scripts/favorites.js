@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const userId = localStorage.getItem("user_id");
   const role = localStorage.getItem("role");
-  
+
   if (!userId || role !== "roommate") {
     Swal.fire({
       icon: "error",
@@ -121,23 +121,24 @@ async function fetchFavorites(userId) {
 
 async function fetchFavoriteRoommates(userId) {
   const container = document.getElementById("roommate-container");
+  container.innerHTML = "";
 
   try {
     const res = await fetch(`https://roommate-1.onrender.com/api/potential-roommates/favorites/${userId}`);
     const roommates = await res.json();
 
-    
+    // ✅ Utiliser "id" car c'est ce que ton API renvoie
     const unique = [];
     const seen = new Set();
 
     roommates.forEach(r => {
-      if (!seen.has(r.profil_user_id)) {
-        seen.add(r.profil_user_id);
+      if (!seen.has(r.id)) {
+        seen.add(r.id);
         unique.push(r);
       }
     });
 
-    if (!Array.isArray(unique) || unique.length === 0) {
+    if (unique.length === 0) {
       container.innerHTML = "<p>No favorite roommates found.</p>";
       return;
     }
@@ -151,23 +152,21 @@ async function fetchFavoriteRoommates(userId) {
           <div class="roommate-info">
             <h3>${roommate.first_name} ${roommate.last_name}</h3>
             <p>
-            <img src="icons/location.svg" alt="Location icon" class="icon" />
-            ${roommate.location}
-          </p>
-          
-          <p>
-            <img src="icons/money.svg" alt="Budget icon" class="icon" />
-            ${roommate.budget} ₪/Month
-          </p>
-          
+              <img src="icons/location.svg" alt="Location icon" class="icon" />
+              ${roommate.location}
+            </p>
+            <p>
+              <img src="icons/money.svg" alt="Budget icon" class="icon" />
+              ${roommate.budget} ₪/Month
+            </p>
           </div>
         </div>
       `;
       container.appendChild(card);
     });
   } catch (err) {
-    console.error(" Error loading favorite roommates :", err);
-    container.innerHTML = "<p>Error loading.</p>";
+    console.error("❌ Error loading favorite roommates:", err);
+    container.innerHTML = "<p>Error loading favorites.</p>";
   }
 }
 
