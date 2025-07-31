@@ -46,15 +46,44 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     
     const callBtn = document.getElementById("call-btn");
+
     if (callBtn && user.phone) {
       callBtn.href = `tel:${user.phone}`;
+      callBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        Swal.fire({
+          icon: "question",
+          title: "Contact Roommate?",
+          html: `Do you want to call this roommate?<br><strong>${user.phone}</strong>`,
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, call now",
+          cancelButtonText: "No, cancel"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = `tel:${user.phone}`;
+          }
+        });
+      });
+    
     } else if (callBtn) {
       callBtn.href = "#";
-      callBtn.textContent = "Number not available.";
+      callBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        Swal.fire({
+          icon: "warning",
+          title: "Number Unavailable",
+          text: "This user has not shared their phone number.",
+          confirmButtonText: "OK"
+        });
+      });
+    
       callBtn.classList.add("disabled");
       callBtn.style.backgroundColor = "#ccc";
       callBtn.style.cursor = "not-allowed";
     }
+    
 
   } catch (err) {
     console.error("❌ Error loading roommate:", err);
