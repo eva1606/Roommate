@@ -1,4 +1,9 @@
 const pool = require('../db');
+const argon2 = require('argon2');
+
+// =======================
+// LOGIN USER
+// =======================
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -11,23 +16,58 @@ const loginUser = async (req, res) => {
     const user = result.rows[0];
 
     if (!user) {
-      return res.status(401).json({ error: "User not found" });
+      return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    if (user.password !== password) {
+    let isValid = false;
+    const storedPassword = user.password || '';
+
+    // Vérifie si le password ressemble à un hash Argon2
+    const isArgonHash = storedPassword.startsWith('$argon2');
+
+    if (isArgonHash) {
+      // Utilisateur déjà migré (hashé Argon2)
+      isValid = await argon2.verify(storedPassword, password);
+    } else {
+      // Ancien utilisateur : password en clair
+      if (storedPassword === password) {
+        isValid = true;
+
+        // On le migre vers Argon2
+        const newHash = await argon2.hash(password, {
+          type: argon2.argon2id,
+          timeCost: 3,
+          memoryCost: 4096,
+          parallelism: 1,
+        });
+
+        await pool.query(
+          'UPDATE users SET password = $1 WHERE id = $2',
+          [newHash, user.id]
+        );
+      } else {
+        isValid = false;
+      }
+    }
+
+    if (!isValid) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
     res.json({
       id: user.id,
       first_name: user.first_name,
-      role: user.role || 'owner' 
+      role: user.role || 'owner',
     });
   } catch (err) {
     console.error("Login error:", err);
     res.status(500).json({ error: "Server error" });
   }
 };
+
+// =======================
+// REGISTER USER
+// =======================
 const registerUser = async (req, res) => {
   const { first_name, last_name, email, password, phone, role } = req.body;
 
@@ -35,7 +75,6 @@ const registerUser = async (req, res) => {
     req.file?.secure_url || req.file?.path || req.file?.url || null;
 
   try {
-    
     const existing = await pool.query(
       'SELECT 1 FROM users WHERE LOWER(email) = LOWER($1)',
       [email]
@@ -45,16 +84,22 @@ const registerUser = async (req, res) => {
       return res.status(409).json({ error: "Email already in use" });
     }
 
- 
+    // Hash Argon2 pour les nouveaux users
+    const hashedPassword = await argon2.hash(password, {
+      type: argon2.argon2id,
+      timeCost: 3,
+      memoryCost: 4096,
+      parallelism: 1,
+    });
+
     const result = await pool.query(
       `INSERT INTO users (first_name, last_name, email, password, phone, role, photo_url)
        VALUES ($1, $2, $3, $4, $5, $6, $7)
        RETURNING id, first_name, last_name, email, photo_url, role`,
-      [first_name, last_name, email, password, phone, role, photo_url]
+      [first_name, last_name, email, hashedPassword, phone, role, photo_url]
     );
 
     const newUser = result.rows[0];
-
 
     await pool.query(
       `INSERT INTO profil_users (user_id, first_name, last_name, email, photo_url)
@@ -80,9 +125,10 @@ const registerUser = async (req, res) => {
   }
 };
 
+// =======================
+// EXPORTS
+// =======================
 module.exports = {
   loginUser,
-  registerUser
+  registerUser,
 };
-
-
